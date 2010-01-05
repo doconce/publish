@@ -46,3 +46,4 @@ def print_summary(papers, num_found=0, num_missing=0):
         heading = headings[category]
         indentation = " " * (max_heading - len(heading))
         print "%s: %s%d" % (heading, indentation, num_papers)
+    print "%s: %s%d" % ("Total", " " * (max_heading - len("Total")), len(papers))

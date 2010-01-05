@@ -11,8 +11,8 @@ from publish.importing import read_database
 from publish import config
 from formats import bibtex, latex, pub, pdf, html
 from validation import validate_papers
+from filtering import filter_papers
 from log import print_summary
-from common import short_author
 
 def export_file(filename, filters=[]):
     "Export data into desired file format"
@@ -59,66 +59,3 @@ def export_file(filename, filters=[]):
     print_summary(filtered_papers)
     print ""
     print "Exported %d paper(s) to %s." % (len(filtered_papers), filename)
-
-def filter_papers(papers, filters):
-    "Filters papers, for instance it enables to get papers from a specific year"
-
-    filtered_papers = []
-    for paper in papers:
-        match = True
-        for attribute in filters:
-            value, should_match = filters[attribute]
-            if attribute == "author" or attribute == "editor":
-                if not matching_author(paper[attribute], value, should_match):
-                    match = False
-                    break
-            else:
-                if not matching_attribute(paper, attribute, value, should_match):
-                    match = False
-                    break
-        if match:
-
-            # Remove private key
-            paper = paper.copy()
-            if "private" in paper:
-                del paper["private"]
-
-            # Append paper
-            filtered_papers.append(paper)
-
-    return filtered_papers
-
-def matching_attribute(paper, attribute, value, should_match):
-    "Check if attribute matches"
-
-    # Check for match
-    match = attribute in paper and paper[attribute] == value
-
-    # Should either match or not
-    if should_match:
-        return match
-    else:
-        return not match
-
-def matching_author(authors, value, should_match):
-    "Check if author matches"
-
-    # Match is case-insensitive
-    value = value.lower()
-
-    # Check for match
-    match = False
-    for author in authors:
-
-        # Check match against full name and abbreviation
-        author_lower = author.lower()
-        author_short = short_author(author).lower()
-        if value in author_lower or value in author_short:
-            match = True
-            break
-
-    # Should either match or not
-    if should_match:
-        return match
-    else:
-        return not match

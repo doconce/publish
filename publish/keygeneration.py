@@ -79,7 +79,7 @@ be easy to fix."""
 
     return key
 
-def _filter(key):
+def _filter_key(key):
     "Filter key, removing special characters."
 
     key = key.replace("{", "")

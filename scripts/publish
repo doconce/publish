@@ -13,11 +13,14 @@ __date__ = "2008-09-24 -- 2008-12-12"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
+# Modified by Anders Logg, 2009.
+
 import sys
 
 from publish.importing import import_file
 from publish.exporting import export_file
 from publish.validation import validate_file
+from publish.printing import print_file
 from publish.log import error
 from publish import config
 
@@ -55,7 +58,7 @@ def print_usage():
     print """\
 Usage: publish <command> [command/global option]... [filename]
 
-Commands: import, validate, export
+Commands: import, validate, export, print
 
 For more information, refer to the Publish man page ('man publish')
 or the Publish User Manual.
@@ -92,8 +95,15 @@ def run_validate(args, filters):
     else:
         validate_file(None)
 
+def run_print(args, filters):
+    "Run print command"
+    print_file(filters)
+
 # Available commands
-commands = {"import": run_import, "export": run_export, "validate": run_validate}
+commands = {"import":   run_import,
+            "export":   run_export,
+            "validate": run_validate,
+            "print":    run_print}
 
 def main(args):
 
