@@ -1,4 +1,4 @@
-\section*{Publications \amper{} communications}
+\section*{Publications \amper{} Communications}
 \subsection*{Journal articles}
 \noindent{% for p in papers %}{% if p.category == 'articles' %}
 {% for author in p.author %}{% if author == "H. Narayanan" %}{\bf {% endif %}{{ author }}{% if author == "H. Narayanan" %}}{% endif %}, {% endfor %}
