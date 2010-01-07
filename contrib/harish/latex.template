@@ -9,14 +9,16 @@
 \subsection*{Ch{}a{}pters in b{}ooks}
 \noindent{% for p in papers %}{% if p.category == 'chapters' %}
 {% for author in p.author %}{% if author == "H. Narayanan" %}{\bf {% endif %}{{ author }}{% if author == "H. Narayanan" %}}{% endif %}, {% endfor %}
-``{{ p.title }},''
+``{{ p.title }},'' in
+{% for editor in p.editor %}{% if editor == 'H. Narayanan' %}{\bf {% endif %}{{ editor }}{% if editor == 'H. Narayanan' %}}{% endif %}{% if not forloop.last %},{% endif %} {% endfor %} (Eds.),
 {\em {{ p.booktitle }}}, {% if p.chapter %}chap.~{{ p.chapter }}, {% endif %}{% if p.pages %}pp.~{{ p.pages }}, {% endif %}{% if p.status == 'preparation' %}Under preparation for submission in {% endif %}{% if p.status == 'submitted' %}Submitted in {% endif %}{% if p.year %}{{ p.year }}.{% endif %}{% if p.postprint %}
 \post{_{{ p.postprint }}}{% endif %}{% if p.preprint %}
 \pre{_{{ p.preprint }}}{% endif %}\nl{% endif %}{% endfor %}
 \subsection*{Conference proceedings}
 \noindent{% for p in papers %}{% if p.category == 'proceedings' %}
 {% for author in p.author %}{% if author == "H. Narayanan" %}{\bf {% endif %}{{ author }}{% if author == "H. Narayanan" %}}{% endif %}, {% endfor %}
-``{{ p.title }},''
+``{{ p.title }},'' in
+{% for editor in p.editor %}{% if editor == 'H. Narayanan' %}{\bf {% endif %}{{ editor }}{% if editor == 'H. Narayanan' %}}{% endif %}{% if not forloop.last %},{% endif %} {% endfor %} (Eds.),
 {% if p.booktitle %}{\em {{ p.booktitle }}}, {% endif %}{% if p.series %}{{ p.series }}, {% endif %}{% if p.volume %}vol.~{{ p.volume }}, {% endif %}{% if p.number %}no.~{{ p.number }}, {% endif %}{% if p.pages %}pp.~{{ p.pages }}, {% endif %}{% if p.status == 'submitted' %}Submitted in {% endif %}{% if p.year %}{{ p.year }}.{% endif %}{% if p.postprint %}
 \post{_{{ p.postprint }}}{% endif %}{% if p.preprint %}
 \pre{_{{ p.preprint }}}{% endif %}\nl{% endif %}{% endfor %}
