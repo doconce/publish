@@ -3,7 +3,7 @@
    author:     H. Narayanan
    school:     University of Michigan
    year:       2007
-   thesistype: phd
+   type:       Doctoral Dissertation
    status:     published
    key:        narayanan2007
    preprint:   http://home.simula.no/~harish/files/papers/dissertation/dissertation.pdf
@@ -140,6 +140,6 @@
    author:     H. Narayanan
    school:     University of Michigan
    year:       2005
-   thesistype: phd
+   type:       Project Report
    key:        narayanan2005
    preprint:   http://home.simula.no/~harish/files/papers/reconstruction.pdf

@@ -32,24 +32,14 @@
 <br />{% if p.volume %}Vol. {{ p.volume }}{% endif %}{% if p.number %}({{ p.number }}){% endif %}, {% if p.pages %}pp. {{ p.pages }}, {% endif %}{% if p.status == 'submitted' %}Submitted in {% endif %}{% if p.year %}{{ p.year }}
 {% endif %}</li>{% endif %}{% endfor %}
 </ol>
-<h2>Ph.D. dissertation</h2>
-<ol class="decorated">{% for p in papers %}{% if p.category == 'theses' %}
+<h2>Other academic writing</h2>
+<ol class="decorated">{% for p in papers %}{% if p.category == 'theses' or p.category == 'misc' %}
 <li>{% if p.postprint %}
 <a href="{{ p.postprint }}" title="Download the original article"><img width="32px" height="32px" src="DOC_ROOT/layout/images/icons/lightgrey/font-x-generic.png" alt="File icon" title="Download a postprint of the article" /></a>{% endif %}{% if p.preprint %}
 <a href="{{ p.preprint }}"><img width="32px" height="32px" src="DOC_ROOT/layout/images/icons/lightgrey/text-x-generic.png" alt="File icon" title="Download a preprint of the article" /></a>{% endif %}
 <strong>&#8220;{{ p.title }}&#8221;</strong>
 <br />{% for author in p.author %}{% if author == 'H. Narayanan' %}<em>{% endif %}{{ author }}{% if author == 'H. Narayanan' %}</em>{% endif %} {% endfor %}
-<br />{{ p.school }}
-<br />{% if p.year %}{{ p.year }}
-{% endif %}</li>{% endif %}{% endfor %}
-</ol>
-<h2>Unpublished works</h2>
-<ol class="decorated">{% for p in papers %}{% if p.category == 'misc' %}
-<li>{% if p.postprint %}
-<a href="{{ p.postprint }}" title="Download the original article"><img width="32px" height="32px" src="DOC_ROOT/layout/images/icons/lightgrey/font-x-generic.png" alt="File icon" title="Download a postprint of the article" /></a>{% endif %}{% if p.preprint %}
-<a href="{{ p.preprint }}"><img width="32px" height="32px" src="DOC_ROOT/layout/images/icons/lightgrey/text-x-generic.png" alt="File icon" title="Download a preprint of the article" /></a>{% endif %}
-<strong>&#8220;{{ p.title }}&#8221;</strong>
-<br />{% for author in p.author %}{% if author == 'H. Narayanan' %}<em>{% endif %}{{ author }}{% if author == 'H. Narayanan' %}</em>{% endif %} {% endfor %}
+<br />{{ p.type }}
 <br />{{ p.school }}
 <br />{% if p.year %}{{ p.year }}
 {% endif %}</li>{% endif %}{% endfor %}
