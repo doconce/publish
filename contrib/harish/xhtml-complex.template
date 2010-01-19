@@ -6,7 +6,7 @@
 		    <strong>&#8220;{{ p.title }}&#8221;</strong>
 		    <br />{% for author in p.author %}{% if author == 'H. Narayanan' %}<em>{% endif %}{{ author }}{% if author == 'H. Narayanan' %}</em>{% endif %}{% if not forloop.last %},{% endif %} {% endfor %}{% if p.journal %}
 		    <br />{{ p.journal }}{% endif %}
-		    <br />{% if p.volume %}Vol. {{ p.volume }}{% endif %}{% if p.number %}({{ p.number }}), {% endif %}{% if p.pages %}pp. {{ p.pages }}, {% endif %}{% if p.status == 'preparation' %}Under preparation for submission in {% endif %}{% if p.status == 'submitted' %}Submitted in {% endif %}{% if p.year %}{{ p.year }}{% endif %}
+		    <br />{% if p.volume %}Vol. {{ p.volume }}{% endif %}{% if p.number %}({{ p.number }}), {% endif %}{% if p.pages %}pp. {{ p.pages }}, {% endif %}{% if p.status == 'preparation' %}Under preparation for submission in {% endif %}{% if p.status == 'submitted' %}Submitted in {% endif %}{% if p.status == 'accepted' %}Accepted for publication in {% endif %}{% if p.year %}{{ p.year }}{% endif %}
 		  </li>{% endif %}{% endfor %}
 		</ol>
 		<h2>Chapters in books</h2>
@@ -17,7 +17,7 @@
 		    <strong>&#8220;{{ p.title }}&#8221;</strong>
 		    <br />{% for author in p.author %}{% if author == 'H. Narayanan' %}<em>{% endif %}{{ author }}{% if author == 'H. Narayanan' %}</em>{% endif %}{% if not forloop.last %},{% endif %} {% endfor %}
 		    <br />{{ p.booktitle }}, {% for editor in p.editor %}{% if editor == 'H. Narayanan' %}<em>{% endif %}{{ editor }}{% if editor == 'H. Narayanan' %}</em>{% endif %}{% if not forloop.last %},{% endif %} {% endfor %} (Eds.)
-		    <br />{% if p.chapter %}Chap. {{ p.chapter }}, {% endif %}{% if p.pages %}pp. {{ p.pages }}, {% endif %}{% if p.status == 'preparation' %}Under preparation for submission in {% endif %}{% if p.status == 'submitted' %}Submitted in {% endif %}{% if p.year %}{{ p.year }}
+		    <br />{% if p.chapter %}Chap. {{ p.chapter }}, {% endif %}{% if p.pages %}pp. {{ p.pages }}, {% endif %}{% if p.status == 'preparation' %}Under preparation for submission in {% endif %}{% if p.status == 'submitted' %}Submitted in {% endif %}{% if p.status == 'accepted' %}Accepted for publication in {% endif %}{% if p.year %}{{ p.year }}
 		  {% endif %}</li>{% endif %}{% endfor %}
 		</ol>
 		<h2>Conference proceedings</h2>
@@ -29,7 +29,7 @@
 		    <br />{% for author in p.author %}{% if author == 'H. Narayanan' %}<em>{% endif %}{{ author }}{% if author == 'H. Narayanan' %}</em>{% endif %}{% if not forloop.last %},{% endif %} {% endfor %}
 		    <br />{{ p.booktitle }}
 		    <br />{% if p.series %}{{ p.series }}{% endif %}
-		    <br />{% if p.volume %}Vol. {{ p.volume }}{% endif %}{% if p.number %}({{ p.number }}){% endif %}, {% if p.pages %}pp. {{ p.pages }}, {% endif %}{% if p.status == 'submitted' %}Submitted in {% endif %}{% if p.year %}{{ p.year }}
+		    <br />{% if p.volume %}Vol. {{ p.volume }}{% endif %}{% if p.number %}({{ p.number }}){% endif %}, {% if p.pages %}pp. {{ p.pages }}, {% endif %}{% if p.status == 'submitted' %}Submitted in {% endif %}{% if p.status == 'accepted' %}Accepted for publication in {% endif %}{% if p.year %}{{ p.year }}
 		  {% endif %}</li>{% endif %}{% endfor %}
 		</ol>
 		<h2>Other academic writing</h2>

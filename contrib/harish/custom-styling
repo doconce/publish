@@ -23,11 +23,11 @@ else:
     context = Context({"papers": papers})
     output = template.render(context)
     #   Filters for HTML
-    output = re.sub('--', '&#8211;', output)
-    output = re.sub('DOC_ROOT', '<!--#echo var="MY_DOCUMENT_ROOT"-->', output)
-    output = re.sub('\\\\-', '', output)
+#     output = re.sub('--', '&#8211;', output)
+#     output = re.sub('DOC_ROOT', '<!--#echo var="MY_DOCUMENT_ROOT"-->', output)
+#     output = re.sub('\\\\-', '', output)
     #   Filters for LaTeX
-#     output = re.sub('{_', '{', output)
-#     output = re.sub('\\\\nl\n\\\\subsection', '\n\\\\subsection', output)
-#     output = re.sub('&amp;', '&', output)
-    print output
+    output = re.sub('{_', '{', output)
+    output = re.sub('\\\\nl\n\\\\subsection', '\n\\\\subsection', output)
+    output = re.sub('&amp;', '&', output)
+    print output,
