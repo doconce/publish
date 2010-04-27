@@ -2,6 +2,7 @@
 
 import sys
 import re
+import os
 from publish.importing import _read_file as read_file
 from django.template import Template, Context
 from django.conf import settings as django_settings
@@ -13,6 +14,7 @@ else:
     # Read template
     django_settings.configure(INSTALLED_APPS='/Users/hnarayan/Projects/publish/contrib/harish')
     template_file_name = sys.argv[1]
+    template_base_name, template_extension = os.path.splitext(template_file_name)
     template_file      = open(template_file_name)
     template           = Template(template_file.read())
 
@@ -22,12 +24,18 @@ else:
     # Output results
     context = Context({"papers": papers})
     output = template.render(context)
-    #   Filters for HTML
-#     output = re.sub('--', '&#8211;', output)
-#     output = re.sub('DOC_ROOT', '<!--#echo var="MY_DOCUMENT_ROOT"-->', output)
-#     output = re.sub('\\\\-', '', output)
-    #   Filters for LaTeX
-    output = re.sub('{_', '{', output)
-    output = re.sub('\\\\nl\n\\\\subsection', '\n\\\\subsection', output)
-    output = re.sub('&amp;', '&', output)
+    if template_extension == '.xhtml' or template_extension == '.html':
+        # Filters for (X)HTML
+        output = re.sub('--', '&#8211;', output)
+        output = re.sub('DOC_ROOT', '<!--#echo var="MY_DOCUMENT_ROOT"-->', output)
+        output = re.sub('\\\\-', '', output)
+    elif template_extension == '.tex':
+        # Filters for LaTeX
+        output = re.sub('{_', '{', output)
+        output = re.sub('\\\\nl\n\\\\subsection', '\n\\\\subsection', output)
+        output = re.sub('&amp;', '&', output)
+    else:
+        print "Unknown template extension"
+        sys.exit(2)
+            
     print output,
