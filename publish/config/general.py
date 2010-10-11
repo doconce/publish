@@ -21,3 +21,4 @@ pdf_dir = "papers"
 
 headline = ""
 
+compact = False

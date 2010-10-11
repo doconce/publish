@@ -68,6 +68,7 @@ def init():
     data["view_pdf"]                 = general.view_pdf
     data["pdf_dir"]                  = general.pdf_dir
     data["headline"]                 = general.headline
+    data["compact"]                  = general.compact
 
     # Import parameters from capitalization
     import capitalization

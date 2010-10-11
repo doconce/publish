@@ -11,9 +11,10 @@ def write(papers):
     "Format the given list of papers in the LaTeX format."
 
     text = ""
-    
+
     # Get formatting rule
     latex_format = config.get("latex_format")
+    compact = config.get("compact")
 
     # Write headline
     headline = config.get("headline")
@@ -21,9 +22,10 @@ def write(papers):
         headline = "Publications"
 
     # Start of LaTeX paper
-    text+= "\\renewcommand \\refname{%s}\n\n" % headline
-    text+= "\\begin{thebibliography}{99}\n"
-  
+    if not compact:
+        text+= "\\renewcommand \\refname{%s}\n\n" % headline
+        text+= "\\begin{thebibliography}{99}\n"
+
     # Iterate over categories
     categories = config.get("categories")
     current_paper = 0
@@ -36,7 +38,10 @@ def write(papers):
 
         # Write category
         category_headings = config.get("category_headings")
-        text += "\\subsection*{%s}\n" % category_headings[category]
+        if compact:
+            text += "\n\\textit{%s}\n\n" % category_headings[category]
+        else:
+            text += "\\subsection*{%s}\n" % category_headings[category]
 
         # Iterate over papers in category
         for paper in category_papers:
@@ -48,10 +53,14 @@ def write(papers):
                 key = "paper%d" % current_paper
 
             # Write each paper as bibitem
-            text += "\\bibitem{%s} {%s}\n" % (key, latex_format[category](paper))
+            if compact:
+                text += "[%d] %s\\\\[1ex]\n" % (current_paper, latex_format[category](paper))
+            else:
+                text += "\\bibitem{%s} {%s}\n" % (key, latex_format[category](paper))
 
             current_paper += 1
 
-    text += "\\end{thebibliography}"
-                
+    if not compact:
+        text += "\\end{thebibliography}"
+
     return text
