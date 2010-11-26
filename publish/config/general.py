@@ -22,3 +22,5 @@ pdf_dir = "papers"
 headline = ""
 
 compact = False
+
+require_page_range = False

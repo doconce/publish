@@ -229,17 +229,22 @@ def _validate_paper_pages(paper):
         return
     pages = paper["pages"]
 
-    # Must contain "-"
     invalid = False
-    if not "-" in pages:
+    new_pages = pages
+
+    # Check if page page must contain "-"
+    if config.get("require_page_range") and not "-" in pages:
         invalid = True
-    else:
+    if "-" in pages:
         if "--" in pages:
             first, last = pages.split("--")[:2]
         else:
             first, last = pages.split("-")[:2]
-        if len(first) == 0 or len(last) == 0:
-            invalid = True
+            if len(first) == 0 or len(last) == 0:
+                invalid = True
+
+            # Reformat string
+            new_pages = first.strip() + "--" + last.strip()
         
     # Check for invalid page string
     if invalid:
@@ -251,8 +256,6 @@ def _validate_paper_pages(paper):
             print "  Skipping paper."
         return
 
-    # Reformat string
-    new_pages = first + "--" + last
 
     # Check if string was changed
     if not new_pages == pages:
