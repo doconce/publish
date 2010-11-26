@@ -270,7 +270,7 @@ def _extract_category(paper):
         return "theses"
 
     # Special case: mscthesis
-    if entry_type == "masterthesis":
+    if entry_type == "mastersthesis":
         paper["thesistype"] = "msc"
         return "theses"
 
