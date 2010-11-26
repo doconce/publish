@@ -9,11 +9,12 @@ __license__  = "GNU GPL version 3 or any later version"
 
 from publish.common import short_author
 from attributes import category_attributes, thesistype_strings
+from publish import config
 
 def latex_format_articles(paper):
     "Return string for article in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
     values += [_format_venue(paper["journal"], paper)]
     if "volume" in paper: values += ["vol. %s" % paper["volume"]]
@@ -24,8 +25,10 @@ def latex_format_articles(paper):
 def latex_format_books(paper):
     "Return string for book in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
+    if paper.has_key("edition") :
+      values += ["\\textit{%s edition}" % paper["edition"]]
     values += [paper["publisher"]]
     values += [paper["year"]]
     return _latex_join(values)
@@ -33,7 +36,7 @@ def latex_format_books(paper):
 def latex_format_edited(paper):
     "Return string for edited book in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
     values += [paper["publisher"]]
     values += [paper["year"]]
@@ -42,7 +45,7 @@ def latex_format_edited(paper):
 def latex_format_chapters(paper):
     "Return string for chapter in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
     values += ["in \\textit{%s}" % paper["booktitle"]]
     values += [_format_editors(paper["editor"])]
@@ -55,7 +58,7 @@ def latex_format_chapters(paper):
 def latex_format_proceedings(paper):
     "Return string for proceeding in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
     values += ["in \\textit{%s}" % paper["booktitle"]]
     values += [paper["year"]]
@@ -64,7 +67,7 @@ def latex_format_proceedings(paper):
 def latex_format_reports(paper):
     "Return string for report in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
     values += [paper["institution"]]
     values += [paper["year"]]
@@ -73,7 +76,7 @@ def latex_format_reports(paper):
 def latex_format_manuals(paper):
     "Return string for manual in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
     if "year" in paper: values += ["%s", paper["year"]]
     return _latex_join(values)
@@ -81,7 +84,7 @@ def latex_format_manuals(paper):
 def latex_format_theses(paper):
     "Return string for thesis in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
     values += [thesistype_strings[paper["thesistype"]]]
     values += [paper["school"]]
@@ -91,7 +94,7 @@ def latex_format_theses(paper):
 def latex_format_courses(paper):
     "Return string for course in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
     values += ["(" + paper["code"] + ")"]
     values += [paper["institution"]]
@@ -101,7 +104,7 @@ def latex_format_courses(paper):
 def latex_format_talks(paper):
     "Return string for talk in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
     values += [paper["meeting"]]
     values += [paper["year"]]
@@ -110,7 +113,7 @@ def latex_format_talks(paper):
 def latex_format_misc(paper):
     "Return string for misc in LaTeX format"
     values = []
-    values += ["\\textsc{%s}" % _format_authors(paper["author"])]
+    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
     values += ["\\textit{%s}" % paper["title"]]
     if "booktitle" in paper: values += ["in \\textit{%s}" % paper["booktitle"]]
     if "howpublished" in paper: values += [paper["howpublished"]]
@@ -144,7 +147,7 @@ def html_format_articles(paper):
     "Return string for article in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     values += [_format_venue(paper["journal"], paper)]
     if "volume" in paper: values += ["vol. %s" % paper["volume"]]
     if "pages" in paper: values += ["pp. %s" % _format_pages(paper["pages"])]
@@ -155,7 +158,7 @@ def html_format_books(paper):
     "Return string for book in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     values += [paper["publisher"]]
     values += [paper["year"]]
     return _html_join(values)
@@ -164,7 +167,7 @@ def html_format_edited(paper):
     "Return string for edited book in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     values += [paper["publisher"]]
     values += [paper["year"]]
     return _html_join(values)
@@ -173,7 +176,7 @@ def html_format_chapters(paper):
     "Return string for chapter in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     values += ["in <i>%s</i>" % paper["booktitle"]]
     values += [_format_editors(paper["editor"])]
     values += [paper["publisher"]]
@@ -186,7 +189,7 @@ def html_format_proceedings(paper):
     "Return string for proceeding in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     values += ["in <i>%s</i>" % paper["booktitle"]]
     values += [paper["year"]]
     return _html_join(values)
@@ -195,7 +198,7 @@ def html_format_reports(paper):
     "Return string for report in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     values += [paper["institution"]]
     values += [paper["year"]]
     return _html_join(values)
@@ -204,7 +207,7 @@ def html_format_manuals(paper):
     "Return string for manual in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     if "year" in paper: values += [paper["year"]]
     return _html_join(values)
 
@@ -212,7 +215,7 @@ def html_format_theses(paper):
     "Return string for thesis in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     values += [thesistype_strings[paper["thesistype"]]]
     values += [paper["school"]]
     values += [paper["year"]]
@@ -222,8 +225,8 @@ def html_format_courses(paper):
     "Return string for course in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     values += [paper["institution"]]
     values += [paper["year"]]
     return _html_join(values)
@@ -232,7 +235,7 @@ def html_format_talks(paper):
     "Return string for talk in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     values += [paper["meeting"]]
     values += [paper["year"]]
     return _html_join(values)
@@ -241,7 +244,7 @@ def html_format_misc(paper):
     "Return string for misc in HTML format"
     values = []
     values += [_html_format_title(paper)]
-    values += [_format_authors(paper["author"])]
+    values += [_get_authors_string(paper["author"])]
     if "howpublished" in paper:
         howpublished = paper["howpublished"]
         if "http://" in howpublished and "<a href" not in values[0]:
@@ -292,9 +295,25 @@ html_format = {"articles"      : html_format_articles,
                "talks"         : html_format_talks,
                "misc"          : html_format_misc}
 
-def _format_authors(authors):
+def _latex_mark_author(author, text) :
+  "Mark the text with bold face if author is in the list of marked authors"
+
+  if config.has_key("mark_author") and author.strip() in config.get("mark_author") :
+    return "\\textbf{%s}" % text
+
+  else :
+    return text
+
+
+def _latex_format_authors(author_string) :
+  if config.has_key("use_textsc") and config.get("use_textsc") :
+    return "\\textsc{%s}" % author_string
+  else :
+    return author_string
+
+def _get_authors_string(authors):
     "Convert author tuple to author string"
-    authors = [short_author(author).strip() for author in authors]
+    authors = [_latex_mark_author(author, short_author(author).strip()) for author in authors]
     if len(authors) == 1:
         return authors[0]
     if authors[-1] == "others":
@@ -304,7 +323,7 @@ def _format_authors(authors):
 
 def _format_editors(authors):
     "Convert editor tuple to author string"
-    return "edited by " + _format_authors(authors)
+    return "edited by " + _get_authors_string(authors)
 
 def _format_pages(pages):
     "Format pages"

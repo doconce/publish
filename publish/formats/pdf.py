@@ -11,18 +11,24 @@ from os import system
 from publish import config
 import latex
 
-def write(papers):
+def write(papers, sort_func=None):
     "Format the given list of papers in the pdf format."
 
     # Start of pdf paper
     latex_text = ""
     latex_text += "\\documentclass[12pt]{article}\n"
     latex_text += "\\usepackage{textcomp}\n"
+
+    # Because of some font issues in latex, we need to include 
+    # this package if we are going to nest \textbf and and \textsc
+    # \textbf is only used if we are going to mark specific authors
+    if config.get("use_textsc") and len(config.get("mark_author")) > 0 :
+        latex_text += "\\usepackage[T1]{fontenc}\n"
     latex_text += "\\usepackage{url}\n"
     latex_text += "\\begin{document}\n"
 
     # LaTeX output
-    latex_text += latex.write(papers)
+    latex_text += latex.write(papers, sort_func)
 
     # End of pdf paper
     latex_text += "\\end{document}"

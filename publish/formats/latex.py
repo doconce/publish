@@ -7,7 +7,7 @@ __license__  = "GNU GPL version 3 or any later version"
 
 from publish import config
 
-def write(papers):
+def write(papers, sort_func=None):
     "Format the given list of papers in the LaTeX format."
 
     text = ""
@@ -35,6 +35,10 @@ def write(papers):
         category_papers = [paper for paper in papers if paper["category"] == category]
         if len(category_papers) == 0:
             continue
+
+        # Sort the list
+        if sort_func is not None :
+          category_papers.sort(sort_func)
 
         # Write category
         category_headings = config.get("category_headings")
