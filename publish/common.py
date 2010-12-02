@@ -7,6 +7,8 @@ __license__  = "GNU GPL version 3 or any later version"
 
 from log import warning
 
+import shlex
+
 def is_valid(paper):
     "Check if paper is valid"
     
@@ -26,16 +28,16 @@ def is_duplicate(paper):
 def pstr(paper):
     "Return a simple string representation of the paper"
 
+    s = "(%s) - %s" % (paper.get("key", "No key"),
+                       paper.get("title", "No title"))
+
+    if len(s) > 75 :
+        s = s[:75]+"..."
+    
+    return s
     if "title" in paper:
         s = paper["title"]
-        n = 25
-        if len(s) > n:
-            s = s[:n] + "..."
-    elif "key" in paper:
-        s = paper["key"]
-    elif "title" in paper:
-        s = paper["title"]
-        n = 25
+        n = 75
         if len(s) > n:
             s = s[:n] + "..."
     else:
@@ -45,7 +47,7 @@ def pstr(paper):
 def short_author(author):
     "Abbreviate author name with initials"
 
-    words = author.split(" ")
+    words = shlex.split(author)
     new_words = []
     for word in words[:-1]:
         if word == "":
