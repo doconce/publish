@@ -13,83 +13,154 @@ from publish import config
 
 def latex_format_articles(paper):
     "Return string for article in LaTeX format"
-    values = []
-    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
-    values += ["\\textit{%s}" % paper["title"]]
-    values += [_format_venue(paper["journal"], paper)]
-    if "volume" in paper: values += ["vol. %s" % paper["volume"]]
-    if "pages" in paper: values += ["pp. %s" % _format_pages(paper["pages"])]
-    values += [paper["year"]]
-    return _latex_join(values)
 
+    text = []
+
+    # authors
+    text.append("%s. " %_latex_format_authors(_get_authors_string(paper["author"])))
+
+    # title
+    text.append("%s.\n" % paper["title"])
+
+    # journal
+    paper_in_italic = "\\textit{%s}" % paper["journal"]
+    text.append("%s" % _format_venue(paper_in_italic, paper))
+
+    # volume
+    if paper.has_key("volume") :
+        text.append(", vol. %s" % paper["volume"])
+
+    # pages
+    if paper.has_key("pages") :
+        text.append(", pp. %s" %  paper["pages"])
+    
+    # year
+    text.append(", %s." % paper["year"])
+
+    return "".join(text)
+                       
 def latex_format_books(paper):
     "Return string for book in LaTeX format"
     values = []
-    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
-    values += ["\\textit{%s}" % paper["title"]]
+
+    # authors
+    values.append("%s.\n" % _latex_format_authors(_get_authors_string(paper["author"])))
+
+    # title
+    values.append(paper["title"])
+
+    # edition
     if paper.has_key("edition") :
-      values += ["\\textit{%s edition}" % paper["edition"]]
-    values += [paper["publisher"]]
-    values += [paper["year"]]
-    return _latex_join(values)
+        values += [", %s edition" % paper["edition"]]
+
+    # publisher
+    values.append(", \\textit{%s}" % paper["publisher"])
+
+    # year
+    values.append(", %s." % paper["year"])
+
+    return "".join(values)
 
 def latex_format_edited(paper):
     "Return string for edited book in LaTeX format"
     values = []
-    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
-    values += ["\\textit{%s}" % paper["title"]]
-    values += [paper["publisher"]]
-    values += [paper["year"]]
-    return _latex_join(values)
+    values += ["%s. " % _latex_format_authors(_get_authors_string(paper["author"]))]
+    values += ["%s, " % paper["title"]]
+    values += ["\\textit{%s}, " % paper["publisher"]]
+    values += [paper["year"]+"."]
+    return "\n".join(values)
 
 def latex_format_chapters(paper):
     "Return string for chapter in LaTeX format"
+
     values = []
-    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
-    values += ["\\textit{%s}" % paper["title"]]
-    values += ["in \\textit{%s}" % paper["booktitle"]]
-    values += [_format_editors(paper["editor"])]
-    values += [paper["publisher"]]
-    if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
-    if "pages" in paper: values += ["pp. %s" % _format_pages(paper["pages"])]
-    values += [paper["year"]]
-    return _latex_join(values)
+
+    # authors
+    values.append("%s. " %_latex_format_authors(_get_authors_string(paper["author"])))
+
+    # title
+    values.append(paper["title"])
+
+    # book title
+    values.append(" %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper, add_in=True))
+
+    #editor
+    values.append("edited by %s, " % _get_authors_string(paper["editor"]))
+
+    # publisher
+    values.append("%s, " % paper["publisher"])
+
+    #if "chapter" in paper: values += [" chapter %s" % paper["chapter"]]
+    #if "pages" in paper: values += [" pp. %s" % _format_pages(paper["pages"])]
+
+    values.append(" %s." % paper["year"])
+    return "".join(values)
 
 def latex_format_proceedings(paper):
     "Return string for proceeding in LaTeX format"
     values = []
-    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
-    values += ["\\textit{%s}" % paper["title"]]
-    values += ["in \\textit{%s}" % paper["booktitle"]]
-    values += [paper["year"]]
-    return _latex_join(values)
+
+    # authors
+    values.append("%s. " % _latex_format_authors(_get_authors_string(paper["author"])))
+
+    # title
+    values.append(paper["title"])
+
+    # book title
+    values.append(" %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper, add_in=True))
+
+    # year
+    values.append(paper["year"])
+
+    return "".join(values)
 
 def latex_format_reports(paper):
     "Return string for report in LaTeX format"
     values = []
-    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
-    values += ["\\textit{%s}" % paper["title"]]
-    values += [paper["institution"]]
-    values += [paper["year"]]
-    return _latex_join(values)
+    
+    # authors
+    values.append("%s. " % _latex_format_authors(_get_authors_string(paper["author"])))
+    
+    # title
+    values.append(paper["title"])
+
+    # institution
+    values.append(", %s, " % paper["institution"])
+
+    # year
+    values.append(paper["year"])
+    return "".join(values)
 
 def latex_format_manuals(paper):
     "Return string for manual in LaTeX format"
     values = []
-    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
-    values += ["\\textit{%s}" % paper["title"]]
-    if "year" in paper: values += ["%s", paper["year"]]
-    return _latex_join(values)
+
+    # authors
+    values.append("%s. " % _latex_format_authors(_get_authors_string(paper["author"])))
+
+    values.append(paper["title"])
+
+    
+    if "year" in paper: values += [", %s" % paper["year"]]
+    return "".join(values)
 
 def latex_format_theses(paper):
     "Return string for thesis in LaTeX format"
     values = []
-    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
-    values += ["\\textit{%s}" % paper["title"]]
-    values += [thesistype_strings[paper["thesistype"]]]
-    values += [paper["school"]]
-    values += [paper["year"]]
-    return _latex_join(values)
+
+    # authors
+    values.append("%s. " %_latex_format_authors(_get_authors_string(paper["author"])))
+
+    # title
+    values.append(paper["title"])
+
+    #thesis type
+    values.append(", %s" % thesistype_strings[paper["thesistype"]])
+
+    # school and year
+    values.append(", %s, %s." % (paper["school"], paper["year"]))
+
+    return "".join(values)
 
 def latex_format_courses(paper):
     "Return string for course in LaTeX format"
@@ -104,11 +175,20 @@ def latex_format_courses(paper):
 def latex_format_talks(paper):
     "Return string for talk in LaTeX format"
     values = []
-    values += [_latex_format_authors(_get_authors_string(paper["author"]))]
-    values += ["\\textit{%s}" % paper["title"]]
-    values += [paper["meeting"]]
-    values += [paper["year"]]
-    return _latex_join(values)
+    
+    # author
+    values.append("%s. " % _latex_format_authors(_get_authors_string(paper["author"])))
+
+    #title
+    values.append(paper["title"])
+
+    # meeting
+    values.append(", %s" % paper["meeting"])
+
+    #year
+    values.append(", %s." % paper["year"])
+
+    return "".join(values)
 
 def latex_format_misc(paper):
     "Return string for misc in LaTeX format"
@@ -323,21 +403,24 @@ def _get_authors_string(authors):
 
 def _format_editors(authors):
     "Convert editor tuple to author string"
-    return "edited by " + _get_authors_string(authors)
+    return "Edited by " + _get_authors_string(authors)
 
 def _format_pages(pages):
     "Format pages"
     if "--" in pages: return pages
     return pages.replace("-", "--")
 
-def _format_venue(venue, paper):
+def _format_venue(venue, paper, add_in=False):
     "Format venue"
     status = paper["status"]
     if status == "published":
-        return venue
+        if add_in :
+            return "in " + venue
+        else :
+            return venue
     elif status == "accepted":
-        return "accepted for publication in " + venue
+        return "Accepted for publication in " + venue
     elif status == "submitted":
-        return "submitted to " + venue
+        return "Submitted to " + venue
     else:
         return "(%s)" % str(status)
