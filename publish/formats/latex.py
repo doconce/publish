@@ -16,14 +16,8 @@ def write(papers, sort_func=None):
     latex_format = config.get("latex_format")
     compact = config.get("compact")
 
-    # Write headline
-    headline = config.get("headline")
-    if headline == "":
-        headline = "Publications"
-
     # Start of LaTeX paper
     if not compact:
-        text+= "\\renewcommand \\refname{%s}\n\n" % headline
         text+= "\\begin{thebibliography}{99}\n"
 
     # Iterate over categories

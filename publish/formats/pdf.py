@@ -27,6 +27,14 @@ def write(papers, sort_func=None):
     latex_text += "\\usepackage{url}\n"
     latex_text += "\\begin{document}\n"
 
+    # Write headline
+    headline = config.get("headline")
+    if headline == "":
+        headline = "Publications"
+
+
+    latex_text+= "\\renewcommand \\refname{%s}\n\n" % headline
+
     # LaTeX output
     latex_text += latex.write(papers, sort_func)
 
