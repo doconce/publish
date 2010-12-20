@@ -1,18 +1,22 @@
 "This module implements input/output for BibTeX."
 
-__author__ = "Anna Logg (anna@loggsystems.se)"
-__date__ = "2008-10-05 -- 2008-11-11"
+__author__    = "Anna Logg (anna@loggsystems.se)"
+__date__      = "2008-10-05 -- 2008-11-11"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
-__license__  = "GNU GPL version 3 or any later version"
+__license__   = "GNU GPL version 3 or any later version"
+
+# Modified by Benjamin Kehlet
 
 import re
 
 from publish.common import pstr
 from publish import config
+from publish.exceptions import ParseException
+
 
 # Pattern used for extracting the BibTeX-fields
 _entry_list = "|".join([entry_type for entry_type in config.get("entrytype_attributes")])
-_start_pattern = re.compile('^@(%s){(.*?)\s*,' % _entry_list, re.IGNORECASE) 
+_entry_pattern = re.compile('^(%s)\s*{' % _entry_list, re.IGNORECASE) 
 
 # Pattern used for extracting everything before and after the "="-sign
 #_block_pattern = re.compile('\s*(.*?)\s*=\s*{(.*?)}\s*,')
@@ -21,6 +25,7 @@ _start_pattern = re.compile('^@(%s){(.*?)\s*,' % _entry_list, re.IGNORECASE)
 _attribute_pattern = re.compile('\s*,*(.*?)\s*=\s*')
 
 def read(text):
+    text = text.strip()
     "Extract papers from text and return papers as a list of dictionaries."
 
     print ""
@@ -30,78 +35,131 @@ def read(text):
 
     papers = []
     position = 0
-    lines = text.split("\n")
-    for line in lines:
 
-        # Look for start of paper
-        match = _start_pattern.search(line)
-        if not match is None:
+    while position < len(text) :
+        current_paper = {}
+
+        position = _skip_spaces(position, text)
+
+        # Look for '@' at start of paper
+        if not text[position] == "@" :
+            raise ParseException, "Bibtext parse error expected '@' near '%s'" % _get_line(position, text)
+
+        position += 1
+
+        # Extract entry-type
+        match = re.search(_entry_pattern, text[position:])
+        if not match :
+            msg  = "Parse error in BibTex file\n%s\n" % _get_line(position, text)
+            msg += "Allowed entry types are: %s" % ", ".join(config.get("entrytype_attributes"))
+            raise ParseException, msg
+
+        # Make sure every entry-type is written in lower-case letters
+        current_paper["entrytype"] = match.group(1).lower()
             
-            # Extract entry-type and key
-            groups = match.groups()
-            (entry_type, key) = groups
+        position += len(current_paper["entrytype"])
+        position = _skip_spaces(position, text)
+        
+        if not text[position] == "{" :
+            raise ParseException, "Bibtex parse error. Expected '{' after entrytype.\n%s" % _get_line(position, text)
 
-            # Make sure every entry-type is written in lower-case letters
-            entry_type = entry_type.lower()
+        position += 1
+
+        # Find the ',' which separates the key from the attributes
+        index = text[position:].find(",")
+
+        current_paper["key"] = text[position:position+index].strip()
+        
+        # skip through the key and the following ','
+        position += index+1
+        position = _skip_spaces(position, text)
+
+        # collect all the attributes
+        while True :
+            position, attr_key, attr_value = _parse_attribute(position, text)
+            position = _skip_spaces(position, text)
+
+            if current_paper.has_key(attr_key) :
+                raise ParseException, "Paper with key '%s' has double declared attribute: '%s'" % (current_paper["key"], attr_key)
             
-            # Look for starting point
-            start = position + 1 + len(entry_type) + 1 + len(key) + 1 + 1
+            current_paper[attr_key] = attr_value
 
-            # Look for the end point, by counting the braces
-            num_left_braces = 1
-            num_right_braces= 0
-            value_start = []
-            value_end = []
-            for end in range(start, len(text)):
+            if text[position] != "," and text[position] != "}" :
+                raise ParseException, "Unexpected character '%s' at %s" % (text[position], _get_line(position, text))
 
-                # Count braces
-                if text[end] == "{":
-                    num_left_braces += 1
-                elif text[end] == "}":
-                    num_right_braces += 1
+            position = _skip_spaces(position ,text)
+            if text[position] == "," :
+                position += 1
+                position = _skip_spaces(position, text)
 
-                # Mark positions for attribute values
-                if text[end] == "{" and num_left_braces == num_right_braces + 2:
-                    value_start.append(end - start)
-                elif text[end] == "}" and num_left_braces == num_right_braces + 1:
-                    value_end.append(end - start)
-                
-                # Found end of paper, done
-                if num_left_braces == num_right_braces:
-                    break
+            # Note that a comma is allowed after the last attribute            
+            if text[position] == "}" :
+                break
 
-            # Extract the block, containing the required fields
-            block = text[start:end]
 
-            # Parse block
-            paper = _parse_paper(block, value_start, value_end)
+        position += 1
+        position = _skip_spaces(position, text)
+        
+        # Done with parsing the paper. Now validate the collected data
 
-            # Check that the block contains all required fields
-            paper["entrytype"] = entry_type
-            paper["key"] = key
+        # Check that paper has all required attributes
+        _check_paper(current_paper)
 
-            # Check that paper has all required attributes
-            _check_paper(paper)
+        # Extract category
+        current_paper["category"] = _extract_category(current_paper)
 
-            # Extract category
-            paper["category"] = _extract_category(paper)
+        # Extract authors as tuple from string
+        if "author" in current_paper:
+            _extract_authors(current_paper, "author")
 
-            # Extract authors as tuple from string
-            if "author" in paper:
-                _extract_authors(paper, "author")
+        # Extract editors as tuple from string
+        if "editor" in current_paper:
+            _extract_authors(current_paper, "editor")
 
-            # Extract editors as tuple from string
-            if "editor" in paper:
-                _extract_authors(paper, "editor")
-
-            # Add paper (a dictionary) to list of papers
-            papers.append(paper)
-
-        # Steps to next line
-        position += len(line) + 1
+        papers.append(current_paper)
 
     # Return list of papers
     return papers
+
+def _parse_attribute(position, text) :
+    eq_pos = text[position:].find("=")
+    
+    if eq_pos < 1 :
+      raise ParseException, "Bibtex parse error, expected attribute=value near '%s'" % _get_line(position, text)
+
+    key = text[position:position+eq_pos].strip()
+
+    position += eq_pos+1
+    
+    position, value = _parse_attribute_value(position, text)
+    return (position, key, value)
+
+def _parse_attribute_value(position, text) :
+    position = _skip_spaces(position, text)
+    
+    if not text[position] == "{" :
+        raise ParseException, "Expected '{' near '%s'" % _get_line(position, text)
+    
+    position += 1
+
+    # Look for the end point, by counting the braces
+    num_left_braces = 1
+    num_right_braces= 0
+    end_pos = position
+    for end in range(position, len(text)):
+
+        # Count braces
+        if text[end] == "{" and not text[end - 1] == "\\" :
+            num_left_braces += 1
+        elif text[end] == "}" and not text[end -1] == "\\" :
+            num_right_braces += 1
+
+        # Found end of paper, done
+        if num_left_braces == num_right_braces:
+            break
+
+    return (end+1, text[position:end].strip())
+    
         
 def write(papers):
     "Format the given list of papers in the BibTeX format."
@@ -163,26 +221,13 @@ def _parse_paper(block, value_start, value_end):
     return paper
 
 def _check_paper(paper):
-    "Check paper"
+    "Check required attributes"
+
+    # TODO: Do this during parsing, so we can give error messages with line number and text
 
     print "Found paper: %s" % pstr(paper)
 
     invalid = False
-
-    # Check that all values are ok (no stray {})
-    for attribute in paper:
-        value = paper[attribute]
-        num_left_braces = 0
-        num_right_braces = 0
-        for c in value:
-            if c == "{":
-                num_left_braces += 1
-            elif c == "}":
-                num_right_braces += 1
-            if num_left_braces < num_right_braces:
-                invalid = True
-                print '  Misplaced "{}" or "," in BibTeX entry.'
-                break
 
     # Check that paper has all required attributes
     entry_type = paper["entrytype"]
@@ -284,3 +329,21 @@ def _extract_category(paper):
             return "misc"
 
     raise RuntimeError, "Unhandled special case for BibTeX entry type."
+
+
+def _skip_spaces(position, text) :
+    "Get position of first character after position, not beeing a white space"
+    while  position < len(text)-1 and text[position].isspace() :
+        position += 1
+
+    return position
+
+def _get_line(position, text) :
+    "Get the string with linenumber and text of the line that text[position] belongs to"
+
+    # count newlines before position to get the linenumber
+    newlines = text.count("\n", 0, position) + 1
+
+    start = text[:position].rfind("\n")
+    end   = text[position:].find("\n")
+    return "(%d) : %s" % (newlines, text[start:position+end].strip())
