@@ -227,12 +227,26 @@ latex_format = {"articles"      : latex_format_articles,
 def html_format_articles(paper):
     "Return string for article in HTML format"
     values = []
-    values += [_html_format_title(paper)]
-    values += [_html_get_authors_string(paper["author"])]
-    values += [_format_venue(paper["journal"], paper)]
-    if "volume" in paper: values += ["vol. %s" % paper["volume"]]
-    if "pages" in paper: values += ["pp. %s" % _html_format_pages(paper["pages"])]
-    values += [paper["year"]]
+    
+    # Title
+    values.append(_html_format_title(paper))
+
+    # Author
+    values.append(_html_get_authors_string(paper["author"]))
+
+    # Journal
+    values.append('<span class="%s_item_journal">%s</span>' % (config.get("html_class_prefix"), _format_venue(paper["journal"], paper)))
+
+    # Volume
+    if "volume" in paper: values.append('<span class="%s_item_volum">vol. %s</span>' %  (config.get("html_class_prefix"), paper["volume"]))
+
+    # Pages
+    if "pages" in paper: values.append('<span class="%s_item_pages">pp. %s</span>' % (config.get("html_class_prefix"), 
+                                                                                      _html_format_pages(paper["pages"])))
+
+    # Year
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
+
     return _html_join(values)
 
 def html_format_books(paper):
@@ -240,8 +254,9 @@ def html_format_books(paper):
     values = []
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
-    values += [paper["publisher"]]
-    values += [paper["year"]]
+    values += ['<span class="%s_item_publisher">%s</span>' % (config.get("html_class_prefix"), paper["publisher"])]
+
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
 
 def html_format_edited(paper):
@@ -249,8 +264,9 @@ def html_format_edited(paper):
     values = []
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
-    values += [paper["publisher"]]
-    values += [paper["year"]]
+    values += ['<span class="%s_item_publisher">%s</span>' % (config.get("html_class_prefix"), paper["publisher"])]
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
+
     return _html_join(values)
 
 def html_format_chapters(paper):
@@ -258,12 +274,14 @@ def html_format_chapters(paper):
     values = []
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
-    values += ["in <i>%s</i>" % paper["booktitle"]]
+    values += ['in <span class="%s_item_publisher">%s</span>' % (config.get("html_class_prefix"), paper["booktitle"])]
     values += [_html_format_editors(paper["editor"])]
-    values += [paper["publisher"]]
+    values += ['<span class="%s_item_publisher">%s</span>' % (config.get("html_class_prefix"), paper["publisher"])]
     if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
     if "pages" in paper: values += ["pp. %s" % _html_format_pages(paper["pages"])]
-    values += [paper["year"]]
+
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
+
     return _html_join(values)
 
 def html_format_proceedings(paper):
@@ -271,8 +289,9 @@ def html_format_proceedings(paper):
     values = []
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
-    values += ["in <i>%s</i>" % paper["booktitle"]]
-    values += [paper["year"]]
+    values += ['in <span class="%s_item_booktitle">%s</span>' % (config.get("html_class_prefix"), paper["booktitle"])]
+
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
 
 def html_format_reports(paper):
@@ -281,7 +300,8 @@ def html_format_reports(paper):
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
     values += [paper["institution"]]
-    values += [paper["year"]]
+
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
 
 def html_format_manuals(paper):
@@ -299,7 +319,8 @@ def html_format_theses(paper):
     values += [_html_get_authors_string(paper["author"])]
     values += [thesistype_strings[paper["thesistype"]]]
     values += [paper["school"]]
-    values += [paper["year"]]
+
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
 
 def html_format_courses(paper):
@@ -309,7 +330,8 @@ def html_format_courses(paper):
     values += [_html_get_authors_string(paper["author"])]
     values += [_html_get_authors_string(paper["author"])]
     values += [paper["institution"]]
-    values += [paper["year"]]
+
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
 
 def html_format_talks(paper):
@@ -317,8 +339,9 @@ def html_format_talks(paper):
     values = []
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
-    values += [paper["meeting"]]
-    values += [paper["year"]]
+    values += ['<span class="%s_item_meeting">%s</span>' % (config.get("html_class_prefix"), paper["meeting"])]
+
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
 
 def html_format_misc(paper):
@@ -340,7 +363,7 @@ def html_format_misc(paper):
     if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
     if "volume" in paper: values += ["vol. %s" % paper["volume"]]
     if "pages" in paper: values += ["pp. %s" % _html_format_pages(paper["pages"])]
-    if "year" in paper: values += [paper["year"]]
+    if "year" in paper: values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
 
 def _html_format_title(paper):
@@ -352,26 +375,29 @@ def _html_format_title(paper):
         title = paper["title"]
 
     if "pdf" in paper and not paper["pdf"] == "missing":
-        return "<a href=\"%s\">%s</a>" % (paper["pdf"], title)
+        return '<span class="publish_item_title"><a href=\"%s\">%s</a></span>' % (paper["pdf"], title)
     else:
-        return "<u>%s</u>" % title
+        return '<span class="publish_item_title">%s</span>' % title
 
 
 
 def _html_format_editors(authors):
     "Convert editor tuple to author string"
-    return "Edited by " + _html_get_authors_string(authors)
+    return '<span class="publish_item_editors">Edited by %s</span>' % _html_get_authors_string(authors)
 
 
 def _html_get_authors_string(authors):
     "Convert author tuple to author string"
     authors = [_html_mark_author(author, short_author(author).strip()) for author in authors]
     if len(authors) == 1:
-        return authors[0]
-    if authors[-1] == "others":
-        return ", ".join(authors[:-1]) + " et al."
-    else:
-        return ", ".join(authors[:-1]) + " and " + authors[-1]
+        str = authors[0]
+    else :
+        if authors[-1] == "others":
+            str =  ", ".join(authors[:-1]) + " et al."
+        else:
+            str = ", ".join(authors[:-1]) + " and " + authors[-1]
+
+    return '<span class=%s_item_authors>%s</span>' % (config.get("html_class_prefix"), str)
 
 
 
@@ -392,7 +418,7 @@ def _html_format_pages(pages):
 
 def _html_join(values):
     "Join values for HTML entry"
-    entry = "<br>\n".join(values[:2]) + "<br>\n" + ",\n".join(values[2:]) + "<br>\n"
+    entry = "<br>\n".join(values[:2]) + "<br>\n" + ",\n".join(values[2:]) + "\n"
     entry = entry.replace("{", "")
     entry = entry.replace("}", "")
     return entry

@@ -71,6 +71,8 @@ def init():
     data["headline"]                 = general.headline
     data["compact"]                  = general.compact
     data["require_page_range"]       = general.require_page_range
+    data["page_separator"]           = general.page_separator
+    data["html_class_prefix"]        = general.html_class_prefix
 
     # Import parameters from capitalization
     import capitalization

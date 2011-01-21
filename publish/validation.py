@@ -244,7 +244,7 @@ def _validate_paper_pages(paper):
                 invalid = True
 
             # Reformat string
-            new_pages = first.strip() + "--" + last.strip()
+            new_pages = first.strip() + config.get("page_separator") + last.strip()
         
     # Check for invalid page string
     if invalid:
