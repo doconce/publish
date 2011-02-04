@@ -397,7 +397,7 @@ def _html_get_authors_string(authors):
         else:
             str = ", ".join(authors[:-1]) + " and " + authors[-1]
 
-    return '<span class=%s_item_authors>%s</span>' % (config.get("html_class_prefix"), str)
+    return '<span class="%s_item_authors">%s</span>' % (config.get("html_class_prefix"), str)
 
 
 
