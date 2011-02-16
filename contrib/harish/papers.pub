@@ -11,9 +11,14 @@
 * articles
 ** An adaptive, error-controlled scheme for the Navier-Stokes equations with applications to biomedical flow
    author:    H. Narayanan, A. Logg
-   year:      2010
+   year:      2011
    status:    preparation
-   key:       narayanan2010a
+   key:       narayanan2011
+** A posteriori error estimates for fluid-structure interaction problems
+   author:    K. Selim, H. Narayanan, A. Logg, M. G. Larson
+   year:      2011
+   status:    preparation
+   key:       selim2011a
 ** In silico estimates of the free energy changes in growing, avascular, tumor spheroids
    author:    H. Narayanan, S. N. Verner, K. L. Mills, R. Kemkemer, K. Garikipati
    journal:   Journal of Physics: Condensed Matter
@@ -71,12 +76,20 @@
 * chapters
 ** A computational framework for nonlinear elasticity
    author:    H. Narayanan
-   editor:    A. Logg, K-A. Mardal , G. N. Wells
+   editor:    A. Logg, K-A. Mardal, G. N. Wells
    booktitle: Automated Scientific Computing
    year:      2010
    status:    accepted
    key:       narayanan2010b
    preprint:  http://home.simula.no/~harish/files/papers/computational-framework-for-nonlinear-elasticity.pdf
+** A comparison of some finite element schemes for the incompressible Navier-Stokes equations
+   author:    K. Valen-Sendstad, A. Logg, K-A. Mardal, H. Narayanan, M. Mortensen
+   editor:    A. Logg, K-A. Mardal, G. N. Wells
+   booktitle: Automated Scientific Computing
+   year:      2010
+   status:    accepted
+   key:       valensendstad2010
+   preprint:  http://home.simula.no/~harish/files/papers/comparison-of-finite-element-schemes-for-navier-stokes-equations.pdf
 ** Characterization and modeling of growth and remodeling in tendon and soft tissue constructs
    author:    E. M. Arruda, S. Calve, K. Garikipati, K. Grosh, H. Narayanan
    chapter:   5
