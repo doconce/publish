@@ -97,7 +97,7 @@ journals = [("ACM Trans. Math. Software", "ACM Transactions on Mathematical Soft
             ("Math. Comp.", "Mathematics of Computation", "0025-5718"),
             ("Math. Comput. Simulat.", "Mathematics and Computers in Simulation", "0378-4754"),
             ("Math. Geol.", "Mathematical Geology", "0882-8121"),
-            ("Metheoritics Planet. Sci.", "Metheoritics \\& Planetary Sciences", "1086-9379"),
+            ("Metheoritics Planet. Sci.", "Metheoritics \\& Planetary Science", "1086-9379"),
             ("Mobile Network. Appl.", "Mobile Networks and Applications", "1383-469X"),
             ("Model. Identif. Control", "Modeling, Identification and Control. A Norwegian Research Bulletin", "0332-7353"),
             ("Multi Agent and Grid Systems", "Multi Agent and Grid Systems", "1574-1702"),

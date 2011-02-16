@@ -31,7 +31,7 @@ def write(papers):
         # Write category
         category_headings = config.get("category_headings")
         text += "<h2>%s</h2>\n\n" % category_headings[category]
-        text += "<ol>\n\n"
+        text += "<ol class=\"publish_list\">\n\n"
 
         # Iterate over papers in category
         for paper in category_papers:
@@ -46,7 +46,7 @@ def write(papers):
             paper_entry = paper_entry.replace("papers/", pdf_dir + "/")
 
             # Write entry for paper
-            text += "<li>\n" + paper_entry + "</li>\n\n"
+            text += "<li class=\"publish_item\">\n" + paper_entry + "</li>\n"
 
         # Write end of list
         text += "</ol>\n"

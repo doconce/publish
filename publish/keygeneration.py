@@ -59,7 +59,7 @@ def _generate_key(paper, used_keys):
     key = "".join(last_names[:min(len(last_names), 2)])
     if len(last_names) > 2:
         key += "EtAl"
-    if paper["category"] == "talks":
+    if paper["category"] == "talks" and paper.has_key("date") :
         key += paper["date"].replace("-", "")
     else:
         key += paper["year"]

@@ -8,6 +8,7 @@ __license__  = "GNU GPL version 3 or any later version"
 # Modified by Anders Logg, 2009.
 
 from os.path import isfile
+import __builtin__
 data = None
 
 def get(key):
@@ -68,6 +69,10 @@ def init():
     data["view_pdf"]                 = general.view_pdf
     data["pdf_dir"]                  = general.pdf_dir
     data["headline"]                 = general.headline
+    data["compact"]                  = general.compact
+    data["require_page_range"]       = general.require_page_range
+    data["page_separator"]           = general.page_separator
+    data["html_class_prefix"]        = general.html_class_prefix
 
     # Import parameters from capitalization
     import capitalization
@@ -93,6 +98,8 @@ def init():
     import formatting
     data["latex_format"] = formatting.latex_format
     data["html_format"] = formatting.html_format
+    data["mark_author"] = __builtin__.set()
+    data["use_textsc"]  = True
 
     # Import parameters from institutions
     import institutions
