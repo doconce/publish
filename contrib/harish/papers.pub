@@ -69,13 +69,14 @@
    preprint:  http://arxiv.org/pdf/q-bio/0312001v3
    postprint: http://dx.doi.org/10.1016/j.jmps.2004.01.004
 * chapters
-** An automated computational framework for nonlinear elasticity
+** A computational framework for nonlinear elasticity
    author:    H. Narayanan
    editor:    A. Logg, K-A. Mardal , G. N. Wells
    booktitle: Automated Scientific Computing
    year:      2010
-   status:    preparation
+   status:    accepted
    key:       narayanan2010b
+   preprint:  http://home.simula.no/~harish/files/papers/computational-framework-for-nonlinear-elasticity.pdf
 ** Characterization and modeling of growth and remodeling in tendon and soft tissue constructs
    author:    E. M. Arruda, S. Calve, K. Garikipati, K. Grosh, H. Narayanan
    chapter:   5
