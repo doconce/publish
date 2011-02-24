@@ -50,11 +50,13 @@ def write(papers, sort_func=None):
             else:
                 key = "paper%d" % current_paper
 
+            entry_text =  latex_format[category](paper)
+
             # Write each paper as bibitem
             if compact:
-                text += "[%d] %s\\\\[1ex]\n" % (current_paper, latex_format[category](paper))
+                text += "[%d] %s\\\\[1ex]\n" % (current_paper,entry_text)
             else:
-                text += "\\bibitem{%s} {%s}\n" % (key, latex_format[category](paper))
+                text += "\\bibitem{%s} {%s}\n" % (key, entry_text)
 
             current_paper += 1
 

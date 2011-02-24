@@ -6,8 +6,7 @@ __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
 from log import warning
-
-import shlex
+import StringIO, csv
 
 def is_valid(paper):
     "Check if paper is valid"
@@ -47,7 +46,17 @@ def pstr(paper):
 def short_author(author):
     "Abbreviate author name with initials"
 
-    words = shlex.split(author)
+    # Use the csv module to split the.
+    # Seems unnatural, but it respects quotes
+    # and does what we want, as opposed to the native
+    # string functions.
+    input = StringIO.StringIO(author)
+    words = csv.reader(input, delimiter=' ').next()
+
+    # This is an alternative, but leaves empty string 
+    # in the result list
+    # words = author.split('\"')
+
     new_words = []
     for word in words[:-1]:
         if word == "":

@@ -476,7 +476,7 @@ def _format_venue(venue, paper, add_in=False):
     status = paper["status"]
     if status == "published":
         if add_in :
-            return "in " + venue
+            return "In " + venue
         else :
             return venue
     elif status == "accepted":
