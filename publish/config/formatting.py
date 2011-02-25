@@ -30,6 +30,8 @@ def latex_format_articles(paper):
     # volume
     if paper.has_key("volume") :
         text.append(", vol. %s" % paper["volume"])
+        if paper.has_key("number") :
+            text.append("(%s)" % paper["number"])
 
     # pages
     if paper.has_key("pages") :
@@ -397,7 +399,7 @@ def _html_get_authors_string(authors):
         else:
             str = ", ".join(authors[:-1]) + " and " + authors[-1]
 
-    return '<span class=%s_item_authors>%s</span>' % (config.get("html_class_prefix"), str)
+    return '<span class="%s_item_authors">%s</span>' % (config.get("html_class_prefix"), str)
 
 
 
@@ -476,7 +478,7 @@ def _format_venue(venue, paper, add_in=False):
     status = paper["status"]
     if status == "published":
         if add_in :
-            return "in " + venue
+            return "In " + venue
         else :
             return venue
     elif status == "accepted":

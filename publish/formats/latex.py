@@ -15,16 +15,16 @@ def write(papers, sort_func=None):
     # Get formatting rule
     latex_format = config.get("latex_format")
     compact = config.get("compact")
+    global_numbering = config.get("global_numbering")
 
     # Start of LaTeX paper
-    if not compact:
+    if global_numbering and not compact:
         text+= "\\begin{thebibliography}{99}\n"
 
     # Iterate over categories
     categories = config.get("categories")
     current_paper = 0
     for category in categories:
-
         # Extract papers in category
         category_papers = [paper for paper in papers if paper["category"] == category]
         if len(category_papers) == 0:
@@ -41,6 +41,9 @@ def write(papers, sort_func=None):
         else:
             text += "\\subsection*{%s}\n" % category_headings[category]
 
+        if not global_numbering and not compact :
+            text += "\\begin{thebibliography}{99}\n"
+
         # Iterate over papers in category
         for paper in category_papers:
 
@@ -50,15 +53,21 @@ def write(papers, sort_func=None):
             else:
                 key = "paper%d" % current_paper
 
+            entry_text =  latex_format[category](paper)
+
             # Write each paper as bibitem
             if compact:
-                text += "[%d] %s\\\\[1ex]\n" % (current_paper, latex_format[category](paper))
+                text += "[%d] %s\\\\[1ex]\n" % (current_paper,entry_text)
             else:
-                text += "\\bibitem{%s} {%s}\n" % (key, latex_format[category](paper))
+                text += "\\bibitem{%s} {%s}\n" % (key, entry_text)
 
             current_paper += 1
 
-    if not compact:
+        if not global_numbering and not compact :
+            text += "\\end{thebibliography}\n\n"
+
+
+    if global_numbering and not compact:
         text += "\\end{thebibliography}"
 
     return text
