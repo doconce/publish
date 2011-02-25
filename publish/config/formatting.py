@@ -30,6 +30,8 @@ def latex_format_articles(paper):
     # volume
     if paper.has_key("volume") :
         text.append(", vol. %s" % paper["volume"])
+        if paper.has_key("number") :
+            text.append("(%s)" % paper["number"])
 
     # pages
     if paper.has_key("pages") :
