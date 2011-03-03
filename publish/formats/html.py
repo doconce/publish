@@ -66,7 +66,20 @@ def _filter(s):
                     ('\\"a', '&auml;'),
                     ('\\"A', '&Auml;'),
                     ('\\"o', '&ouml;'),
-                    ('\\"O', '&Ouml;')]
+                    ('\\"O', '&Ouml;'),
+                    ('\\o',  '&oslash;'),
+                    ('\\O',  '&Oslash;'),
+                    ('\\&',   '&amp;'),
+                    ('\\textonesuperior', "<sup>1</sup>"),
+                    ('\\textendash', "&ndash;"),
+                    ('\\textemdash', "&mdash;"),
+                    ('\\textasciiacute', "&acute;"),
+                    ('\\\'a', "&acute;"),
+                    ('\\"u', "&Uuml;"),
+                    ('\\epsilon', "&epsilon;"),
+                    ('\\\'\i', "&iacute;"),
+                    ('\\textquoteright', "&apos;") # Is this correct?
+                    ]
 
     # Iterate over replacements
     for (a, b) in replacements:
