@@ -11,6 +11,12 @@ def write(papers):
     "Format the given list of papers in HTML format."
 
     text = ""
+    prefix = ""
+    
+    # Get the categories.
+    # Assume unique names
+    categories = config.get("categories")
+    category_headings = config.get("category_headings")
 
     # Get formatting rule
     html_format = config.get("html_format")
@@ -19,19 +25,25 @@ def write(papers):
     pdf_dir = config.get("pdf_dir")
 
     # Iterate over categories
-    categories = config.get("categories")
     current_paper = 0
     for category in categories:
-
         # Extract papers in category
         category_papers = [paper for paper in papers if paper["category"] == category]
         if len(category_papers) == 0:
             continue
 
+
+        # Add internal links to each category
+        if config.get("html_add_internal_links") :
+            prefix += "<p><a href=\"#%s_id_%s\">%s</a></p>\n" % (config.get("html_class_prefix"),
+                                                                 category,
+                                                                 category_headings[category])
+
         # Write category
-        category_headings = config.get("category_headings")
-        text += "<h2>%s</h2>\n\n" % category_headings[category]
-        text += "<ol class=\"publish_list\">\n\n"
+        text += '<h2 id="%s_id_%s">%s</h2>\n\n' % ( config.get("html_class_prefix"), 
+                                                    category,
+                                                    category_headings[category])
+        text += "<ol class=\"%s_list\">\n\n" %  config.get("html_class_prefix")
 
         # Iterate over papers in category
         for paper in category_papers:
@@ -51,7 +63,7 @@ def write(papers):
         # Write end of list
         text += "</ol>\n"
 
-    return text
+    return prefix+"\n\n"+text
 
 def _filter(s):
     "Filter string for special characters."

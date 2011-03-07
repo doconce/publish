@@ -31,6 +31,7 @@ page_separator = "-"
 # Set a prefix for the class names when generating html.
 # Example: class="publish_item_title"
 html_class_prefix = "publish"
+html_add_internal_links = False
 
 # Should numbering in report be global
 # or start over for each category

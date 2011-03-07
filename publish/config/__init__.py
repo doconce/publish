@@ -73,6 +73,7 @@ def init():
     data["require_page_range"]       = general.require_page_range
     data["page_separator"]           = general.page_separator
     data["html_class_prefix"]        = general.html_class_prefix
+    data["html_add_internal_links"]  = general.html_add_internal_links
     data["global_numbering"]         = general.global_numbering
 
     # Import parameters from capitalization
