@@ -5,7 +5,8 @@ __date__ = "2008-10-23 -- 2008-10-29"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
-journals = [("ACM Trans. Math. Software", "ACM Transactions on Mathematical Software", "0098-3500"),
+journals = [("none", "none", "xxxx-xxxx"),
+            ("ACM Trans. Math. Software", "ACM Transactions on Mathematical Software", "0098-3500"),
             ("ACM Comput. Surv.", "ACM Computing Surveys", "0360-0300"),
             ("ACM SIGSOFT Software Engineering Notes", "ACM SIGSOFT Software Engineering Notes", "01635848"),
             ("ACM Trans. Multimed. Comput. Comm. Appl.", "ACM Transactions on Multimedia Computing, Communications, and Applications", "1551-6857"),

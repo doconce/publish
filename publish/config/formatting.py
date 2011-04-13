@@ -36,12 +36,12 @@ def latex_format_articles(paper):
     # pages
     if paper.has_key("pages") :
         text.append(", pp. %s" %  paper["pages"])
-    
+
     # year
     text.append(", %s." % paper["year"])
 
     return "".join(text)
-                       
+
 def latex_format_books(paper):
     "Return string for book in LaTeX format"
     values = []
@@ -120,10 +120,10 @@ def latex_format_proceedings(paper):
 def latex_format_reports(paper):
     "Return string for report in LaTeX format"
     values = []
-    
+
     # authors
     values.append("%s. " % _latex_format_authors(_latex_get_authors_string(paper["author"])))
-    
+
     # title
     values.append(paper["title"])
 
@@ -143,7 +143,7 @@ def latex_format_manuals(paper):
 
     values.append(paper["title"])
 
-    
+
     if "year" in paper: values += [", %s" % paper["year"]]
     return "".join(values)
 
@@ -178,7 +178,7 @@ def latex_format_courses(paper):
 def latex_format_talks(paper):
     "Return string for talk in LaTeX format"
     values = []
-    
+
     # author
     values.append("%s. " % _latex_format_authors(_latex_get_authors_string(paper["author"])))
 
@@ -229,7 +229,7 @@ latex_format = {"articles"      : latex_format_articles,
 def html_format_articles(paper):
     "Return string for article in HTML format"
     values = []
-    
+
     # Title
     values.append(_html_format_title(paper))
 
@@ -243,7 +243,7 @@ def html_format_articles(paper):
     if "volume" in paper: values.append('<span class="%s_item_volum">vol. %s</span>' %  (config.get("html_class_prefix"), paper["volume"]))
 
     # Pages
-    if "pages" in paper: values.append('<span class="%s_item_pages">pp. %s</span>' % (config.get("html_class_prefix"), 
+    if "pages" in paper: values.append('<span class="%s_item_pages">pp. %s</span>' % (config.get("html_class_prefix"),
                                                                                       _html_format_pages(paper["pages"])))
 
     # Year
@@ -484,6 +484,9 @@ def _format_venue(venue, paper, add_in=False):
     elif status == "accepted":
         return "Accepted for publication in " + venue
     elif status == "submitted":
-        return "Submitted to " + venue
+        if venue == "none":
+            return "Submitted to journal for publication"
+        else:
+            return "Submitted to " + venue
     else:
         return "(%s)" % str(status)
