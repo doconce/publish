@@ -477,10 +477,6 @@ def _format_venue(formatted_venue, venue, paper, add_in=False):
     elif status == "accepted":
         return "Accepted for publication in " + formatted_venue
     elif status == "submitted":
-
-        print "Yo!"
-        print ":%s:" % venue
-
         if venue == "none":
             return "Submitted to journal for publication"
         else:
