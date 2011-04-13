@@ -6,7 +6,7 @@ __copyright__ = "Copyright (C) 2008-2009 Anna Logg"
 __license__   = "GNU GPL version 3 or any later version"
 
 # Modified by Anders Logg, 2009.
-# Modified by Benjamin Kehlet 2010-2011
+# Modified by Benjamin Kehlet, 2010-2011.
 
 from publish.common import short_author
 from attributes import category_attributes, thesistype_strings
@@ -24,8 +24,8 @@ def latex_format_articles(paper):
     text.append("%s.\n" % paper["title"])
 
     # journal
-    paper_in_italic = "\\textit{%s}" % paper["journal"]
-    text.append("%s" % _format_venue(paper_in_italic, paper))
+    journal_in_italic = "\\textit{%s}" % paper["journal"]
+    text.append("%s" % _format_venue(journal_in_italic, paper["journal"], paper))
 
     # volume
     if paper.has_key("volume") :
@@ -85,7 +85,7 @@ def latex_format_chapters(paper):
     values.append(paper["title"])
 
     # book title
-    values.append(" %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper, add_in=True))
+    values.append(" %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper["booktitle"], paper, add_in=True))
 
     #editor
     values.append("edited by %s, " % _latex_get_authors_string(paper["editor"]))
@@ -110,7 +110,7 @@ def latex_format_proceedings(paper):
     values.append(paper["title"])
 
     # book title
-    values.append(" %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper, add_in=True))
+    values.append(" %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper["booktitle"], paper, add_in=True))
 
     # year
     values.append(paper["year"])
@@ -237,7 +237,7 @@ def html_format_articles(paper):
     values.append(_html_get_authors_string(paper["author"]))
 
     # Journal
-    values.append('<span class="%s_item_journal">%s</span>' % (config.get("html_class_prefix"), _format_venue(paper["journal"], paper)))
+    values.append('<span class="%s_item_journal">%s</span>' % (config.get("html_class_prefix"), _format_venue(paper["journal"], paper["journal"], paper)))
 
     # Volume
     if "volume" in paper: values.append('<span class="%s_item_volum">vol. %s</span>' %  (config.get("html_class_prefix"), paper["volume"]))
@@ -381,12 +381,9 @@ def _html_format_title(paper):
     else:
         return '<span class="publish_item_title">%s</span>' % title
 
-
-
 def _html_format_editors(authors):
     "Convert editor tuple to author string"
     return '<span class="publish_item_editors">Edited by %s</span>' % _html_get_authors_string(authors)
-
 
 def _html_get_authors_string(authors):
     "Convert author tuple to author string"
@@ -401,8 +398,6 @@ def _html_get_authors_string(authors):
 
     return '<span class="%s_item_authors">%s</span>' % (config.get("html_class_prefix"), str)
 
-
-
 def _html_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"
 
@@ -416,7 +411,6 @@ def _html_format_pages(pages):
     "Format pages"
     if "--" in pages: return pages.replace("_-", "&mdash;")
     else :            return pages.replace("-", "&mdash;")
-
 
 def _html_join(values):
     "Join values for HTML entry"
@@ -447,7 +441,6 @@ def _latex_mark_author(author, text) :
   else :
     return text
 
-
 def _latex_format_authors(author_string) :
   if config.has_key("use_textsc") and config.get("use_textsc") :
     return "\\textsc{%s}" % author_string
@@ -473,20 +466,24 @@ def _latex_format_pages(pages):
     if "--" in pages: return pages
     return pages.replace("-", "--")
 
-def _format_venue(venue, paper, add_in=False):
+def _format_venue(formatted_venue, venue, paper, add_in=False):
     "Format venue"
     status = paper["status"]
     if status == "published":
         if add_in :
-            return "In " + venue
+            return "In " + formatted_venue
         else :
-            return venue
+            return formatted_venue
     elif status == "accepted":
-        return "Accepted for publication in " + venue
+        return "Accepted for publication in " + formatted_venue
     elif status == "submitted":
+
+        print "Yo!"
+        print ":%s:" % venue
+
         if venue == "none":
             return "Submitted to journal for publication"
         else:
-            return "Submitted to " + venue
+            return "Submitted to " + formatted_venue
     else:
         return "(%s)" % str(status)

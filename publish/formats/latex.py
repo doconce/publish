@@ -53,7 +53,7 @@ def write(papers, sort_func=None):
             else:
                 key = "paper%d" % current_paper
 
-            entry_text =  latex_format[category](paper)
+            entry_text = latex_format[category](paper)
 
             # Write each paper as bibitem
             if compact:
