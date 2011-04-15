@@ -14,11 +14,12 @@
    year:      2011
    status:    preparation
    key:       narayanan2011
-** A posteriori error estimates for fluid-structure interaction problems
-   author:    K. Selim, H. Narayanan, A. Logg, M. G. Larson
+** An adaptive finite element method for fluid-structure interaction
+   author:    K. Selim, A. Logg, H. Narayanan, M. G. Larson
    year:      2011
-   status:    preparation
-   key:       selim2011a
+   status:    submitted
+   preprint:  http://home.simula.no/~harish/files/papers/adaptive-finite-element-method-for-fluid-structure-interaction.pdf
+   key:       selim2011
 ** In silico estimates of the free energy changes in growing, avascular, tumor spheroids
    author:    H. Narayanan, S. N. Verner, K. L. Mills, R. Kemkemer, K. Garikipati
    journal:   Journal of Physics: Condensed Matter
