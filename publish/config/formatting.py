@@ -520,7 +520,7 @@ def rst_format_reports(paper):
     values += [_rst_get_authors_string(paper)]
     values += [_rst_format_title(paper)]
     values += [paper["institution"]]
-    values += [paper["year"]]
+    values += [paper["number"]]
     return _rst_join(values)
 
 def rst_format_manuals(paper):
