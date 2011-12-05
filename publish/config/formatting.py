@@ -473,48 +473,44 @@ def rst_format_articles(paper):
 def rst_format_books(paper):
     "Return string for book in reSt format"
     values = []
-    values += [_rst_format_title(paper)]
     values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
     values += [paper["publisher"]]
-    values += [paper["year"]]
     return _rst_join(values)
 
 def rst_format_edited(paper):
     "Return string for edited book in reSt format"
     values = []
-    values += [_rst_format_title(paper)]
     values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
     values += [paper["publisher"]]
-    values += [paper["year"]]
     return _rst_join(values)
 
 def rst_format_chapters(paper):
     "Return string for chapter in reSt format"
     values = []
-    values += [_rst_format_title(paper)]
     values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
     values += [paper["booktitle"]]
-    values += [_rst_format_editors(paper)]
+    #values += [_rst_format_editors(paper)]
     values += [paper["publisher"]]
-    if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
+    if "chapter" in paper: values += ["Chapter %s" % paper["chapter"]]
     if "pages" in paper: values += ["pp. %s" % _rst_format_pages(paper["pages"])]
-    values += [paper["year"]]
     return _rst_join(values)
 
 def rst_format_proceedings(paper):
     "Return string for proceeding in reSt format"
     values = []
-    values += [_rst_format_title(paper)]
     values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
     values += [paper["booktitle"]]
-    values += [paper["year"]]
     return _rst_join(values)
 
 def rst_format_reports(paper):
     "Return string for report in reSt format"
     values = []
-    values += [_rst_format_title(paper)]
     values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
     values += [paper["institution"]]
     values += [paper["year"]]
     return _rst_join(values)
@@ -522,16 +518,16 @@ def rst_format_reports(paper):
 def rst_format_manuals(paper):
     "Return string for manual in reSt format"
     values = []
-    values += [_rst_format_title(paper)]
     values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
     if "year" in paper: values += [paper["year"]]
     return _rst_join(values)
 
 def rst_format_theses(paper):
     "Return string for thesis in reSt format"
     values = []
-    values += [_rst_format_title(paper)]
     values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
     values += [thesistype_strings[paper["thesistype"]]]
     values += [paper["school"]]
     values += [paper["year"]]
@@ -540,8 +536,8 @@ def rst_format_theses(paper):
 def rst_format_courses(paper):
     "Return string for course in reSt format"
     values = []
-    values += [_rst_format_title(paper)]
     values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
     values += [paper["institution"]]
     values += [paper["year"]]
     return _rst_join(values)
@@ -549,8 +545,8 @@ def rst_format_courses(paper):
 def rst_format_talks(paper):
     "Return string for talk in reSt format"
     values = []
-    values += [_rst_format_title(paper)]
     values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
     values += [paper["meeting"]]
     values += [paper["year"]]
     return _rst_join(values)
@@ -558,8 +554,8 @@ def rst_format_talks(paper):
 def rst_format_misc(paper):
     "Return string for misc in reSt format"
     values = []
-    values += [_rst_format_title(paper)]
     values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
     if "howpublished" in paper:
         howpublished = paper["howpublished"]
         values += [howpublished]
@@ -567,7 +563,7 @@ def rst_format_misc(paper):
     if "meeting" in paper: values += [paper["meeting"]]
     if "thesistype" in paper: values += [thesistype_strings[paper["thesistype"]]]
     if "school" in paper: values += [paper["school"]]
-    if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
+    if "chapter" in paper: values += ["Chapter %s" % paper["chapter"]]
     if "volume" in paper: values += ["vol. %s" % paper["volume"]]
     if "pages" in paper: values += ["pp. %s" % _rst_format_pages(paper["pages"])]
     if "year" in paper: values.append(paper["year"])

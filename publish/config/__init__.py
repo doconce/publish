@@ -5,7 +5,8 @@ __date__ = "2008-11-09 -- 2009-07-31"
 __copyright__ = "Copyright (C) 2008-2009 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
-# Modified by Anders Logg, 2009.
+# Modified by Anders Logg 2009-2011
+# Last modified: 2011-12-05
 
 from os.path import isfile
 import __builtin__
@@ -92,6 +93,7 @@ def init():
     data["category_headings"]    = attributes.category_headings
     data["category_attributes"]  = attributes.category_attributes
     data["category_venues"]      = attributes.category_venues
+    data["ordered_attributes"]   = attributes.ordered_attributes
     data["entrytypes"]           = attributes.entrytypes
     data["entrytype_attributes"] = attributes.entrytype_attributes
     data["entrytype2category"]   = attributes.entrytype2category

@@ -5,6 +5,9 @@ __date__ = "2008-10-28 -- 2008-11-03"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
+# Modified by Anders Logg 2011
+# Last modified: 2011-12-05
+
 # Categories
 categories = ("articles",
               "books",
@@ -45,7 +48,7 @@ category_attributes = {"articles":       ("author", "title", "journal", "year", 
                        "theses":         ("author", "title", "school", "year", "thesistype", "status"),
                        "courses":        ("author", "title", "code", "institution", "year", "status"),
                        "talks":          ("author", "title", "meeting", "year", "status"),
-                       "misc":           ("author", "title", "status")}                  
+                       "misc":           ("author", "title", "status")}
 
 # Venues for categories (will be matched against a list of allowed values)
 category_venues = {"articles":       "journal",
@@ -60,6 +63,27 @@ category_venues = {"articles":       "journal",
                    "courses":        "institution",
                    "talks":          "meeting",
                    "misc":           None}
+
+# List of ordered attributes (so we rewrite pub files in a fixed order)
+ordered_attributes = ("title",
+                      "key",
+                      "author", "editor",
+                      "year",
+                      "journal", "booktitle", "institution",
+                      "publisher",
+                      "volume",
+                      "number",
+                      "pages",
+                      "num_pages",
+                      "doi",
+                      "arxiv",
+                      "pdf",
+                      "url",
+                      "status",
+                      "duplicate",
+                      "tags",
+                      "private",
+                      "fixme")
 
 # Entry types (BibTeX)
 entrytypes = ("article",
@@ -99,7 +123,7 @@ entrytype2category = {"article":          "articles",
                       "book proceedings": "edited",
                       "inbook":           "chapters",
                       "inproceedings":    "proceedings",
-                      "conference":       "proceedings", 
+                      "conference":       "proceedings",
                       "techreport":       "reports",
                       "manual":           "manuals",
                       "phdthesis":        None,            # special case: theses

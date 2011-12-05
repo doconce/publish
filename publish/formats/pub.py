@@ -50,7 +50,7 @@ def read(text):
             # Check that the category has been specified
             if category is None:
                 raise RuntimeError, "Found paper but category has not been specified."
-            
+
             # Extract title
             groups = match.groups()
             title = groups[0]
@@ -62,9 +62,9 @@ def read(text):
                     paper["author"] = _extract_authors(paper, "author")
                 if "editor" in paper:
                     paper["editor"] = _extract_authors(paper, "editor")
-                    
+
                 papers.append(paper)
-            
+
             # Reset paper
             paper = {"title": title, "category": category}
 
@@ -109,13 +109,13 @@ def write(papers):
         category_papers = [paper for paper in papers if paper["category"] == category]
         if len(category_papers) == 0:
             continue
-        
-        # Write category        
+
+        # Write category
         text += "* %s\n" % category
 
         # Iterate over papers in category
         for paper in category_papers:
-            
+
             # Write title
             if "title" in paper:
                 title = paper["title"]
@@ -125,7 +125,7 @@ def write(papers):
 
             # Write attributes
             text += write_paper(paper, ["category", "title"] + _ignores)
-          
+
     return text
 
 def write_paper(paper, ignores=[]):
@@ -135,25 +135,21 @@ def write_paper(paper, ignores=[]):
 
     # Extract which attributes to write (first required, then others)
     attributes = []
-    category_attributes = config.get("category_attributes")
+    ordered_attributes = config.get("ordered_attributes")
     category = paper["category"]
-    for attribute in category_attributes[category]:
-        if isinstance(attribute, tuple):
-            for a in attribute:
-                if a in paper:
-                    attributes.append(a)
-        elif not attribute in ignores:
+    for attribute in ordered_attributes:
+        if attribute in paper and not attribute in ignores:
             attributes.append(attribute)
     for attribute in paper:
         if not attribute in attributes and not attribute in ignores:
             attributes.append(attribute)
-            
+
     # Make correct indentation for each attribute-value pair
     max_attr = max([len(attribute) for attribute in attributes])
-    
+
     # Write attribute-value pairs
     for attribute in attributes:
-                
+
         # Compute indendation
         indentation = " " * (max_attr - len(attribute))
 
@@ -166,7 +162,7 @@ def write_paper(paper, ignores=[]):
             value = ", ".join(paper["editor"])
         else:
             value = str(paper[attribute])
-                                    
+
         # Write attribute-value pair
         text += "   %s: %s%s\n" % (attribute, indentation, value)
 
@@ -196,7 +192,7 @@ def write_diff(paper0, paper1):
 
     # Mark differences for second paper
     for line in s1.split("\n"):
-        if not ":" in line: continue  
+        if not ":" in line: continue
         attribute = line.split(":")[0].strip()
         if attribute in paper0 and paper0[attribute] == paper1[attribute]:
             text += "    " + line.strip() + "\n"
@@ -225,7 +221,7 @@ def _extract_authors(paper, attribute):
             elif len(word) > 1:
                 new_words.append(word)
         name = " ".join(new_words)
-    
-        authors.append(name)        
+
+        authors.append(name)
 
     return tuple(authors)
