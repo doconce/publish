@@ -12,6 +12,10 @@ from publish.common import short_author
 from attributes import category_attributes, thesistype_strings
 from publish import config
 
+#------------------------------------------------------------------------------
+# LaTeX formatting
+#------------------------------------------------------------------------------
+
 def latex_format_articles(paper):
     "Return string for article in LaTeX format"
 
@@ -226,6 +230,10 @@ latex_format = {"articles"      : latex_format_articles,
                 "talks"         : latex_format_talks,
                 "misc"          : latex_format_misc}
 
+#------------------------------------------------------------------------------
+# HTML formatting
+#------------------------------------------------------------------------------
+
 def html_format_articles(paper):
     "Return string for article in HTML format"
     values = []
@@ -409,7 +417,7 @@ def _html_mark_author(author, text) :
 
 def _html_format_pages(pages):
     "Format pages"
-    if "--" in pages: return pages.replace("_-", "&mdash;")
+    if "--" in pages: return pages.replace("--", "&mdash;")
     else :            return pages.replace("-", "&mdash;")
 
 def _html_join(values):
@@ -431,6 +439,203 @@ html_format = {"articles"      : html_format_articles,
                "courses"       : html_format_courses,
                "talks"         : html_format_talks,
                "misc"          : html_format_misc}
+
+#------------------------------------------------------------------------------
+# reSt formatting
+#------------------------------------------------------------------------------
+
+def rst_format_articles(paper):
+    "Return string for article in reSt format"
+    values = []
+
+    # Author
+    values.append(_rst_get_authors_string(paper))
+
+    # Title
+    values.append(_rst_format_title(paper))
+
+    # Journal
+    values.append(_format_venue(paper["journal"], paper["journal"], paper))
+
+    # Volume
+    if "volume" in paper:
+        vol = paper["volume"]
+        if paper.has_key("number") :
+            vol += "(%s)" % paper["number"]
+        values.append(vol)
+
+    # Pages
+    if "pages" in paper:
+        values.append(_rst_format_pages(paper["pages"]))
+
+    return _rst_join(values)
+
+def rst_format_books(paper):
+    "Return string for book in reSt format"
+    values = []
+    values += [_rst_format_title(paper)]
+    values += [_rst_get_authors_string(paper)]
+    values += [paper["publisher"]]
+    values += [paper["year"]]
+    return _rst_join(values)
+
+def rst_format_edited(paper):
+    "Return string for edited book in reSt format"
+    values = []
+    values += [_rst_format_title(paper)]
+    values += [_rst_get_authors_string(paper)]
+    values += [paper["publisher"]]
+    values += [paper["year"]]
+    return _rst_join(values)
+
+def rst_format_chapters(paper):
+    "Return string for chapter in reSt format"
+    values = []
+    values += [_rst_format_title(paper)]
+    values += [_rst_get_authors_string(paper)]
+    values += [paper["booktitle"]]
+    values += [_rst_format_editors(paper)]
+    values += [paper["publisher"]]
+    if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
+    if "pages" in paper: values += ["pp. %s" % _rst_format_pages(paper["pages"])]
+    values += [paper["year"]]
+    return _rst_join(values)
+
+def rst_format_proceedings(paper):
+    "Return string for proceeding in reSt format"
+    values = []
+    values += [_rst_format_title(paper)]
+    values += [_rst_get_authors_string(paper)]
+    values += [paper["booktitle"]]
+    values += [paper["year"]]
+    return _rst_join(values)
+
+def rst_format_reports(paper):
+    "Return string for report in reSt format"
+    values = []
+    values += [_rst_format_title(paper)]
+    values += [_rst_get_authors_string(paper)]
+    values += [paper["institution"]]
+    values += [paper["year"]]
+    return _rst_join(values)
+
+def rst_format_manuals(paper):
+    "Return string for manual in reSt format"
+    values = []
+    values += [_rst_format_title(paper)]
+    values += [_rst_get_authors_string(paper)]
+    if "year" in paper: values += [paper["year"]]
+    return _rst_join(values)
+
+def rst_format_theses(paper):
+    "Return string for thesis in reSt format"
+    values = []
+    values += [_rst_format_title(paper)]
+    values += [_rst_get_authors_string(paper)]
+    values += [thesistype_strings[paper["thesistype"]]]
+    values += [paper["school"]]
+    values += [paper["year"]]
+    return _rst_join(values)
+
+def rst_format_courses(paper):
+    "Return string for course in reSt format"
+    values = []
+    values += [_rst_format_title(paper)]
+    values += [_rst_get_authors_string(paper)]
+    values += [paper["institution"]]
+    values += [paper["year"]]
+    return _rst_join(values)
+
+def rst_format_talks(paper):
+    "Return string for talk in reSt format"
+    values = []
+    values += [_rst_format_title(paper)]
+    values += [_rst_get_authors_string(paper)]
+    values += [paper["meeting"]]
+    values += [paper["year"]]
+    return _rst_join(values)
+
+def rst_format_misc(paper):
+    "Return string for misc in reSt format"
+    values = []
+    values += [_rst_format_title(paper)]
+    values += [_rst_get_authors_string(paper)]
+    if "howpublished" in paper:
+        howpublished = paper["howpublished"]
+        values += [howpublished]
+    if "booktitle" in paper: values += ["in *%s*" % paper["booktitle"]]
+    if "meeting" in paper: values += [paper["meeting"]]
+    if "thesistype" in paper: values += [thesistype_strings[paper["thesistype"]]]
+    if "school" in paper: values += [paper["school"]]
+    if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
+    if "volume" in paper: values += ["vol. %s" % paper["volume"]]
+    if "pages" in paper: values += ["pp. %s" % _rst_format_pages(paper["pages"])]
+    if "year" in paper: values.append(paper["year"])
+    return _rst_join(values)
+
+def _rst_format_title(paper):
+    "Format title for reSt, with or without link to PDF file"
+    if paper["category"] == "courses":
+        title = "%s (%s)" % (paper["title"], paper["code"])
+    else:
+        title = paper["title"]
+    return "*%s*" % title
+
+def _rst_format_editors(paper):
+    "Convert editor tuple to author string"
+    return "Edited by %s" % _rst_get_authors_string(paper)
+
+def _rst_get_authors_string(paper):
+    "Convert author tuple to author string"
+    authors = paper["author"]
+    authors = [_rst_mark_author(author, short_author(author).strip()) \
+                   for author in authors]
+    if len(authors) == 1:
+        str = authors[0]
+    else :
+        if authors[-1] == "others":
+            str =  ", ".join(authors[:-1]) + " et al."
+        else:
+            str = ", ".join(authors[:-1]) + " and " + authors[-1]
+    str = "**%s (%s)**" % (str, paper["year"])
+    return str
+
+def _rst_mark_author(author, text) :
+  "Mark the text with bold face if author is in the list of marked authors"
+  if config.has_key("mark_author") and author.strip() in config.get("mark_author") :
+    return "**%s**" % text
+  else:
+    return text
+
+def _rst_format_pages(pages):
+    "Format pages"
+    if "--" in pages:
+        pages = pages.replace("--", "-")
+    return "pp. %s" % pages
+
+def _rst_join(values):
+    "Join values for reSt entry"
+    entry = "* " + values[0] + ".\n  " + ",\n  ".join(values[1:]) + "." + "\n"
+    entry = entry.replace("{", "")
+    entry = entry.replace("}", "")
+    return entry
+
+rst_format = {"articles"      : rst_format_articles,
+              "books"         : rst_format_books,
+              "edited"        : rst_format_edited,
+              "chapters"      : rst_format_chapters,
+              "proceedings"   : rst_format_proceedings,
+              "refproceedings": rst_format_proceedings,
+              "reports"       : rst_format_reports,
+              "manuals"       : rst_format_manuals,
+              "theses"        : rst_format_theses,
+              "courses"       : rst_format_courses,
+              "talks"         : rst_format_talks,
+              "misc"          : rst_format_misc}
+
+#------------------------------------------------------------------------------
+# Utility functions
+#------------------------------------------------------------------------------
 
 def _latex_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"

@@ -75,6 +75,7 @@ def init():
     data["html_class_prefix"]        = general.html_class_prefix
     data["html_add_internal_links"]  = general.html_add_internal_links
     data["global_numbering"]         = general.global_numbering
+    data["skip_categories"]          = general.skip_categories
 
     # Import parameters from capitalization
     import capitalization
@@ -100,6 +101,7 @@ def init():
     import formatting
     data["latex_format"] = formatting.latex_format
     data["html_format"] = formatting.html_format
+    data["rst_format"] = formatting.rst_format
     data["mark_author"] = __builtin__.set()
     data["use_textsc"]  = True
 

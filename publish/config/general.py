@@ -37,3 +37,8 @@ html_add_internal_links = False
 # or start over for each category
 # NOTE: Not fully implemented for all report types.
 global_numbering = False
+
+# Control whether output should contain categories or just be a list
+# NOTE: Not fully implemented for all report types.
+skip_categories = False
+

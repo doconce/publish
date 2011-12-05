@@ -1,8 +1,8 @@
-"This module implements output for HTML."
+"This module implements output for reStructuredText."
 
 __author__ = "Anders Logg <logg@simula.no>"
-__date__ = "2009-07-31 -- 2009-08-18"
-__copyright__ = "Copyright (C) 2009 Anders Logg"
+__date__ = "2011-12-05 -- 2011-12-05"
+__copyright__ = "Copyright (C) 2011 Anders Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
 from publish import config
@@ -17,43 +17,24 @@ def write(papers, sort_func=None):
     # Assume unique names
     categories = config.get("categories")
     category_headings = config.get("category_headings")
+    skip_categories = config.get("skip_categories")
 
     # Get formatting rule
-    html_format = config.get("html_format")
+    rst_format = config.get("rst_format")
 
     # Get PDF directory
     pdf_dir = config.get("pdf_dir")
 
     # Iterate over categories
     current_paper = 0
-    for category in categories:
+    if skip_categories:
 
-        # Extract papers in category
-        category_papers = [paper for paper in papers if paper["category"] == category]
-        if len(category_papers) == 0:
-            continue
-
-        # Sort the list
-        if sort_func is not None :
-          category_papers.sort(sort_func)
-
-        # Add internal links to each category
-        if config.get("html_add_internal_links") :
-            prefix += "<p><a href=\"#%s_id_%s\">%s</a></p>\n" % (config.get("html_class_prefix"),
-                                                                 category,
-                                                                 category_headings[category])
-
-        # Write category
-        text += '<h2 id="%s_id_%s">%s</h2>\n\n' % ( config.get("html_class_prefix"),
-                                                    category,
-                                                    category_headings[category])
-        text += "<ol class=\"%s_list\">\n\n" %  config.get("html_class_prefix")
-
-        # Iterate over papers in category
-        for paper in category_papers:
+        # Iterate over papers
+        for paper in papers:
 
             # Format paper entry
-            paper_entry = html_format[category](paper)
+            category = paper["category"]
+            paper_entry = rst_format[category](paper)
 
             # Filter entry from special characters
             paper_entry = _filter(paper_entry)
@@ -62,12 +43,43 @@ def write(papers, sort_func=None):
             paper_entry = paper_entry.replace("papers/", pdf_dir + "/")
 
             # Write entry for paper
-            text += "<li class=\"publish_item\">\n" + paper_entry + "</li>\n"
+            text += paper_entry + "\n"
 
-        # Write end of list
-        text += "</ol>\n"
+    else:
 
-    return prefix+"\n\n"+text
+        # Iterate over categories
+        for category in categories:
+
+            # Extract papers in category
+            category_papers = [paper for paper in papers if paper["category"] == category]
+            if len(category_papers) == 0:
+                continue
+
+            # Sort the list
+            if sort_func is not None :
+                category_papers.sort(sort_func)
+
+            # Write category
+            heading = category_headings[category]
+            text += "%s\n" % heading
+            text += "="*len(heading) + "\n\n"
+
+            # Iterate over papers in category
+            for paper in category_papers:
+
+                # Format paper entry
+                paper_entry = rst_format[category](paper)
+
+                # Filter entry from special characters
+                paper_entry = _filter(paper_entry)
+
+                # Set directory to papers (a bit of a hack)
+                paper_entry = paper_entry.replace("papers/", pdf_dir + "/")
+
+                # Write entry for paper
+                text += paper_entry + "\n"
+
+    return text
 
 def _filter(s):
     "Filter string for special characters."

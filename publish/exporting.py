@@ -5,11 +5,13 @@ __date__ = "2008-11-11 -- 2009-08-30"
 __copyright__ = "Copyright (C) 2008-2009 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
-# Modified by Anders Logg, 2009.
+# Last modified: 2011-12-05
+
+# Modified by Anders Logg, 2009-2011.
 
 from publish.importing import read_database
 from publish import config
-from formats import bibtex, latex, pub, pdf, html
+from formats import bibtex, latex, pub, pdf, html, rst
 from validation import validate_papers
 from filtering import filter_papers
 from log import print_summary
@@ -43,6 +45,8 @@ def export_file(filename, filters=[]):
         write = pdf.write
     elif suffix == "html":
         write = html.write
+    elif suffix == "rst":
+        write = rst.write
     else:
         raise RuntimeError, "Unknown file format."
 
