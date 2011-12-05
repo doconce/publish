@@ -468,6 +468,14 @@ def rst_format_articles(paper):
     if "pages" in paper:
         values.append(_rst_format_pages(paper["pages"]))
 
+    # DOI
+    if "doi" in paper:
+        values.append(_rst_format_doi(paper["doi"]))
+
+    # arXiv
+    if "arxiv" in paper:
+        values.append(_rst_format_arxiv(paper["arxiv"]))
+
     return _rst_join(values)
 
 def rst_format_books(paper):
@@ -608,6 +616,14 @@ def _rst_format_pages(pages):
     if "--" in pages:
         pages = pages.replace("--", "-")
     return "pp. %s" % pages
+
+def _rst_format_doi(doi):
+    "Format DOI"
+    return "[`doi:%s <http://dx.doi.org/%s>`_]" % (doi, doi)
+
+def _rst_format_arxiv(arxiv):
+    "Format arXiv"
+    return "[`arXiv:%s <http://arxiv.org/abs/%s>`_]" % (arxiv, arxiv)
 
 def _rst_join(values):
     "Join values for reSt entry"
