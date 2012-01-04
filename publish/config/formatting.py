@@ -114,7 +114,7 @@ def latex_format_proceedings(paper):
     values.append(paper["title"])
 
     # book title
-    values.append(" %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper["booktitle"], paper, add_in=True))
+    values.append(". %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper["booktitle"], paper, add_in=True))
 
     # year
     values.append(paper["year"])
