@@ -5,8 +5,8 @@ __date__ = "2008-11-09 -- 2009-07-31"
 __copyright__ = "Copyright (C) 2008-2009 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
-# Modified by Anders Logg 2009-2011
-# Last modified: 2011-12-05
+# Modified by Anders Logg 2009-2012
+# Last modified: 2012-01-04
 
 from os.path import isfile
 import __builtin__
@@ -70,6 +70,7 @@ def init():
     data["view_pdf"]                 = general.view_pdf
     data["pdf_dir"]                  = general.pdf_dir
     data["headline"]                 = general.headline
+    data["repeat_headline"]          = general.repeat_headline
     data["compact"]                  = general.compact
     data["require_page_range"]       = general.require_page_range
     data["page_separator"]           = general.page_separator

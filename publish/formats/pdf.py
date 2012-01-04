@@ -5,6 +5,9 @@ __date__ = "2008-11-25 -- 2008-11-25"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
+# Modified by Anders Logg 2011
+# Last changed: 2012-01-04
+
 from tempfile import mkstemp
 from os import system
 
@@ -19,7 +22,7 @@ def write(papers, sort_func=None):
     latex_text += "\\documentclass[12pt]{article}\n"
     latex_text += "\\usepackage{textcomp}\n"
 
-    # Because of some font issues in latex, we need to include 
+    # Because of some font issues in latex, we need to include
     # this package if we are going to nest \textbf and and \textsc
     # \textbf is only used if we are going to mark specific authors
     if config.get("use_textsc") and len(config.get("mark_author")) > 0 :
@@ -27,13 +30,17 @@ def write(papers, sort_func=None):
     latex_text += "\\usepackage{url}\n"
     latex_text += "\\begin{document}\n"
 
-    # Write headline
+    # Get headline
     headline = config.get("headline")
-    if headline == "":
-        headline = "Publications"
+    if headline == "": headline = "Publications"
 
-
-    latex_text+= "\\renewcommand \\refname{%s}\n\n" % headline
+    # Write headline
+    repeat_headline = config.get("repeat_headline")
+    if repeat_headline:
+        latex_text += "\\renewcommand \\refname{%s}\n\n" % headline
+    else:
+        latex_text += "\\renewcommand \\refname{}\n\n"
+        latex_text += "\\section*{%s}\n\n" % headline
 
     # LaTeX output
     latex_text += latex.write(papers, sort_func)
@@ -52,16 +59,16 @@ def write(papers, sort_func=None):
 
     # FIXME: Specifying /tmp is platform-specific
     # FIXME: Remove temporary files
-    
+
     # Run pdflatex on LaTeX file
     system("pdflatex -output-directory /tmp %s" % latex_filename)
-    
+
     # Read PDF file
     try:
-        pdf_filename = ".".join(latex_filename.split(".")[:-1]) + ".pdf"    
+        pdf_filename = ".".join(latex_filename.split(".")[:-1]) + ".pdf"
         pdf_file = open(pdf_filename, "r")
         pdf_text = pdf_file.read()
-        pdf_file.close()        
+        pdf_file.close()
     except:
         raise RuntimeError, "Unable to read generated PDF output."
 

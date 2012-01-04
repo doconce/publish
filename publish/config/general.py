@@ -5,7 +5,9 @@ __date__      = "2008-11-01 -- 2008-12-12"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__   = "GNU GPL version 3 or any later version"
 
-# Modified by Benjamin Kehlet, 2011
+# Modified by Benjamin Kehlet 2011
+# Modified by Anders Logg 2011
+# Last changed: 2012-01-04
 
 database_filename       = "papers.pub"
 local_venues_filename   = "venues.list"
@@ -22,6 +24,7 @@ view_pdf = True
 pdf_dir = "papers"
 
 headline = ""
+repeat_headline = False
 
 compact = False
 
