@@ -6,7 +6,7 @@ __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
 # Modified by Anders Logg 2011
-# Last changed: 2012-01-04
+# Last changed: 2012-01-05
 
 from tempfile import mkstemp
 from os import system
@@ -39,7 +39,7 @@ def write(papers, sort_func=None):
     if repeat_headline:
         latex_text += "\\renewcommand \\refname{%s}\n\n" % headline
     else:
-        latex_text += "\\renewcommand \\refname{}\n\n"
+        latex_text += "\\renewcommand \\refname{\\vspace{-0.7cm}}\n\n"
         latex_text += "\\section*{%s}\n\n" % headline
 
     # LaTeX output
