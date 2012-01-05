@@ -89,7 +89,7 @@ def latex_format_chapters(paper):
     values.append(paper["title"])
 
     # book title
-    values.append(" %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper["booktitle"], paper, add_in=True))
+    values.append(". %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper["booktitle"], paper, add_in=True))
 
     #editor
     values.append("edited by %s, " % _latex_get_authors_string(paper["editor"]))
