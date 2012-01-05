@@ -6,7 +6,7 @@ __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
 # Words that should not be capitalized
-lowercase = ["a", "an", "and", "at", "for", "in", "of", "on", "the", "to"]
+lowercase = ["a", "an", "and", "at", "for", "in", "of", "on", "the", "to", "by"]
 
 # Words that should be capitalized
 uppercase = {"python": "{P}ython",
