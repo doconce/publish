@@ -5,24 +5,28 @@ __date__      = "2008-10-05 -- 2008-11-11"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__   = "GNU GPL version 3 or any later version"
 
-# Modified by Benjamin Kehlet
+# Modified by Benjamin Kehlet 2011
+# Modified by Anders Logg 2012
+# Last changed: 2012-01-30
 
 import re
 
-from publish.common import pstr
+from publish.common import pstr, ordered_attributes
 from publish import config
 from publish.exceptions import ParseException
 
-
 # Pattern used for extracting the BibTeX-fields
 _entry_list = "|".join([entry_type for entry_type in config.get("entrytype_attributes")])
-_entry_pattern = re.compile('^(%s)\s*{' % _entry_list, re.IGNORECASE) 
+_entry_pattern = re.compile('^(%s)\s*{' % _entry_list, re.IGNORECASE)
 
 # Pattern used for extracting everything before and after the "="-sign
 #_block_pattern = re.compile('\s*(.*?)\s*=\s*{(.*?)}\s*,')
 
 # Pattern used for extracting attribute
 _attribute_pattern = re.compile('\s*,*(.*?)\s*=\s*')
+
+# Attributes to ignore
+_ignores = ["invalid", "pdf", "status", "category"]
 
 def read(text):
     text = text.strip()
@@ -56,10 +60,10 @@ def read(text):
 
         # Make sure every entry-type is written in lower-case letters
         current_paper["entrytype"] = match.group(1).lower()
-            
+
         position += len(current_paper["entrytype"])
         position = _skip_spaces(position, text)
-        
+
         if not text[position] == "{" :
             raise ParseException, "Bibtex parse error. Expected '{' after entrytype.\n%s" % _get_line(position, text)
 
@@ -69,7 +73,7 @@ def read(text):
         index = text[position:].find(",")
 
         current_paper["key"] = text[position:position+index].strip()
-        
+
         # skip through the key and the following ','
         position += index+1
         position = _skip_spaces(position, text)
@@ -81,7 +85,7 @@ def read(text):
 
             if current_paper.has_key(attr_key) :
                 raise ParseException, "Paper with key '%s' has double declared attribute: '%s'" % (current_paper["key"], attr_key)
-            
+
             current_paper[attr_key] = attr_value
 
             if text[position] != "," and text[position] != "}" :
@@ -92,14 +96,14 @@ def read(text):
                 position += 1
                 position = _skip_spaces(position, text)
 
-            # Note that a comma is allowed after the last attribute            
+            # Note that a comma is allowed after the last attribute
             if text[position] == "}" :
                 break
 
 
         position += 1
         position = _skip_spaces(position, text)
-        
+
         # Done with parsing the paper. Now validate the collected data
 
         # Check that paper has all required attributes
@@ -123,23 +127,23 @@ def read(text):
 
 def _parse_attribute(position, text) :
     eq_pos = text[position:].find("=")
-    
+
     if eq_pos < 1 :
       raise ParseException, "Bibtex parse error, expected attribute=value near '%s'" % _get_line(position, text)
 
     key = text[position:position+eq_pos].strip()
 
     position += eq_pos+1
-    
+
     position, value = _parse_attribute_value(position, text)
     return (position, key, value)
 
 def _parse_attribute_value(position, text) :
     position = _skip_spaces(position, text)
-    
+
     if not text[position] == "{" :
         raise ParseException, "Expected '{' near '%s'" % _get_line(position, text)
-    
+
     position += 1
 
     # Look for the end point, by counting the braces
@@ -159,11 +163,11 @@ def _parse_attribute_value(position, text) :
             break
 
     return (end+1, text[position:end].strip())
-    
-        
+
+
 def write(papers):
     "Format the given list of papers in the BibTeX format."
-    
+
     text = ""
 
     for (i, paper) in enumerate(papers):
@@ -173,7 +177,7 @@ def write(papers):
         else:
             key = "paper%d" % i
         text += "@%s{%s,\n" % (entry_type, key)
-        for attribute in paper:
+        for attribute in ordered_attributes(paper, _ignores):
             if attribute in ("entrytype", "key"):
                 continue
             elif attribute == "author":
@@ -182,7 +186,7 @@ def write(papers):
                 value = " and ".join(paper["editor"])
             else:
                 value = str(paper[attribute])
-            text += "  %s = {%s},\n" % (attribute, value)  
+            text += "  %s = {%s},\n" % (attribute, value)
         text += "}\n"
         if not paper == papers[-1]:
             text += "\n"
@@ -234,7 +238,7 @@ def _check_paper(paper):
     key = paper["key"]
     attributes = config.get("entrytype_attributes")[entry_type]
     for attribute in attributes:
-        # Check if the required field is a tuple and at least one field is used 
+        # Check if the required field is a tuple and at least one field is used
         if isinstance(attribute, tuple):
             if not len([f for f in attribute if f in paper]) >= 1:
                 print '  Missing required attribute(s) "%s" for paper "%s"' % ('"/"'.join(attribute), key)
@@ -270,7 +274,7 @@ def _extract_authors(paper, attribute):
                     raw_input("  Skipping paper, press return to continue.")
             words.reverse()
             name = " ".join([w.strip() for w in words])
-            
+
         # Add missing . for initials and cleanup spaces
         words = name.split(" ")
         new_words = []
@@ -281,8 +285,8 @@ def _extract_authors(paper, attribute):
             elif len(word) > 1:
                 new_words.append(word)
         name = " ".join(new_words)
-            
-        authors.append(name)        
+
+        authors.append(name)
 
     paper[attribute] = tuple(authors)
 

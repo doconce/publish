@@ -5,9 +5,12 @@ __date__ = "2008-10-22 -- 2008-11-11"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
+# Modified by Anders Logg 2012
+# Last changed: 2012-01-30
+
 import re
 
-from publish.common import is_valid
+from publish.common import is_valid, ordered_attributes
 from publish import config
 
 # Pattern used for extracting the pub-categories
@@ -134,15 +137,7 @@ def write_paper(paper, ignores=[]):
     text = ""
 
     # Extract which attributes to write (first required, then others)
-    attributes = []
-    ordered_attributes = config.get("ordered_attributes")
-    category = paper["category"]
-    for attribute in ordered_attributes:
-        if attribute in paper and not attribute in ignores:
-            attributes.append(attribute)
-    for attribute in paper:
-        if not attribute in attributes and not attribute in ignores:
-            attributes.append(attribute)
+    attributes = ordered_attributes(paper, ignores)
 
     # Make correct indentation for each attribute-value pair
     max_attr = max([len(attribute) for attribute in attributes])
