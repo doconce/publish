@@ -4,3 +4,7 @@
   - HTML output
   - Key "private"
   - print command
+  - author file
+
+* Improve handling of duplicated keys. 
+As of now if one imports a database and a particular key is present in both, one should not be allowed to keep both publications.
