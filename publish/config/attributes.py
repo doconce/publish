@@ -20,6 +20,7 @@ categories = ("articles",
               "theses",
               "courses",
               "talks",
+              "posters",
               "misc")
 
 # Headings for categories
@@ -34,6 +35,7 @@ category_headings = {"articles":       "Articles in International Journals",
                      "theses":         "Theses",
                      "courses":        "Courses",
                      "talks":          "Talks",
+                     "posters":        "Posters",
                      "misc":           "Other Publications"}
 
 # Attributes for categories (tuple means at least one of listed attributes required)
@@ -48,6 +50,7 @@ category_attributes = {"articles":       ("author", "title", "journal", "year", 
                        "theses":         ("author", "title", "school", "year", "thesistype", "status"),
                        "courses":        ("author", "title", "code", "institution", "year", "status"),
                        "talks":          ("author", "title", "meeting", "year", "status"),
+                       "posters":        ("author", "title", "meeting", "year", "status"),
                        "misc":           ("author", "title", "status")}
 
 # Venues for categories (will be matched against a list of allowed values)
@@ -62,6 +65,7 @@ category_venues = {"articles":       "journal",
                    "theses":         "school",
                    "courses":        "institution",
                    "talks":          "meeting",
+                   "posters":        "meeting",
                    "misc":           None}
 
 # List of ordered attributes (so we rewrite pub files in a fixed order)

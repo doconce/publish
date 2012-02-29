@@ -6,7 +6,7 @@ __copyright__ = "Copyright (C) 2008-2009 Anna Logg"
 __license__   = "GNU GPL version 3 or any later version"
 
 # Modified by Anders Logg, 2009.
-# Modified by Benjamin Kehlet, 2010-2011.
+# Modified by Benjamin Kehlet, 2010-2012.
 
 from publish.common import short_author
 from attributes import category_attributes, thesistype_strings
@@ -197,6 +197,26 @@ def latex_format_talks(paper):
 
     return "".join(values)
 
+def latex_format_posters(paper):
+    "Return string for poster in LaTeX format"
+    values = []
+
+    # author
+    values.append("%s. " % _latex_format_authors(_latex_get_authors_string(paper["author"])))
+
+    #title
+    values.append(paper["title"])
+
+    # meeting
+    values.append(", %s" % paper["meeting"])
+
+    #year
+    values.append(", %s." % paper["year"])
+
+    return "".join(values)
+
+
+
 def latex_format_misc(paper):
     "Return string for misc in LaTeX format"
     values = []
@@ -228,6 +248,7 @@ latex_format = {"articles"      : latex_format_articles,
                 "theses"        : latex_format_theses,
                 "courses"       : latex_format_courses,
                 "talks"         : latex_format_talks,
+                "posters"       : latex_format_posters,
                 "misc"          : latex_format_misc}
 
 #------------------------------------------------------------------------------
@@ -354,6 +375,17 @@ def html_format_talks(paper):
     values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
 
+def html_format_posters(paper):
+    "Return string for poster in HTML format"
+    values = []
+    values += [_html_format_title(paper)]
+    values += [_html_get_authors_string(paper["author"])]
+    values += ['<span class="%s_item_meeting">%s</span>' % (config.get("html_class_prefix"), paper["meeting"])]
+
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
+    return _html_join(values)
+
+
 def html_format_misc(paper):
     "Return string for misc in HTML format"
     values = []
@@ -438,6 +470,7 @@ html_format = {"articles"      : html_format_articles,
                "theses"        : html_format_theses,
                "courses"       : html_format_courses,
                "talks"         : html_format_talks,
+               "posters"       : html_format_posters,
                "misc"          : html_format_misc}
 
 #------------------------------------------------------------------------------
@@ -559,6 +592,16 @@ def rst_format_talks(paper):
     values += [paper["year"]]
     return _rst_join(values)
 
+def rst_format_posters(paper):
+    "Return string for poster in reSt format"
+    values = []
+    values += [_rst_get_authors_string(paper)]
+    values += [_rst_format_title(paper)]
+    values += [paper["meeting"]]
+    values += [paper["year"]]
+    return _rst_join(values)
+
+
 def rst_format_misc(paper):
     "Return string for misc in reSt format"
     values = []
@@ -643,6 +686,7 @@ rst_format = {"articles"      : rst_format_articles,
               "theses"        : rst_format_theses,
               "courses"       : rst_format_courses,
               "talks"         : rst_format_talks,
+              "posters"       : rst_format_posters,
               "misc"          : rst_format_misc}
 
 #------------------------------------------------------------------------------

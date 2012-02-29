@@ -6,6 +6,7 @@ __copyright__ = "Copyright (C) 2008-2009 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
 # Modified by Anders Logg 2009-2012
+# Modified by Benjamin Kehlet, 2012
 # Last modified: 2012-01-04
 
 from os.path import isfile
