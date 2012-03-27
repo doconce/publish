@@ -517,6 +517,7 @@ def rst_format_books(paper):
     values += [_rst_get_authors_string(paper)]
     values += [_rst_format_title(paper)]
     values += [paper["publisher"]]
+    if "doi" in paper: values.append(_rst_format_doi(paper["doi"]))
     return _rst_join(values)
 
 def rst_format_edited(paper):
