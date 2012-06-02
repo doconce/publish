@@ -6,7 +6,7 @@ __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
 # Modified by Anders Logg 2011
-# Last changed: 2012-01-05
+# Last changed: 2012-06-02
 
 from tempfile import mkstemp
 from os import system
@@ -19,7 +19,7 @@ def write(papers, sort_func=None):
 
     # Start of pdf paper
     latex_text = ""
-    latex_text += "\\documentclass[12pt]{article}\n"
+    latex_text += "\\documentclass[11pt]{article}\n"
     latex_text += "\\usepackage{textcomp}\n"
 
     # Because of some font issues in latex, we need to include

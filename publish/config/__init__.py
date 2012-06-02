@@ -6,8 +6,8 @@ __copyright__ = "Copyright (C) 2008-2009 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
 # Modified by Anders Logg 2009-2012
-# Modified by Benjamin Kehlet, 2012
-# Last modified: 2012-01-04
+# Modified by Benjamin Kehlet 2012
+# Last modified: 2012-06-02
 
 from os.path import isfile
 import __builtin__
@@ -78,6 +78,7 @@ def init():
     data["html_class_prefix"]        = general.html_class_prefix
     data["html_add_internal_links"]  = general.html_add_internal_links
     data["global_numbering"]         = general.global_numbering
+    data["use_labels"]               = general.use_labels
     data["skip_categories"]          = general.skip_categories
 
     # Import parameters from capitalization
@@ -93,6 +94,7 @@ def init():
     import attributes
     data["categories"]           = attributes.categories
     data["category_headings"]    = attributes.category_headings
+    data["category_labels"]      = attributes.category_labels
     data["category_attributes"]  = attributes.category_attributes
     data["category_venues"]      = attributes.category_venues
     data["ordered_attributes"]   = attributes.ordered_attributes

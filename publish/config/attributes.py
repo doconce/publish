@@ -29,7 +29,7 @@ category_headings = {"articles":       "Articles in International Journals",
                      "edited":         "Edited Books",
                      "chapters":       "Chapters in Books",
                      "refproceedings": "Refereed Proceedings",
-                     "proceedings":    "Conference Preceedings",
+                     "proceedings":    "Conference Proceedings",
                      "reports":        "Technical Reports",
                      "manuals":        "Manuals",
                      "theses":         "Theses",
@@ -37,6 +37,21 @@ category_headings = {"articles":       "Articles in International Journals",
                      "talks":          "Talks",
                      "posters":        "Posters",
                      "misc":           "Other Publications"}
+
+# Labels for categories
+category_labels = {"articles":       "J",
+                   "books":          "B",
+                   "edited":         "E",
+                   "chapters":       "C",
+                   "refproceedings": "P",
+                   "proceedings":    "Pc",
+                   "reports":        "R",
+                   "manuals":        "M",
+                   "theses":         "T",
+                   "courses":        "Co",
+                   "talks":          "Ta",
+                   "posters":        "Po",
+                   "misc":           "Mi"}
 
 # Attributes for categories (tuple means at least one of listed attributes required)
 category_attributes = {"articles":       ("author", "title", "journal", "year", "status"),

@@ -7,6 +7,7 @@ __license__  = "GNU GPL version 3 or any later version"
 
 from publish import config
 
+
 def write(papers, sort_func=None):
     "Format the given list of papers in the LaTeX format."
 
@@ -16,6 +17,8 @@ def write(papers, sort_func=None):
     latex_format = config.get("latex_format")
     compact = config.get("compact")
     global_numbering = config.get("global_numbering")
+    use_labels = config.get("use_labels")
+    category_labels = config.get("category_labels")
 
     # Start of LaTeX paper
     if global_numbering and not compact:
@@ -45,7 +48,7 @@ def write(papers, sort_func=None):
             text += "\\begin{thebibliography}{99}\n"
 
         # Iterate over papers in category
-        for paper in category_papers:
+        for (counter, paper) in enumerate(category_papers):
 
             # Get key (or generate key)
             if "key" in paper:
@@ -55,11 +58,17 @@ def write(papers, sort_func=None):
 
             entry_text = latex_format[category](paper)
 
+            # Set bibitem key
+            if use_labels:
+                label = "[%s%d]" % (category_labels[category], counter + 1)
+            else:
+                label = ""
+
             # Write each paper as bibitem
             if compact:
-                text += "[%d] %s\\\\[1ex]\n" % (current_paper,entry_text)
+                text += "[%d] %s\\\\[1ex]\n" % (current_paper, entry_text)
             else:
-                text += "\\bibitem{%s} {%s}\n" % (key, entry_text)
+                text += "\\bibitem%s{%s} {%s}\n" % (label, key, entry_text)
 
             current_paper += 1
 
