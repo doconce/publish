@@ -21,6 +21,7 @@ def write(papers, sort_func=None):
     latex_text = ""
     latex_text += "\\documentclass[11pt]{article}\n"
     latex_text += "\\usepackage{textcomp}\n"
+    latex_text += "\\usepackage{a4wide}\n"
 
     # Because of some font issues in latex, we need to include
     # this package if we are going to nest \textbf and and \textsc
