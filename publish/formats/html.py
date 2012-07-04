@@ -39,7 +39,7 @@ def write(papers, sort_func=None):
 
         # Add internal links to each category
         if config.get("html_add_internal_links") :
-            prefix += "<p><a href=\"#%s_id_%s\">%s</a></p>\n" % (config.get("html_class_prefix"),
+            prefix += "<li><a href=\"#%s_id_%s\">%s</a></li>\n" % (config.get("html_class_prefix"),
                                                                  category,
                                                                  category_headings[category])
 
@@ -67,7 +67,9 @@ def write(papers, sort_func=None):
         # Write end of list
         text += "</ol>\n"
 
-    return prefix+"\n\n"+text
+    prefix = "<ul>" + prefix + "</ul>\n"
+
+    return prefix+"\n"+text
 
 def _filter(s):
     "Filter string for special characters."
