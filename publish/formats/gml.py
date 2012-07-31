@@ -13,21 +13,24 @@ def write(papers) :
   text.append("graph\n[\n")
   text.append("  directed 0\n")
 
-  # Dictionary mapping author name to id
+  # Dictionary mapping author name to id and counter
   authors = {}
 
   # Dictionary mapping tuple of author ids to counter
   edges = {}
   for paper in papers :
     for author in paper["author"] :
-      if not authors.has_key(author) :
-        authors[author] = len(authors)
+      if authors.has_key(author) :
+        authors[author]["count"] += 1
+      else : 
+        authors[author] = {'id' : len(authors), 'count' : 1}
+
 
     # sort the authors to ensure the order will not cause duplicates
     authors_sorted = sorted(paper["author"])
     for author_tuple in itertools.combinations(authors_sorted, 2) :
       # look up author id and create tuple
-      author_ids = tuple( [authors[single_author] for single_author in author_tuple] )
+      author_ids = tuple( [authors[single_author]["id"] for single_author in author_tuple] )
 
       # increment counter or add entry
       if edges.has_key(author_ids) :
@@ -35,8 +38,8 @@ def write(papers) :
       else :
         edges[author_ids]  = 1
         
-  for author, id in authors.iteritems() :
-    text.append("  node\n  [\n  id %d\n  label \"%s\"\n  ]\n" % (id, author))
+  for author, author_data in authors.iteritems() :
+    text.append("  node\n  [\n  id %d\n  label \"%s\"\n  value %d\n  ]\n" % (author_data["id"], author, author_data["count"]))
 
   for ((source, target), count) in edges.iteritems() :
     text.append("  edge\n  [\n  source %s\n  target %s\n  value %d\n  ]\n" % (source, target, count))
