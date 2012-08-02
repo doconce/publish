@@ -7,8 +7,9 @@ __license__   = "GNU GPL version 3 or any later version"
 
 import lxml.etree as xml
 import StringIO
-import time
 import itertools
+from publish import config
+
 
 def write(papers) :
   # Dictionary mapping author name to id and counter
@@ -59,13 +60,21 @@ def write(papers) :
   publications_element.attrib["attr.type"] = "integer"
   xml_root.append(publications_element)
 
+  if len(config.get("mark_author")) :
+    marked_element = xml.Element("key")
+    marked_element.attrib["id"] = "marked_key"
+    marked_element.attrib["for"] = "node"
+    marked_element.attrib["attr.name"] = "marked"
+    marked_element.attrib["attr.type"] = "integer"
+    default_element = xml.Element("default")
+    default_element.text = "0"
+    marked_element.append(default_element)
+    xml_root.append(marked_element)
 
  
   root_element = xml.Element("graph")
   root_element.attrib["edgedefault"] = "undirected"
   xml_root.append(root_element)
-
-
   
 
   for author, author_data in authors.iteritems() :
@@ -78,6 +87,14 @@ def write(papers) :
     publications = xml.Element("data")
     publications.attrib["key"] = "publications_key"
     publications.text = str(author_data["count"])
+
+    # Mark author if requested
+    if author.strip() in config.get("mark_author") :
+      marked_data = xml.Element("data")
+      marked_data.attrib["key"] = "marked_key"
+      marked_data.text = "1"
+      node.append(marked_data)
+
     node.append(publications)
     root_element.append(node)
 
