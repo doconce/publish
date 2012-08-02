@@ -11,7 +11,7 @@ __license__  = "GNU GPL version 3 or any later version"
 
 from publish.importing import read_database
 from publish import config
-from formats import bibtex, latex, pub, pdf, html, rst, gml
+from formats import bibtex, latex, pub, pdf, html, rst, graphml
 from validation import validate_papers
 from filtering import filter_papers
 from log import print_summary
@@ -47,8 +47,8 @@ def export_file(filename, filters=[]):
         write = html.write
     elif suffix == "rst":
         write = rst.write
-    elif suffix == "gml" :
-        write = gml.write
+    elif suffix == "graphml" :
+        write = graphml.write
     else:
         raise RuntimeError, "Unknown file format."
 
