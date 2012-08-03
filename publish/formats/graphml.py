@@ -1,4 +1,6 @@
 "This module implements output for Graph ML files where authors are nodes and joint work are edges."
+ # -*- coding: UTF-8 -*-
+
 # See https://gephi.org/users/supported-graph-formats/graphml-format/ for some more details
 __author__    = "Benjamin Kehlet <benjamik@simula.no>"
 __date__      = "2012-01-08 -- 2012-01-08"
@@ -82,7 +84,7 @@ def write(papers) :
     node.attrib["id"] = str(author_data["id"])
     label = xml.Element("data")
     label.attrib["key"] = "label_key"
-    label.text = author
+    label.text = _filter(author)
     node.append(label)
     publications = xml.Element("data")
     publications.attrib["key"] = "publications_key"
@@ -98,7 +100,6 @@ def write(papers) :
     node.append(publications)
     root_element.append(node)
 
-
   for (i, ((source, target), count)) in enumerate(edges.iteritems()) :
     edge = xml.Element("edge")
     edge.attrib["source"] = str(source)
@@ -110,13 +111,47 @@ def write(papers) :
     edge.append(weight)
     root_element.append(edge)
 
-    #string_buffer = StringIO.StringIO()
-  xml_declaration = """<?xml version="1.0" encoding="UTF-8"?>
-<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
-http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
-"""
-  # return xml_declaration + xml.tostring(root_element, pretty_print=True)
   return xml.tostring(xml_root, encoding="utf-8", xml_declaration=True, pretty_print=True)
 
+
+def _filter(s):
+    "Filter string for special characters."
+
+    s = unicode(s, "utf-8")
+
+
+    # List of replacements
+    replacements = [("--", u'-'),
+                    ("$", u""),
+                    ("\\mathrm", u""),
+                    ('\\aa', u'å'),
+                    ('\\AA', u'Å'),
+                    ('\\"a', u'ä'),
+                    ('\\"A', u'Ä'),
+                    ('\\"o', u'ö'),
+                    ('\\"O', u'Ö'),
+                    ('\\o',  u'ø'),
+                    ('\\O',  u'ø'),
+                    ('\\ae', u'æ'),
+                    ('\\AE', u'Æ'),
+                    ('\\&',  u'&'),
+                    # ('\\textonesuperior', "<sup>1</sup>"),
+                    ('\\textendash', u'-'),
+                    ('\\textemdash', u'-'),
+                    ('\\textasciiacute', u'\xb4'),
+                    ('\\\'a', u'\xb4'),
+                    ('\\"u', u'ü'),
+                    #('\\epsilon', "&epsilon;"),
+                    ('\\\'\i', u'í'),
+                    # ('\\textquoteright', "&apos;") # Is this correct?
+                    ]
+
+    with_brackets = [ ("{"+a+"}", b) for (a, b) in replacements]
+    replacements = with_brackets+replacements
+
+
+    # Iterate over replacements
+    for (a, b) in replacements :
+        s = s.replace(a, b)
+
+    return s
