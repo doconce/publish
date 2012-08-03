@@ -6,5 +6,19 @@
   - print command
   - author file
 
-* Improve handling of duplicated keys. 
-As of now if one imports a database and a particular key is present in both, one should not be allowed to keep both publications.
+* Improve handling of duplicated keys.  
+Currently, if one imports a database and a particular key is present
+in both, one should not be allowed to keep both publications.
+
+* Improve handling of allowed duplicates
+Currently papers can be marked with "allow duplicates". This will skip
+the duplicate test completely. Instead a list of ids to the duplicates
+should be maintained and the paper should be tested against all other
+papers not explicitly marked as duplicates.
+
+* Encodings
+Special characters in .pub are now assumed to be encoded in latex
+style. Converting is now handled in the export script.  
+- We should consider if latex is the best encoding.  
+- Centralize the encoding conversion and use some standard python
+  modules.
