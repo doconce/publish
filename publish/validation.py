@@ -104,6 +104,9 @@ def _validate_paper(paper):
     if is_valid(paper):
         _validate_paper_venue(paper)
 
+    if is_valid(paper) :
+        _validate_paper_authors(paper)
+
     # Validate title
     if is_valid(paper):
         _validate_paper_title(paper)
@@ -192,6 +195,45 @@ def _validate_paper_venue(paper):
                 paper["invalid"] = True
             else:
                 raise RuntimeError, "Unknown option."
+
+def _validate_paper_authors(paper) :
+    "Validate spelling of the author names"
+
+    allowed_author_names = config.get("allowed_author_names")
+
+    # Skip if there is nothing to check
+    if allowed_author_names is None:
+        return
+    
+    for i, author in enumerate(paper["author"]) :
+        if not author in allowed_author_names :
+            print "\n  Unknown author: \"%s\"" % author
+            suggested_author = _suggest_venue(author, allowed_author_names)
+            if suggested_author is None:
+                if ask_user_yesno('  Would you like to add %s"?' % (author), "no"):
+                    _add_author(author)
+                else:
+                    print "  Skipping paper."
+                    paper["invalid"] = True
+            else:
+                print '  Suggested "%s"' % (suggested_author)
+                alternative = ask_user_alternatives("  Unknown author, what should I do?",
+                                                    ("Replace author.",
+                                                     "Add author.",
+                                                     "Skip paper."))
+                print ""
+                if alternative == 0:
+                    paper["author"][i] = suggested_author
+                elif alternative == 1:
+                    _add_author(suggested_author)
+                elif alternative == 2:
+                    print "  Skipping paper (unable to guess the right author)"
+                    raw_input("  Press return to continue.")
+                    paper["invalid"] = True
+                else:
+                    raise RuntimeError, "Unknown option."
+
+
 
 def _validate_paper_title(paper):
     "Validate that the title is correct, fix capitalization"
@@ -365,6 +407,20 @@ def _add_venue(venue_type, venue_name):
         file.write("%s: %s\n" % (venue_type, venue_name))
     except:
         raise RuntimeError, 'Unable to add local venue to file "%s".' % filename
+
+def _add_author(author_name) :
+    allowed_author_names = config.get("allowed_author_names")
+    allowed_author_names.add(author_name)
+
+    # Append to file
+    filename = config.get("authornames_filename")
+
+    try:
+        file = open(filename, "a")
+        file.write(author_name.strip()+"\n")
+    except:
+        raise RuntimeError, 'Unable to author to file: "%s".' % filename
+
 
 def check_pdf_files(papers):
     "Check which PDF files are missing (if any)"

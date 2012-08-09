@@ -62,6 +62,7 @@ def init():
     import general
     data["database_filename"]        = general.database_filename
     data["local_venues_filename"]    = general.local_venues_filename
+    data["authornames_filename"]     = general.authornames_filename
     data["invalid_filename_prefix"]  = general.invalid_filename_prefix
     data["matching_distance_strong"] = general.matching_distance_strong
     data["matching_distance_weak"]   = general.matching_distance_weak
@@ -160,6 +161,9 @@ def init():
                      data["institutions"],
                      data["meetings"])
 
+    # Read list of author names
+    data["allowed_author_names"] = _read_author_names(general.authornames_filename)
+
 def _read_uservenues(filename, journals, publishers, schools, institutions, meetings):
     "Read venues from file"
 
@@ -197,3 +201,17 @@ def _read_uservenues(filename, journals, publishers, schools, institutions, meet
             meetings.append(venue_name)
         else:
             print 'Unknown venue type: "%s"' % venue_type
+
+def _read_author_names(filename) :
+    # Note: Name clash with this modules set function
+    authors = __builtin__.set()
+    if isfile(filename) :
+        with open(filename, "r") as f :
+            for line in f :
+                author = line.strip()
+                if not author :
+                    continue
+                authors.add(author)
+        return authors
+    else :
+        return None

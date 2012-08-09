@@ -5,12 +5,13 @@ __date__      = "2008-11-01 -- 2008-12-12"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__   = "GNU GPL version 3 or any later version"
 
-# Modified by Benjamin Kehlet 2011
+# Modified by Benjamin Kehlet 2011-2012
 # Modified by Anders Logg 2011-2012
 # Last changed: 2012-06-02
 
 database_filename       = "papers.pub"
 local_venues_filename   = "venues.list"
+authornames_filename    = "authors.list"
 invalid_filename_prefix = "invalid_papers"
 
 matching_distance_strong = 0.1

@@ -219,4 +219,4 @@ def _extract_authors(paper, attribute):
 
         authors.append(name)
 
-    return tuple(authors)
+    return authors
