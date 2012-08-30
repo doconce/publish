@@ -3,9 +3,9 @@
 from distutils.core import setup, Extension
 
 module_levenshtein = Extension('publish.levenshtein',
-                               sources = ['publish/extensions/levenshtein.c'])
+                               sources = ['extensions/levenshtein.c'])
 
-setup(name = "publish",
+setup(name             = "publish",
       version          = "1.0.1",
       description      = "Distributed publication management system",
       long_description = open('README', 'r').read(),
@@ -16,8 +16,7 @@ setup(name = "publish",
       url              = "https://bitbucket.org/logg/publish",
       packages         = ["publish",
                           "publish.formats",
-                          "publish.config",
-                          "publish.extensions"],
+                          "publish.config"],
       classifiers      = ['Development Status :: 5 - Production/Stable',
                           'Intended Audience :: Science/Research',
                           'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
