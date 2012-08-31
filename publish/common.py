@@ -5,8 +5,9 @@ __date__ = "2008-11-10 -- 2008-11-11"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
-# Last modified: 2012-01-30
+# Last modified: 2012-08-30
 # Modified by Anders Logg 2012
+# Modified by Benjamin Kehlet 2012
 
 from log import warning
 import StringIO, csv
@@ -15,19 +16,18 @@ from publish import config
 
 def is_valid(paper):
     "Check if paper is valid"
+    return not ("invalid" in paper and paper["invalid"])
 
-    if "invalid" in paper and paper["invalid"]:
-        return False
-    else:
-        return True
 
 def is_duplicate(paper):
     "Check if paper is a duplicate"
+    return "duplicate" in paper and paper["duplicate"]
 
-    if "duplicate" in paper and paper["duplicate"]:
-        return True
-    else:
-        return False
+
+def is_allowed_duplicate(paper1, paper2) :
+    "Check if papers are allowed duplicates"
+    return (("allowed_duplicates" in paper1 and paper2["key"] in paper1["allowed_duplicates"]) or
+           ("allowed_duplicates" in paper2 and paper1["key"] in paper2["allowed_duplicates"]))
 
 def pstr(paper):
     "Return a simple string representation of the paper"

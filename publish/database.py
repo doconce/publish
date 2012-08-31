@@ -6,9 +6,9 @@ __date__ = "2008-12-12 -- 2008-12-12"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
-from shutil import copyfile
-from os.path import isfile
-from time import strftime
+import shutil
+import os.path
+import time
 
 from formats import pub
 from publish import config
@@ -35,23 +35,27 @@ def read_database(database_filename=None):
     return database_papers
 
 def save_database(merged_papers):
-    "Save to database and make a backup copy"
+    "Save to database and make a backup copy if needed"
 
     database_filename = config.get("database_filename")
 
+    # Generate text to be written to file
+    text = pub.write(merged_papers)
+
     print ""
 
-    # Make backup copy if needed
-    if isfile(database_filename):
+    # Make backup copy if needed (file size of generated file is different from the current)
+    # TODO: Register if changes has been made and write backup file based on that
+    #       (instead of just comparing file sizes)
+    if os.path.isfile(database_filename) and len(text) != os.path.getsize(database_filename):
         backup_filename = database_filename + ".bak"
         print 'Saving backup copy of database to file "%s"' % backup_filename
         try:
-            copyfile(database_filename, backup_filename)
+            shutil.copyfile(database_filename, backup_filename)
         except:
             raise RuntimeError, "Unable to create backup copy of database"
 
     # Open and read file
-    text = pub.write(merged_papers)
     print 'Saving database to file "%s"' % database_filename
     try:
         file = open(database_filename, "w")
@@ -74,7 +78,7 @@ def save_invalid_papers(papers):
         return
 
     # Generate filename
-    date = strftime("%Y%m%d-%H:%m:%S")
+    date = time.strftime("%Y%m%d-%H:%m:%S")
     invalid_filename = config.get("invalid_filename_prefix") + "-" + date + ".pub"
 
     # Write to file

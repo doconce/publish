@@ -5,8 +5,12 @@ __date__ = "2008-10-27 -- 2008-11-08"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
+# Last changed: 2012-08-31
+
+# Modified by Benjamin Kehlet 2012
+
 from publish import config
-from publish.common import pstr, is_duplicate
+from publish.common import pstr, is_duplicate, is_allowed_duplicate
 from publish.algorithms import distance
 from publish.interaction import ask_user_alternatives
 from publish.formats import pub
@@ -23,8 +27,17 @@ def merge_papers(papers_0, papers_1):
     print ""
 
     # Concatenate lists and then check every paper against all others
-    merged_papers = []
     papers = papers_0 + papers_1
+
+    merged_papers = process_duplicates(papers)
+
+    return merged_papers
+
+
+def process_duplicates(papers) :
+    " Search for duplicates, ask user what to do, return processed list"
+
+    merged_papers = []
 
     for paper in papers:
 
@@ -42,10 +55,20 @@ def merge_papers(papers_0, papers_1):
             continue
 
         # Add paper if matching paper marked as duplicate
+        # NOTE: The attribute "duplicate" is now superseded by "allowed_duplicates". 
+        # "duplicate" will be read and respected when merging, but not written
+
         if is_duplicate(matching_paper):
+            print "Warning: Attribute 'duplicate' is deprecated. Use 'allowed_duplicates' and specify keys of duplicates."
             print "Found close match with allowed duplicate for paper %s, keeping paper.\n" % pstr(paper)
             merged_papers.append(paper)
             continue
+
+        if is_allowed_duplicate(paper, matching_paper) :
+            print "Found close match with allowed duplicate for paper %s, keeping paper.\n" % pstr(paper)
+            merged_papers.append(paper)
+            continue
+
 
         # Remove matching paper (so we can add back the merged paper)
         del merged_papers[matching_position]
@@ -59,7 +82,7 @@ def merge_papers(papers_0, papers_1):
     return merged_papers
 
 def _find_matching_paper(paper, merged_papers):
-    "Find paper that is so similar that it is probably are intended to be the same"
+    "Find paper that is so similar that it is probably intended to be the same"
 
     min_distance = 1.0
     matching_paper = None
@@ -99,7 +122,7 @@ def _find_matching_paper(paper, merged_papers):
 def _exact_match(paper0, paper1):
     "Check if papers match exactly."
 
-    ignores = ["duplicate", "invalid"]
+    ignores = ["duplicate", "invalid", "allowed_duplicates"]
 
     attributes = [attribute for attribute in paper0 if not attribute in ignores] + \
                  [attribute for attribute in paper1 if not attribute in ignores]
@@ -159,8 +182,9 @@ def _merge_papers(paper0, paper1):
                 
                 print ""
                 if alternative == 0:
-                    paper0["duplicate"] = True
-                    paper1["duplicate"] = True
+                    paper0["allowed_duplicates"] = [paper1["key"]] + (paper0["allowed_duplicates"] if "allowed_duplicates" in paper0 else [])
+                    paper1["allowed_duplicates"] = [paper0["key"]] + (paper1["allowed_duplicates"] if "allowed_duplicates" in paper1 else [])
+
                     return [paper0, paper1]
                 elif alternative == 1:
                     paper0["invalid"] = True

@@ -5,6 +5,9 @@ __date__ = "2008-10-27 -- 2008-12-12"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
+# Last changed: 2012-08-31
+# Modified by Benjamin Kehlet 2012
+
 import os
 from string import capitalize
 
@@ -16,6 +19,7 @@ from publish.algorithms import distance
 from publish.interaction import ask_user_yesno, ask_user_alternatives
 from publish.database import read_database, save_database, save_invalid_papers
 from publish.keygeneration import generate_keys
+from publish.merging import process_duplicates
 
 # Maps complete journal name with its issn-number
 long2issn = config.get("long2issn")
@@ -48,6 +52,9 @@ def validate_file(filename=None):
 
     # Check for PDF files
     (num_found, num_missing) = check_pdf_files(papers)
+
+    # Checking for duplicates
+    database_papers = process_duplicates(database_papers)
 
     # Print summary
     print_summary(papers, num_found, num_missing)

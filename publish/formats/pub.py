@@ -6,7 +6,8 @@ __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
 # Modified by Anders Logg 2012
-# Last changed: 2012-01-30
+# Modified by Benjamin Kehlet 2012
+# Last changed: 2012-08-31
 
 import re
 
@@ -65,6 +66,10 @@ def read(text):
                     paper["author"] = _extract_authors(paper, "author")
                 if "editor" in paper:
                     paper["editor"] = _extract_authors(paper, "editor")
+
+                if "allowed_duplicates" in paper :
+                    # Split wrt whitespaces
+                    paper["allowed_duplicates"] = paper['allowed_duplicates'].split()
 
                 papers.append(paper)
 
@@ -155,6 +160,8 @@ def write_paper(paper, ignores=[]):
             value = ", ".join(paper["author"])
         elif attribute == "editor":
             value = ", ".join(paper["editor"])
+        elif attribute == "allowed_duplicates" :
+            value = " ".join(paper["allowed_duplicates"])
         else:
             value = str(paper[attribute])
 

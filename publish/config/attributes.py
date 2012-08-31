@@ -6,7 +6,8 @@ __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
 # Modified by Anders Logg 2011
-# Last modified: 2011-12-05
+# Modified by Benjamin Kehlet 2012
+# Last modified: 2012-08-31
 
 # Categories
 categories = ("articles",
@@ -102,6 +103,7 @@ ordered_attributes = ("title",
                       "url",
                       "status",
                       "duplicate",
+                      "allowed_duplicates",
                       "tags",
                       "private",
                       "fixme")
