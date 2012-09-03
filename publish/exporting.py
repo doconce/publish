@@ -24,12 +24,14 @@ def export_file(filename, filters=[]):
     if filename == database_filename:
         raise RuntimeError, ('Papers cannot be exported to the default database ("%s").' % database_filename)
 
-    # Read and validate database
+    # Read database
     database_papers = read_database(database_filename)
-    (valid_papers, invalid_papers) = validate_papers(database_papers)
+
+    # Why should the database be validated on export?
+    #(valid_papers, invalid_papers) = validate_papers(database_papers)
 
     # Filter papers
-    filtered_papers = filter_papers(valid_papers, filters)
+    filtered_papers = filter_papers(database_papers, filters)
 
     # Get the filename suffix
     suffix = filename.split(".")[-1]
