@@ -45,14 +45,18 @@ def ask_user_alternatives(question, alternatives):
         if config.get("autofix"):
             print "  Autofix enabled, choosing default (1)."
             return 0
-        try:
-            s = raw_input("Please enter %s (or press return to choose [1]): " % numbers)
-            if s == "":
-                choice = 1
-            else:
+
+        s = raw_input("Please enter %s (or press return to choose [1]): " % numbers)
+        if s.strip() == "":
+            choice = 1
+        else:
+            try :
                 choice = int(s)
-        except:
-            choice = 0
+            except ValueError :
+                # If answer could not be converted to int, set to illegal int value
+                choice = -1
+
         if (choice - 1) in range(n):
             return choice - 1
+
         print "Illegal option."
