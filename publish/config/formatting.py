@@ -215,6 +215,24 @@ def latex_format_posters(paper):
 
     return "".join(values)
 
+def latex_format_publicoutreach(paper):
+    "Return string for public outreach in LaTeX format"
+    values = []
+
+    # author
+    values.append("%s. " % _latex_format_authors(_latex_get_authors_string(paper["author"])))
+
+    #title
+    values.append(paper["title"])
+
+    # meeting
+    values.append(", %s" % paper["meeting"])
+
+    #year
+    values.append(", %s." % paper["year"])
+
+    return "".join(values)
+
 
 
 def latex_format_misc(paper):
@@ -249,6 +267,7 @@ latex_format = {"articles"      : latex_format_articles,
                 "courses"       : latex_format_courses,
                 "talks"         : latex_format_talks,
                 "posters"       : latex_format_posters,
+                "publicoutreach": latex_format_publicoutreach,
                 "misc"          : latex_format_misc}
 
 #------------------------------------------------------------------------------
