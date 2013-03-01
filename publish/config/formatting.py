@@ -32,13 +32,13 @@ def latex_format_articles(paper):
     text.append("%s" % _format_venue(journal_in_italic, paper["journal"], paper))
 
     # volume
-    if paper.has_key("volume") :
+    if paper.has_key("volume") and paper["volume"].strip() :
         text.append(", vol. %s" % paper["volume"])
-        if paper.has_key("number") :
+        if paper.has_key("number") and paper["number"].strip() :
             text.append("(%s)" % paper["number"])
 
     # pages
-    if paper.has_key("pages") :
+    if paper.has_key("pages") and paper["pages"].strip() :
         text.append(", pp. %s" %  paper["pages"])
 
     # year
