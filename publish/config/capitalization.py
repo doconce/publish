@@ -11,4 +11,4 @@ lowercase = ["a", "an", "and", "at", "for", "in", "of", "on", "the", "to", "by"]
 # Words that should be capitalized
 uppercase = {"python": "{P}ython",
              "ode":    "{ODE}",
-             "pde":    "{PDE}"}
+             "pde":    "{PDE}",}

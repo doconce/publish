@@ -71,7 +71,7 @@ category_attributes = {"articles":       ("author", "title", "journal", "year", 
                        "talks":          ("author", "title", "meeting", "year", "status"),
                        "posters":        ("author", "title", "meeting", "year", "status"),
                        "publicoutreach": ("author", "title", "meeting", "year", "status"),
-                       "misc":           ("author", "title", "status")}
+                       "misc":           ("title", "status")}
 
 # Venues for categories (will be matched against a list of allowed values)
 category_venues = {"articles":       "journal",
@@ -86,7 +86,7 @@ category_venues = {"articles":       "journal",
                    "courses":        "institution",
                    "talks":          "meeting",
                    "posters":        "meeting",
-                   "publicoutreach": "meeting",                   
+                   "publicoutreach": "meeting",
                    "misc":           None}
 
 # List of ordered attributes (so we rewrite pub files in a fixed order)
