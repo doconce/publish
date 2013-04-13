@@ -58,8 +58,24 @@ def init():
     global data
     data = {}
 
+    try:
+        # Import from user's configuration file, which
+        # performs from publish.config.default import * first
+        # and then overrides and/or adds information
+        import publish_config as conf
+    except ImportError:
+        import default as conf
+    # Backward compatibility of names
+    general = conf
+    attributes = conf
+    capitalization = conf
+    schools = conf
+    publishers = conf
+    typos = conf
+    institutions = conf
+
+
     # Import parameters from general
-    import general
     data["database_filename"]        = general.database_filename
     data["local_venues_filename"]    = general.local_venues_filename
     data["authornames_filename"]     = general.authornames_filename
@@ -83,16 +99,13 @@ def init():
     data["skip_categories"]          = general.skip_categories
 
     # Import parameters from capitalization
-    import capitalization
     data["lowercase"] = capitalization.lowercase
     data["uppercase"] = capitalization.uppercase
 
     # Import parameters from typos
-    import typos
     data["typos"] = typos.typos
 
     # Import parameters from attributes
-    import attributes
     data["categories"]           = attributes.categories
     data["category_headings"]    = attributes.category_headings
     data["category_labels"]      = attributes.category_labels
@@ -113,15 +126,12 @@ def init():
     data["use_textsc"]  = True
 
     # Import parameters from institutions
-    import institutions
     data["institutions"] = list(institutions.institutions)
 
     # Import parameters from schools
-    import schools
     data["schools"] = list(schools.schools)
 
     # Import parameters from publishers
-    import publishers
     data["publishers"] = list(publishers.publishers)
 
     # Empty list of meetings (could be extended in meetings.py)
@@ -129,7 +139,6 @@ def init():
 
     # Import parameters from journals
     import journals
-
     # Create list of all journals (including both short and long names)
     journal_list = [short for (short, long, issn) in journals.journals] + \
                    [long  for (short, long, issn) in journals.journals]
@@ -154,7 +163,7 @@ def init():
     data["long2issn"] = long2issn
 
     # Read local venues
-    _read_uservenues(general.local_venues_filename,
+    _read_uservenues(data["local_venues_filename"],
                      data["journals"],
                      data["publishers"],
                      data["schools"],
@@ -162,7 +171,7 @@ def init():
                      data["meetings"])
 
     # Read list of author names
-    data["allowed_author_names"] = _read_author_names(general.authornames_filename)
+    data["allowed_author_names"] = _read_author_names(data["authornames_filename"])
 
 def _read_uservenues(filename, journals, publishers, schools, institutions, meetings):
     "Read venues from file"

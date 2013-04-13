@@ -1,0 +1,513 @@
+
+Importing papers from BibTeX
+----------------------------
+
+Found paper: (Langtangen_2008a) - Python Scripting for Computational Science
+Found paper: (Langtangen_2012) - A Primer on Scientific Programming with Python
+Found paper: (Langtangen_1992c) - Stochastic breakthrough time analysis of an enhanced o...
+Found paper: (Langtangen:1992) - Stochastic breakthrough time analysis of an enhanced oi...
+Found paper: (Langtangen:1991) - Stochastic analysis of enhanced oil recovery processes
+Found paper: (Langtangen_1994a) - Numerical solution of first passage problems in random...
+
+Validating papers
+-----------------
+
+Validating paper: (Langtangen_2008a) - Python Scripting for Computational Science
+  Status is not defined, assuming status is "published".
+Validating paper: (Langtangen_2012) - A Primer on Scientific Programming with Python
+  Status is not defined, assuming status is "published".
+Validating paper: (Langtangen_1992c) - Stochastic breakthrough time analysis of an enhanced o...
+  Status is not defined, assuming status is "published".
+
+  Unknown journal: "SIAM Journal of Scientific and Statistical Computing"
+  Suggested journal: "SIAM Journal on Scientific Computing"
+  Unknown journal, what should I do?
+  [1] Replace journal.
+  [2] Add journal.
+  [3] Skip paper.
+Please enter 1, 2 or 3 (or press return to choose [1]): 
+  Incorrectly formatted page string: 1394 -1417
+  Suggested correction:              1394-1417
+  Would you like to accept the suggested correction: ([y]/n):   Correcting page string.
+Validating paper: (Langtangen:1992) - Stochastic breakthrough time analysis of an enhanced oi...
+  Status is not defined, assuming status is "published".
+  Incorrectly formatted page string: 1394 -1417
+  Suggested correction:              1394-1417
+  Would you like to accept the suggested correction: ([y]/n):   Correcting page string.
+Validating paper: (Langtangen:1991) - Stochastic analysis of enhanced oil recovery processes
+  Status is not defined, assuming status is "published".
+
+  Unknown institution: "University of Oslo"
+  Suggested institution: "InterMedia, University of Oslo"
+  Unknown institution, what should I do?
+  [1] Replace institution.
+  [2] Add institution.
+  [3] Skip paper.
+Please enter 1, 2 or 3 (or press return to choose [1]): 
+Validating paper: (Langtangen_1994a) - Numerical solution of first passage problems in random...
+  Status is not defined, assuming status is "published".
+
+  Unknown journal: "SIAM Journal of Scientific and Stat. Computing"
+  Suggested journal: "SIAM Journal of Scientific and Statistical Computing"
+  Unknown journal, what should I do?
+  [1] Replace journal.
+  [2] Add journal.
+  [3] Skip paper.
+Please enter 1, 2 or 3 (or press return to choose [1]): 
+
+Validated 6 paper(s) ok.
+Found 0 invalid paper(s).
+
+
+Imported 6 paper(s) from "refs1.bib".
+
+Merging papers
+--------------
+
+Need to merge 0 + 6 = 6 papers.
+
+Found close match between (Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi... and (Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O..., merging papers.
+  Langtangen_1992c: Stochastic Breakthrough Time Analysis of an Enhanced Oil Recovery Process
+  Langtangen:1992: Stochastic Breakthrough Time Analysis of an Enhanced Oil Recovery Process
+['category', 'status', 'title', 'journal', 'author', 'pages', 'volume', 'key', 'year', 'entrytype', 'category', 'title', 'journal', 'author', 'pages', 'volume', 'status', 'key', 'year', 'entrytype']
+  Attribute "volume" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [5] Use attribute from first paper ("13")
+  [6] Use attribute from second paper ("131223")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+  Attribute "key" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [5] Use attribute from first paper ("Langtangen_1992c")
+  [6] Use attribute from second paper ("Langtangen:1992")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+  Attribute "year" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [5] Use attribute from first paper ("1992")
+  [6] Use attribute from second paper ("1991")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+
+Summary of papers
+-----------------
+
+Articles in International Journals: 3
+Books:                              2
+Edited Books:                       0
+Chapters in Books:                  0
+Refereed Proceedings:               0
+Conference Proceedings:             0
+Technical Reports:                  1
+Manuals:                            0
+Theses:                             0
+Courses:                            0
+Talks:                              0
+Posters:                            0
+Public Outreach:                    0
+Other Publications:                 0
+Total:                              6
+
+Saving database to file "papers.pub"
+
+
+Validating papers
+-----------------
+
+Validating paper: (Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...
+Validating paper: (Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...
+Validating paper: (Langtangen_1994a) - Numerical Solution of First Passage Problems in Random...
+Validating paper: (Langtangen_2008a) - {P}ython Scripting for Computational Science
+Validating paper: (Langtangen_2012) - A Primer on Scientific Programming With {P}ython
+Validating paper: (Langtangen:1991) - Stochastic Analysis of Enhanced Oil Recovery Processes
+
+Validated 6 paper(s) ok.
+Found 0 invalid paper(s).
+
+
+Importing papers from BibTeX
+----------------------------
+
+Found paper: (Mortensen_et_al_2011) - A FEniCS-Based Programming Framework for Modeling ...
+Found paper: (Mardal_et_al_2003a) - Software Tools for Multigrid Methods
+Found paper: (Jeberg_et_al_2004) - Optimization with {Diffpack}: Practical Example from ...
+Found paper: (Langtangen_1988d) - The {FEMDEQS} Program System
+Found paper: (Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...
+Found paper: (Langtangen_talk_2007a) - Computational Modeling of Huge Tsunamis from Aste...
+
+Validating papers
+-----------------
+
+Validating paper: (Mortensen_et_al_2011) - A FEniCS-Based Programming Framework for Modeling ...
+  Status is not defined, assuming status is "published".
+Validating paper: (Mardal_et_al_2003a) - Software Tools for Multigrid Methods
+  Status is not defined, assuming status is "published".
+Validating paper: (Jeberg_et_al_2004) - Optimization with {Diffpack}: Practical Example from ...
+  Status is not defined, assuming status is "published".
+Validating paper: (Langtangen_1988d) - The {FEMDEQS} Program System
+  Status is not defined, assuming status is "published".
+
+  Unknown institution: "Department of Mathematics, University of Oslo"
+  Suggested institution: "InterMedia, University of Oslo"
+  Unknown institution, what should I do?
+  [1] Replace institution.
+  [2] Add institution.
+  [3] Skip paper.
+Please enter 1, 2 or 3 (or press return to choose [1]): 
+Validating paper: (Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...
+  Status is not defined, assuming status is "published".
+
+  Unknown school: "Mechanics Division, Department of Mathematics, University of Oslo"
+  Suggested school: "Department of Informatics, University of Oslo"
+  Unknown school, what should I do?
+  [1] Replace school.
+  [2] Add school.
+  [3] Skip paper.
+Please enter 1, 2 or 3 (or press return to choose [1]): 
+Validating paper: (Langtangen_talk_2007a) - Computational Modeling of Huge Tsunamis from Aste...
+  Status is not defined, assuming status is "published".
+
+Validated 6 paper(s) ok.
+Found 0 invalid paper(s).
+
+
+Imported 6 paper(s) from "refs2.bib".
+
+Merging papers
+--------------
+
+Need to merge 6 + 6 = 12 papers.
+
+Found close match between (Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi... and (Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O..., merging papers.
+  Langtangen_1992c: Stochastic Breakthrough Time Analysis of an Enhanced Oil Recovery Process
+  Langtangen:1992: Stochastic Breakthrough Time Analysis of an Enhanced Oil Recovery Process
+['category', 'status', 'author', 'journal', 'title', 'entrytype', 'volume', 'key', 'year', 'pages', 'category', 'status', 'author', 'journal', 'title', 'entrytype', 'volume', 'key', 'year', 'pages']
+  Attribute "volume" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [5] Use attribute from first paper ("13")
+  [6] Use attribute from second paper ("131223")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+  Attribute "key" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [5] Use attribute from first paper ("Langtangen_1992c")
+  [6] Use attribute from second paper ("Langtangen:1992")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+  Attribute "year" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [5] Use attribute from first paper ("1992")
+  [6] Use attribute from second paper ("1991")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+  Attribute "volume" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [5] Use attribute from first paper ("13")
+  [6] Use attribute from second paper ("131223")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+  Attribute "key" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [5] Use attribute from first paper ("Langtangen_1992c")
+  [6] Use attribute from second paper ("Langtangen:1992")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+  Attribute "year" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [5] Use attribute from first paper ("1992")
+  [6] Use attribute from second paper ("1991")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+
+Summary of papers
+-----------------
+
+Articles in International Journals: 3
+Books:                              2
+Edited Books:                       0
+Chapters in Books:                  0
+Refereed Proceedings:               0
+Conference Proceedings:             1
+Technical Reports:                  3
+Manuals:                            0
+Theses:                             1
+Courses:                            0
+Talks:                              0
+Posters:                            0
+Public Outreach:                    0
+Other Publications:                 1
+Total:                              11
+
+Saving backup copy of database to file "papers.pub.bak"
+Saving database to file "papers.pub"
+
+Validating papers
+-----------------
+
+Validating paper: (Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...
+Validating paper: (Langtangen_1994a) - Numerical Solution of First Passage Problems in Random...
+Validating paper: (Mortensen_et_al_2011) - A FEniCS-Based Programming Framework for Modeling ...
+Validating paper: (Langtangen_2008a) - {P}ython Scripting for Computational Science
+Validating paper: (Langtangen_2012) - A Primer on Scientific Programming With {P}ython
+Validating paper: (Mardal_et_al_2003a) - Software Tools for Multigrid Methods
+Validating paper: (Langtangen:1991) - Stochastic Analysis of Enhanced Oil Recovery Processes
+Validating paper: (Jeberg_et_al_2004) - Optimization With {Diffpack}: Practical Example From ...
+Validating paper: (Langtangen_1988d) - The {FEMDEQS} Program System
+Validating paper: (Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...
+Validating paper: (Langtangen_talk_2007a) - Computational Modeling of Huge Tsunamis From Aste...
+
+Validated 11 paper(s) ok.
+Found 0 invalid paper(s).
+
+
+Importing papers from BibTeX
+----------------------------
+
+Found paper: (Langtangen_Pedersen_2002) - Propagation of Large Destructive Waves
+Found paper: (Langtangen_et_al_2002) - Numerical Methods for Incompressible Viscous Flow
+Found paper: (Glimsdal_et_al_20006) - Propagation of the {Dec.~26}, 2004 {Indian Ocean T...
+Found paper: (Rahman_et_al_2006b) - Numerical Investigation of a Piezoelectric Surface A...
+Found paper: (Haga_et_al_2011a) - On the causes of pressure oscillations in low-permeabl...
+Found paper: (Langtangen:95) - Finite elements for the {Boussinesq} wave equations
+Found paper: (Langtangen:85) - Solution of the {Navier-Stokes} equations with the finite...
+Found paper: (Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi...
+Found paper: (Langtangen:91) - Numerical Methods in Continuum Mechanics
+Found paper: (Langtangen:94b) - {Diffpack}: Software for partial differential equations
+
+Validating papers
+-----------------
+
+Validating paper: (Langtangen_Pedersen_2002) - Propagation of Large Destructive Waves
+  Status is not defined, assuming status is "published".
+Validating paper: (Langtangen_et_al_2002) - Numerical Methods for Incompressible Viscous Flow
+  Status is not defined, assuming status is "published".
+Validating paper: (Glimsdal_et_al_20006) - Propagation of the {Dec.~26}, 2004 {Indian Ocean T...
+  Status is not defined, assuming status is "published".
+Validating paper: (Rahman_et_al_2006b) - Numerical Investigation of a Piezoelectric Surface A...
+  Status is not defined, assuming status is "published".
+
+  Unknown journal: "Physical Review B"
+  Suggested journal: "Physical Review B: Condensed Matter and Materials Physics"
+  Unknown journal, what should I do?
+  [1] Replace journal.
+  [2] Add journal.
+  [3] Skip paper.
+Please enter 1, 2 or 3 (or press return to choose [1]): 
+Validating paper: (Haga_et_al_2011a) - On the causes of pressure oscillations in low-permeabl...
+  Status is not defined, assuming status is "published".
+
+  Unknown journal: "International Journal of Analytical and Numerical Methods in Geomechanics"
+  Suggested journal: "International Journal for Numerical Methods in Engineering"
+  Unknown journal, what should I do?
+  [1] Replace journal.
+  [2] Add journal.
+  [3] Skip paper.
+Please enter 1, 2 or 3 (or press return to choose [1]): 
+Validating paper: (Langtangen:95) - Finite elements for the {Boussinesq} wave equations
+  Status is not defined, assuming status is "published".
+Validating paper: (Langtangen:85) - Solution of the {Navier-Stokes} equations with the finite...
+  Status is not defined, assuming status is "published".
+Validating paper: (Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi...
+  Status is not defined, assuming status is "published".
+Validating paper: (Langtangen:91) - Numerical Methods in Continuum Mechanics
+  Status is not defined, assuming status is "published".
+
+  Unknown institution: "Center for Industrial Research"
+  Would you like to add institution "Center for Industrial Research"? (y/[n]): Validating paper: (Langtangen:94b) - {Diffpack}: Software for partial differential equations
+  Status is not defined, assuming status is "published".
+
+Validated 10 paper(s) ok.
+Found 0 invalid paper(s).
+
+
+Imported 10 paper(s) from "refs3.bib".
+
+Merging papers
+--------------
+
+Need to merge 11 + 10 = 21 papers.
+
+Found close match between (Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi... and (Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv..., merging papers.
+  Langtangen_1989e: Computational Methods for Two-Phase Flow in Oil Reservoirs
+  Langtangen:89d: Computational Methods for Two-Phase Flow in Oil Reservoirs
+['category', 'status', 'school', 'author', 'title', 'thesistype', 'note', 'key', 'year', 'entrytype', 'category', 'status', 'school', 'title', 'author', 'thesistype', 'note', 'key', 'year', 'entrytype']
+  Attribute "author" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...) and ignore second paper ((Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi...)
+  [4] Keep second paper ((Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...) and ignore first paper ((Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi...)
+  [5] Use attribute from first paper ("['H. P. Langtangen']")
+  [6] Use attribute from second paper ("('H. P. Langtangen',)")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+
+Summary of papers
+-----------------
+
+Articles in International Journals: 8
+Books:                              2
+Edited Books:                       0
+Chapters in Books:                  1
+Refereed Proceedings:               0
+Conference Proceedings:             2
+Technical Reports:                  4
+Manuals:                            0
+Theses:                             3
+Courses:                            0
+Talks:                              0
+Posters:                            0
+Public Outreach:                    0
+Other Publications:                 1
+Total:                              21
+
+Saving backup copy of database to file "papers.pub.bak"
+Saving database to file "papers.pub"
+
+Validating papers
+-----------------
+
+Validating paper: (Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...
+Validating paper: (Langtangen_1994a) - Numerical Solution of First Passage Problems in Random...
+Validating paper: (Mortensen_et_al_2011) - A FEniCS-Based Programming Framework for Modeling ...
+Validating paper: (Langtangen_Pedersen_2002) - Propagation of Large Destructive Waves
+Validating paper: (Langtangen_et_al_2002) - Numerical Methods for Incompressible Viscous Flow
+Validating paper: (Glimsdal_et_al_20006) - Propagation of the {Dec.~26}, 2004 {Indian Ocean T...
+Validating paper: (Rahman_et_al_2006b) - Numerical Investigation of a Piezoelectric Surface A...
+Validating paper: (Haga_et_al_2011a) - On the Causes of Pressure Oscillations in Low-Permeabl...
+Validating paper: (Langtangen_2008a) - {P}ython Scripting for Computational Science
+Validating paper: (Langtangen_2012) - A Primer on Scientific Programming With {P}ython
+Validating paper: (Langtangen:95) - Finite Elements for the {Boussinesq} Wave Equations
+Validating paper: (Mardal_et_al_2003a) - Software Tools for Multigrid Methods
+Validating paper: (Langtangen:94b) - {Diffpack}: Software for Partial Differential Equations
+Validating paper: (Langtangen:1991) - Stochastic Analysis of Enhanced Oil Recovery Processes
+Validating paper: (Jeberg_et_al_2004) - Optimization With {Diffpack}: Practical Example From ...
+Validating paper: (Langtangen_1988d) - The {FEMDEQS} Program System
+Validating paper: (Langtangen:91) - Numerical Methods in Continuum Mechanics
+Validating paper: (Langtangen:85) - Solution of the {Navier-Stokes} Equations With the Finite...
+Validating paper: (Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...
+Validating paper: (Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi...
+Validating paper: (Langtangen_talk_2007a) - Computational Modeling of Huge Tsunamis From Aste...
+
+Validated 21 paper(s) ok.
+Found 0 invalid paper(s).
+
+Checking for PDF files
+----------------------
+
+Missing PDF file papers/Langtangen_1992c.pdf for paper: (Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...
+Missing PDF file papers/Langtangen_1994a.pdf for paper: (Langtangen_1994a) - Numerical Solution of First Passage Problems in Random...
+Missing PDF file papers/Mortensen_et_al_2011.pdf for paper: (Mortensen_et_al_2011) - A FEniCS-Based Programming Framework for Modeling ...
+Missing PDF file papers/Langtangen_Pedersen_2002.pdf for paper: (Langtangen_Pedersen_2002) - Propagation of Large Destructive Waves
+Missing PDF file papers/Langtangen_et_al_2002.pdf for paper: (Langtangen_et_al_2002) - Numerical Methods for Incompressible Viscous Flow
+Missing PDF file papers/Glimsdal_et_al_20006.pdf for paper: (Glimsdal_et_al_20006) - Propagation of the {Dec.~26}, 2004 {Indian Ocean T...
+Missing PDF file papers/Rahman_et_al_2006b.pdf for paper: (Rahman_et_al_2006b) - Numerical Investigation of a Piezoelectric Surface A...
+Missing PDF file papers/Haga_et_al_2011a.pdf for paper: (Haga_et_al_2011a) - On the Causes of Pressure Oscillations in Low-Permeabl...
+Missing PDF file papers/Langtangen_2008a.pdf for paper: (Langtangen_2008a) - {P}ython Scripting for Computational Science
+Missing PDF file papers/Langtangen_2012.pdf for paper: (Langtangen_2012) - A Primer on Scientific Programming With {P}ython
+Missing PDF file papers/Langtangen:95.pdf for paper: (Langtangen:95) - Finite Elements for the {Boussinesq} Wave Equations
+Missing PDF file papers/Mardal_et_al_2003a.pdf for paper: (Mardal_et_al_2003a) - Software Tools for Multigrid Methods
+Missing PDF file papers/Langtangen:94b.pdf for paper: (Langtangen:94b) - {Diffpack}: Software for Partial Differential Equations
+Missing PDF file papers/Langtangen:1991.pdf for paper: (Langtangen:1991) - Stochastic Analysis of Enhanced Oil Recovery Processes
+Missing PDF file papers/Jeberg_et_al_2004.pdf for paper: (Jeberg_et_al_2004) - Optimization With {Diffpack}: Practical Example From ...
+Missing PDF file papers/Langtangen_1988d.pdf for paper: (Langtangen_1988d) - The {FEMDEQS} Program System
+Missing PDF file papers/Langtangen:91.pdf for paper: (Langtangen:91) - Numerical Methods in Continuum Mechanics
+Missing PDF file papers/Langtangen:85.pdf for paper: (Langtangen:85) - Solution of the {Navier-Stokes} Equations With the Finite...
+Missing PDF file papers/Langtangen_1989e.pdf for paper: (Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...
+Missing PDF file papers/Langtangen:89d.pdf for paper: (Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi...
+Missing PDF file papers/Langtangen_talk_2007a.pdf for paper: (Langtangen_talk_2007a) - Computational Modeling of Huge Tsunamis From Aste...
+Found close match with allowed duplicate for paper (Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi..., keeping paper.
+
+
+Summary of papers
+-----------------
+
+Database has 21 paper(s).
+PDF files found for 0 paper(s), 21 missing.
+
+Articles in International Journals: 8
+Books:                              2
+Edited Books:                       0
+Chapters in Books:                  1
+Refereed Proceedings:               0
+Conference Proceedings:             2
+Technical Reports:                  4
+Manuals:                            0
+Theses:                             3
+Courses:                            0
+Talks:                              0
+Posters:                            0
+Public Outreach:                    0
+Other Publications:                 1
+Total:                              21
+
+Saving backup copy of database to file "papers.pub.bak"
+Saving database to file "papers.pub"
+
+Summary of papers
+-----------------
+
+Articles in International Journals: 8
+Books:                              2
+Edited Books:                       0
+Chapters in Books:                  1
+Refereed Proceedings:               0
+Conference Proceedings:             2
+Technical Reports:                  4
+Manuals:                            0
+Theses:                             3
+Courses:                            0
+Talks:                              0
+Posters:                            0
+Public Outreach:                    0
+Other Publications:                 1
+Total:                              21
+
+Exported 21 paper(s) to present.html.
+
+Summary of papers
+-----------------
+
+Articles in International Journals: 8
+Books:                              2
+Edited Books:                       0
+Chapters in Books:                  1
+Refereed Proceedings:               0
+Conference Proceedings:             2
+Technical Reports:                  4
+Manuals:                            0
+Theses:                             3
+Courses:                            0
+Talks:                              0
+Posters:                            0
+Public Outreach:                    0
+Other Publications:                 1
+Total:                              21
+
+Exported 21 paper(s) to present.bib.
