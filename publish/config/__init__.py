@@ -59,12 +59,44 @@ def init():
     data = {}
 
     try:
-        # Import from user's configuration file, which
-        # performs from publish.config.default import * first
-        # and then overrides and/or adds information
-        import publish_config as conf
+        # Import from user's configuration file, which may
+        # perform from publish.config.default import * first
+        # and then overrides and/or adds information, or
+        # just redefine variables and extending lists and dicts.
+        import publish_config as user_conf
     except ImportError:
-        import default as conf
+        import default
+
+    if hasattr(user_conf, 'MARKER_FOR_IMPORT_0123456789'):
+        # User's publish_config.py has done a
+        #   from publish.default.config import *
+        # and represents the uninion of defaults and user's data
+        conf = user_conf
+    else:
+        # Add user's data to those in default
+        for var in dir(default):
+            if var.startswith('_'):
+                # Drop "private" data
+                continue
+            if not hasattr(user_config, var):
+                # User has not set this variable
+                continue
+            if isinstance(var, (bool,int,float,basestring)):
+                # Override basic variable with user's value
+                setattr(default, var, getattr(user_config, var))
+            elif isinstance(var, (tuple,list)):
+                # Extend default's var with user's
+                setattr(default, var,
+                        getattr(user_config, var) +
+                        getattr(default, var))
+                # (we do obj = obj + obj since it works with
+                # pure tuples and list)
+            elif isinstance(var, dict):
+                getattr(default, var).update(getattr(user_config, var))
+            else:
+                raise Exception('default.py variable "%s" is of a type not handled by the code in config/__init__.py')
+            conf = default
+
     # Backward compatibility of names
     general = conf
     attributes = conf
