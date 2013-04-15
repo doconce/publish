@@ -162,7 +162,10 @@ def _parse_attribute_value(position, text) :
         if num_left_braces == num_right_braces:
             break
 
-    return (end+1, text[position:end].strip())
+    #orig: return (end+1, text[position:end].strip())
+    value = text[position:end].strip().replace('\n', ' ')
+    value = re.sub(r' +', ' ', value)
+    return (end+1, value)
 
 
 def write(papers):
