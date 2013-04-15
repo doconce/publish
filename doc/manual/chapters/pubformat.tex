@@ -88,87 +88,13 @@ Currently, all attribute-value pairs must be entered in a single line
 
 \section{Required Attributes}
 
-\subsection{Category \emp{articles}}
+Some attributes are mandatory for a given category. For example,
+an article needs author, title, journal, and year (as well as status,
+but that can set by \package()). The required attributes are defined
+in a variable \emp{category\_attributes} in
+\emp{publish/config/defaults.py} and can be overridden in
+a user's \emp{publish\_config.py} file.
 
-This category is for refereed articles published in international
-journals.
-
-Required attributes are \emp{author}, \emp{title}, \emp{journal}, \emp{year}, and \emp{status}.
-
-\subsection{Category \emp{books}}
-
-This category is for books.
-
-Required attributes are \emp{author}, \emp{title}, \emp{publisher}, \emp{year}, and \emp{status}.
-
-\subsection{Category \emp{edited}}
-
-This category is for edited books (where the authors are the editors of
-the book).
-
-Required attributes are \emp{author}, \emp{title}, \emp{publisher}, \emp{year}, and \emp{status}.
-
-\subsection{Category \emp{chapters}}
-
-This category is for parts of books, which may be a chapter, a
-section, and/or a range of pages.
-
-Required attributes are \emp{author}, \emp{title}, \emp{chapter}
-and/or \emp{pages}, \emp{editor}, \emp{publisher}, \emp{year}, and
-\emp{status}.
-
-\subsection{Category \emp{refproceedings}}
-
-This category is for \emph{refereed} articles in conference
-proceedings.
-
-Required attributes are \emp{author}, \emp{title}, \emp{booktitle},
-\emp{year}, and \emp{status}.
-
-\subsection{Category \emp{proceedings}}
-
-This category is for articles in conference proceedings without
-referee.
-
-Required attributes are \emp{author}, \emp{title}, \emp{booktitle},
-\emp{year}, and \emp{status}.
-
-\subsection{Category \emp{reports}}
-
-This category is for reports/preprints published by a school or other
-institution, usually numbered within a series.
-
-Required attributes are \emp{author}, \emp{title}, \emp{institution},
-\emp{year}, and \emp{status}.
-
-\subsection{Category \emp{manuals}}
-
-This category is for technical documentation.
-
-Required attributes are \emp{author}, \emp{title}, and \emp{status}.
-
-\subsection{Category \emp{thesis}}
-
-This category is for PhD, Licentiate, Diploma, or Master's theses.
-
-Required attributes are \emp{author}, \emp{title}, \emp{school},
-\emp{year}, \emp{thesistype}, and \emp{status}.
-
-\subsection{Category \emp{courses}}
-
-This category is for courses given at a university or other
-educational institution.
-
-Required attributes are \emp{author}, \emp{title}, \emp{code},
-\emp{institution}, \emp{year}, and \emp{status}.
-
-\subsection{Category \emp{talks}}
-
-This category is for talks at meetings (conference or workshop).
-
-Required attributes are \emp{author}, \emp{title}, \emp{meeting}, \emp{year}, and \emp{status}.
-
-\subsection{Category \emp{misc}}
-
-This category should be used when nothing else fits. Required attributes are
-\emp{title} and \emp{status}.
+We refer to the \emp{category\_attributes} dictionary in
+\emp{publish/config/defaults.py} for an overview of
+all required attributes.

@@ -90,8 +90,11 @@ subsequent validations.
 Paper titles are validated for correct capitalization. The system
 keeps a list of common words (``and'', ``or'', ``for'' etc.) that
 should not be capitalized, and also a list of words that should be
-capitalized. These may be configured by editing
-\emp{publish/config/capitalization.py}.
+capitalized. The default words for capitalization are set in the
+\emp{lowercase} and \emp{uppercase} dictionaries. The default
+configuration is found in
+\emp{publish/config/defaults.py} and can be extended in a user's
+\emp{publish\_config.py} file.
 
 \subsection{Page Range}
 \index{page range}
@@ -102,5 +105,6 @@ ranges are automatically detected and fixed.
 \subsection{Typos}
 \index{typos}
 
-A number of typos are also detected. These may be configured by
-editing \emp{publish/config/typos.py}.
+A number of typos are also detected. The default typos are
+found in \emp{publish/config/defaults.py} and can be extended in a user's
+\emp{publish\_config.py} file.
