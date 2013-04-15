@@ -291,7 +291,7 @@ def _extract_authors(paper, attribute):
 
         authors.append(name)
 
-    paper[attribute] = tuple(authors)
+    paper[attribute] = authors
 
 def _extract_category(paper):
     "Extract category for paper"
