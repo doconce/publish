@@ -9,7 +9,8 @@ def test_demo():
     # The test is a Bash script, record output and put to file
     failure, output = commands.getstatusoutput('sh refs_demo.sh')
     if failure:
-        raise OSError('Could not run the test script run refs_demo.sh!')
+        print output
+        raise OSError('test_demo: could not run the test script run refs_demo.sh!')
     # Line with 'Saving invalid papers to ...' contains the date,
     # strip that off
     output = re.sub(r'^Saving invalid papers to.+$', '', output,
@@ -40,9 +41,9 @@ to update the reference files.
     assert success, msg
 
 
-def test_config():
+def test_config_publish_import():
     """
-    Override config data using local_config/publish_config.py.
+    Override config data using local_config_publish_import/publish_config.py.
     The database and venues names are different and a capitalization
     typo is corrected.
     """
@@ -56,14 +57,18 @@ def test_config():
     # Must set PYTHONPATH in OS subprocess (sys.path cannot be
     # changed in this script - that has no effect on the OS subprocess)
     failure, output = commands.getstatusoutput(
-        'export PYTHONPATH=local_config:$PYTHONPATH; sh refs_demo.sh')
+        'export PYTHONPATH=local_config_publish_import:$PYTHONPATH; sh refs_demo.sh')
     if failure:
-        raise OSError('Could not run the test script run refs_demo.sh!')
+        print output
+        raise OSError('test_config_publish_import: could not run the test script run refs_demo.sh!')
     # Line with 'Saving invalid papers to ...' contains the date,
     # strip that off
     output = re.sub(r'^Saving invalid papers to.+$', '', output,
                     flags=re.MULTILINE)
-    f = open('refs_demo_with_local_config.out', 'w')
+    # User config...imported from... contains absolute path, strip off
+    output = re.sub(r'^User configuration data imported from .+$', '', output,
+                    flags=re.MULTILINE)
+    f = open('refs_demo_with_local_config_publish_import.out', 'w')
     f.write(output)
     f.close()
     # Strip off date and time in invalid_papers*.pub
@@ -75,8 +80,64 @@ def test_config():
 
     # Compare all files generated (incl. output from script)
     reference_data = 'reference_data'
-    files = ['publish_papers.pub', 'publish_venues.txt', 'refs_demo.sh',
-             'refs_demo_with_local_config.out', 'invalid_papers.pub',
+    files = ['publish_papers1.pub', 'publish_venues1.txt',
+             'refs_demo.sh',
+             'refs_demo_with_local_config_publish_import.out',
+             'invalid_papers.pub',
+             'present.html', 'present_fixed.bib']
+    ref_files = [os.path.join(reference_data, filename) for
+                 filename in files]
+    failure = pydiff(ref_files, files)
+    success = not failure
+    msg = """
+New data differs from reference data! Check out the files
+tmp_diff*.txt (plain text comparison) or load tmp_diff*.html
+into a browser for visual inspection of differences.
+If differences are correct, run copy_new_reference_data.sh
+to update the reference files.
+"""
+    assert success, msg
+
+def test_config_no_import():
+    """
+    Override config data using local_config_no_import/publish_config.py.
+    The database and venues names are different and a capitalization
+    typo is corrected.
+    """
+    for name in glob.glob('tmp_diff*'):  # clean old diff files
+        os.remove(name)
+
+    # The test is a Bash script, record output and put to file.
+    # Must set PYTHONPATH in OS subprocess (sys.path cannot be
+    # changed in this script - that has no effect on the OS subprocess)
+    failure, output = commands.getstatusoutput(
+        'export PYTHONPATH=local_config_no_import:$PYTHONPATH; sh refs_demo.sh')
+    if failure:
+        print output
+        raise OSError('test_config_no_import: could not run the test script run refs_demo.sh!')
+    # Line with 'Saving invalid papers to ...' contains the date,
+    # strip that off
+    output = re.sub(r'^Saving invalid papers to.+$', '', output,
+                    flags=re.MULTILINE)
+    # User config...imported from... contains absolute path, strip off
+    output = re.sub(r'^User configuration data imported from .+$', '', output,
+                    flags=re.MULTILINE)
+    f = open('refs_demo_with_local_config_no_import.out', 'w')
+    f.write(output)
+    f.close()
+    # Strip off date and time in invalid_papers*.pub
+    for filename in glob.glob('invalid_papers-*'):
+        shutil.copy(filename, 'invalid_papers.pub')
+    # present.bib is has now the FEniCS capitalization fixed,
+    # must change its name since the reference has a different name
+    shutil.copy('present.bib', 'present_fixed.bib')
+
+    # Compare all files generated (incl. output from script)
+    reference_data = 'reference_data'
+    files = ['publish_papers2.pub', 'publish_venues2.txt',
+             'refs_demo.sh',
+             'refs_demo_with_local_config_no_import.out',
+             'invalid_papers.pub',
              'present.html', 'present_fixed.bib']
     ref_files = [os.path.join(reference_data, filename) for
                  filename in files]
@@ -153,7 +214,6 @@ def pydiff(files1, files2, n=3):
         return False
 
 if __name__ == '__main__':
-    print 'test_demo'
     test_demo()
-    print 'test_config'
-    test_config()
+    test_config_publish_import()
+    test_config_no_import()

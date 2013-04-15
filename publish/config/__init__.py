@@ -10,7 +10,7 @@ __license__  = "GNU GPL version 3 or any later version"
 # Last modified: 2012-06-02
 
 from os.path import isfile
-import __builtin__
+import __builtin__, sys
 data = None
 
 def get(key):
@@ -63,49 +63,59 @@ def init():
         # perform from publish.config.default import * first
         # and then overrides and/or adds information, or
         # just redefine variables and extending lists and dicts.
-        import publish_config as user_conf
+        import publish_config as user_config
+        print 'User configuration data imported from ', \
+              str(sys.modules['publish_config']).split('from')[1][3:-6]
     except ImportError:
-        import default
+        user_config = None
 
-    if hasattr(user_conf, 'MARKER_FOR_IMPORT_0123456789'):
-        # User's publish_config.py has done a
-        #   from publish.default.config import *
-        # and represents the uninion of defaults and user's data
-        conf = user_conf
-    else:
-        # Add user's data to those in default
-        for var in dir(default):
-            if var.startswith('_'):
-                # Drop "private" data
-                continue
-            if not hasattr(user_config, var):
-                # User has not set this variable
-                continue
-            if isinstance(var, (bool,int,float,basestring)):
-                # Override basic variable with user's value
-                setattr(default, var, getattr(user_config, var))
-            elif isinstance(var, (tuple,list)):
-                # Extend default's var with user's
-                setattr(default, var,
-                        getattr(user_config, var) +
-                        getattr(default, var))
-                # (we do obj = obj + obj since it works with
-                # pure tuples and list)
-            elif isinstance(var, dict):
-                getattr(default, var).update(getattr(user_config, var))
-            else:
-                raise Exception('default.py variable "%s" is of a type not handled by the code in config/__init__.py')
-            conf = default
+    import defaults
+
+    if user_config is not None:
+        if hasattr(user_config, 'MARKER_FOR_IMPORT_0123456789'):
+            # User's publish_config.py has done a
+            #   from publish.defaults.config import *
+            # and represents the uninion of defaults and user's data
+            defaults = user_config
+        else:
+            # Add user's data to those in defaults
+            for name in dir(defaults):
+                var = getattr(defaults, name)
+                if name.startswith('_'):
+                    # Drop "private" data
+                    continue
+                if not hasattr(user_config, name):
+                    # User has not set this variable
+                    continue
+                if isinstance(var, (bool,int,float,basestring)):
+                    # Override basic variable with user's value
+                    setattr(defaults, name,
+                            getattr(user_config, name))
+                elif isinstance(var, (tuple,list)):
+                    # Extend defaults' var with user's
+                    setattr(defaults, name,
+                            getattr(user_config, name) + var)
+                    # (we do obj = obj + obj since it works with
+                    # pure tuples and list, alternative is in-place
+                    # var.extend(getattr(user_config, name))
+                    # but that works only for lists)
+                elif isinstance(var, dict):
+                    # inplace change (no assignment)
+                    var.update(getattr(user_config, name))
+                else:
+                    raise TypeError(
+                        'defaults.py variable "%s" is of a type not '
+                        'handled by the code in config/__init__.py')
+                conf = defaults
 
     # Backward compatibility of names
-    general = conf
-    attributes = conf
-    capitalization = conf
-    schools = conf
-    publishers = conf
-    typos = conf
-    institutions = conf
-
+    general = defaults
+    attributes = defaults
+    capitalization = defaults
+    schools = defaults
+    publishers = defaults
+    typos = defaults
+    institutions = defaults
 
     # Import parameters from general
     data["database_filename"]        = general.database_filename

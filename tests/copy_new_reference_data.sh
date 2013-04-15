@@ -1,6 +1,8 @@
 #!/bin/sh
 cd reference_data
 for filename in `/bin/ls`; do
-    cp ../$filename $filename
+    if [ -f ../$filename ]; then
+        cp ../$filename $filename
+    fi
 done
 
