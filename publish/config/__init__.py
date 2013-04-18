@@ -116,6 +116,7 @@ def init():
     publishers = defaults
     typos = defaults
     institutions = defaults
+    journals = defaults
 
     # Import parameters from general
     data["database_filename"]        = general.database_filename
@@ -180,7 +181,6 @@ def init():
     data["meetings"] = []
 
     # Import parameters from journals
-    import journals
     # Create list of all journals (including both short and long names)
     journal_list = [short for (short, long, issn) in journals.journals] + \
                    [long  for (short, long, issn) in journals.journals]
