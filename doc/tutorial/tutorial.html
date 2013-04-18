@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Automatically generated HTML file from Doconce source
+(http://code.google.com/p/doconce/)
+-->
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Doconce: http://code.google.com/p/doconce/" />
+<meta name="description" content="Publish by Example">
+
+
+
+<style type="text/css">
+    body {
+      font-family: Helvetica, Verdana, Arial, Sans-serif;
+      color: #404040;
+      background: #ffffff;
+    }
+    h1 { font-size: 1.8em;  color: #8A0808; }
+    h2 { font-size: 1.5em;  color: #8A0808; }
+    h3, h4 { color: #8A0808; }
+    a { color: #8A0808; text-decoration:none; }
+    tt { font-family: "Courier New", Courier; }
+    pre { background: #ededed; color: #000; padding: 15px;}
+    p { text-indent: 0px; }
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    p.caption { width: 80%; font-style: normal; text-align: left; }
+    hr.figure { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+
+</style>
+
+</head>
+
+<!-- tocinfo
+{'highest level': 1,
+ 'sections': [(' Motivation ', 1, None, '___sec0'),
+              (' Publish in action ', 1, None, '___sec1'),
+              (' Importing a BibTeX file ', 2, None, '___sec2'),
+              (' Adding information ', 2, None, '___sec3'),
+              (' Merging publication records ', 2, None, '___sec4'),
+              (' Exporting references ',
+               2,
+               'publish:export',
+               'publish:export'),
+              (' Capitalization ',
+               2,
+               'publish:capitalization',
+               'publish:capitalization'),
+              (' Configuration ', 2, 'publish:config', 'publish:config'),
+              (' Programming Publish ', 1, None, '___sec8')]}
+end of tocinfo -->
+
+<body>
+
+    
+<!-- ------------------- main content ---------------------- -->
+
+
+<title>Publish by Example</title>
+
+<center><h1>Publish by Example</h1></center>  <!-- document title -->
+
+<p>
+<!-- author(s): Hans Petter Langtangen -->
+
+<center>
+<b>Hans Petter Langtangen</b> [1, 2]
+</center>
+
+
+<p>
+<!-- institution(s) -->
+
+<center>[1] <b>Center for Biomedical Computing, Simula Research Laboratory,</b></center>
+<center>[2] <b>Deptartment of Informatics, University of Oslo</b></center>
+<p>
+<center><h4>Apr 18, 2013</h4></center> <!-- date -->
+<p>
+
+<h2>Table of contents</h2>
+
+<p>
+
+<a href="#___sec0"> Motivation </a><br>
+<a href="#___sec1"> Publish in action </a><br>
+&nbsp; &nbsp; &nbsp; <a href="#___sec2"> Importing a BibTeX file </a><br>
+&nbsp; &nbsp; &nbsp; <a href="#___sec3"> Adding information </a><br>
+&nbsp; &nbsp; &nbsp; <a href="#___sec4"> Merging publication records </a><br>
+&nbsp; &nbsp; &nbsp; <a href="#publish:export"> Exporting references </a><br>
+&nbsp; &nbsp; &nbsp; <a href="#publish:capitalization"> Capitalization </a><br>
+&nbsp; &nbsp; &nbsp; <a href="#publish:config"> Configuration </a><br>
+<a href="#___sec8"> Programming Publish </a><br>
+
+<p>
+
+
+<!-- The read .bib files become !bc cod/pro which Sphinx typesets -->
+<!-- in python pygments style. Change cod and pro to be plain text: -->
+<!-- Sphinx code-blocks: cod=text pro=text -->
+
+<p>
+
+<h2>Motivation  <a name="___sec0"></a></h2>
+
+<p>
+Publish is a software for managing your own list of publications or any
+list of references to literature. There are numerous tools available for
+this purpose. The most well-known to scientists is perhaps BibTeX.
+Publish offers several important advantages over BibTeX:
+
+<p>
+
+<ol>
+<li> the format is simpler (plain self-explanatory text),</li>
+<li> multiple registrations of the same publication are detected and
+   merged to one master registration,</li>
+<li> flexibly selected parts of the list of publications can be output
+   in different formats: BibTeX, HTML, reStructuredText, PDF, ...,</li>
+<li> the list of publications can easily be manipulated in simple
+   Python code to meet various demands for publishing or maintaining
+   the list (e.g., exporting the list to other types of software).</li>
+</ol>
+
+Point 2 and 3 are particularly important: publication lists needs to
+be formatted also for the web nowadays, and many published lists
+suffer from double entries in BibTeX because of slightly different
+input by different people.
+
+<p>
+There should be no need to emphasize the importance of having
+beautifully formatted and absolutely correct publication data in your
+CV and in your papers. My claim is that unless you really like
+to constantly check and polish your BibTeX files, your life gets
+much simpler if you use Publish for all publication records and generate
+BibTeX or other formats from the Publish format.
+
+<p>
+
+<h2>Publish in action  <a name="___sec1"></a></h2>
+
+<p>
+The following sections takes you through the main steps of creating
+your first Publish database:
+
+<p>
+
+<ol>
+<li> import data from another source, here BibTeX files,</li>
+<li> clean up data,</li>
+<li> export to other formats,</li>
+<li> customize the behavior of Publish.</li>
+</ol>
+
+
+<h3>Importing a BibTeX file  <a name="___sec2"></a></h3>
+
+<p>
+Suppose you have some BibTeX files and want to put these in a
+Publish database. Technically, this means merging the BibTeX files
+to one text file with a simple format. You may choose to have one
+Publish database or many.
+
+<p>
+Here is a sample BibTeX file called <code>refs1.bib</code>:
+
+<p>
+
+
+<!-- code=text (from !bc pro) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">@InProceedings{Mardal_et_al_2003a,
+author =    {K.-A. Mardal and G. W. Zumbusch and H. P. Langtangen},
+editor =    {H. P. Langtangen and A. Tveito},
+title =     {Software Tools for Multigrid Methods},
+booktitle = {Advanced Topics in Computational Partial Differential
+            Equations -- Numerical Methods and Diffpack Programming},
+publisher = {Springer},
+series    = {Lecture Notes in Computational Science and Engineering},
+year =      {2003},
+pages =     {97-152},
+}
+
+@TechReport{Jeberg_et_al_2004,
+author =    {P. V. Jeberg and H. P. Langtangen and C. B. Terp},
+title =     {Optimization with {Diffpack}: Practical Example from
+             Welding},
+year =      {2004},
+institution =  {Simula Research Laboratory},
+type =    {Report 2004-12},
+}
+
+@Misc{Langtangen_talk_2007a,
+author = {H. P. Langtangen},
+title = {Computational Modeling of Huge Tsunamis from Asteroid Impacts},
+month = {May},
+year = {2007},
+howpublished = {Invited keynote lecture at the \emph{International
+ conference on Computational Science 2007 (ICCS&#39;07)}, Beijing, China},
+}
+
+@Article{Mortensen_et_al_2011,
+author         = {M. Mortensen and H. P. Langtangen and G. N. Wells},
+title          = {A FEniCS-Based Programming Framework for Modeling
+Turbulent Flow by the {Reynolds}-Averaged {Navier-Stokes} Equations},
+journal        = {Advances in Water Resources},
+year           = {2011},
+volume         = {34},
+number         = {9},
+doi            = {10.1016/j.advwatres.2011.02.013},
+}
+
+@Book{Langtangen_2012,
+author =    {H. P. Langtangen},
+title =     {Python Scripting for Computational Science},
+series =    {Texts in Computational Science and Engineering},
+publisher = {Springer},
+year =      {2012},
+edition =   {Third},
+}
+</pre></div>
+<p>
+Importing this to Publish format is done by
+
+<p>
+
+
+<!-- code=bash (from !bc sys) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">Terminal&gt; publish import refs1.bib
+</pre></div>
+<p>
+Publish creates a database with the default name <code>papers.pub</code>.
+It has the following content:
+
+<p>
+
+
+<!-- code=text (from !bc pro) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">* articles
+** A FEniCS-Based Programming Framework for Modeling Turbulent Flow by the {Reynolds}-Averaged {Navier-Stokes} Equations
+   key:       Mortensen_et_al_2011
+   author:    M. Mortensen, H. P. Langtangen, G. N. Wells
+   year:      2011
+   journal:   Advances in Water Resources
+   volume:    34
+   number:    9
+   doi:       10.1016/j.advwatres.2011.02.013
+   status:    published
+   entrytype: article
+* books
+** {P}ython Scripting for Computational Science
+   key:       Langtangen_2012
+   author:    H. P. Langtangen
+   year:      2012
+   publisher: Springer
+   status:    published
+   series:    Texts in Computational Science and Engineering
+   edition:   Third
+   entrytype: book
+* proceedings
+** Software Tools for Multigrid Methods
+   key:       Mardal_et_al_2003a
+   author:    K.-A. Mardal, G. W. Zumbusch, H. P. Langtangen
+   editor:    H. P. Langtangen, A. Tveito
+   year:      2003
+   booktitle: Advanced Topics in Computational Partial Differential Equations -- Numerical Methods and Diffpack Programming
+   publisher: Springer
+   pages:     97-152
+   status:    published
+   series:    Lecture Notes in Computational Science and Engineering
+   entrytype: inproceedings
+* reports
+** Optimization With {Diffpack}: Practical Example From Welding
+   key:         Jeberg_et_al_2004
+   author:      P. V. Jeberg, H. P. Langtangen, C. B. Terp
+   year:        2004
+   institution: Simula Research Laboratory
+   status:      published
+   entrytype:   techreport
+   type:        Report 2004-12
+* misc
+** Computational Modeling of Huge Tsunamis From Asteroid Impacts
+   key:          Langtangen_talk_2007a
+   author:       H. P. Langtangen
+   year:         2007
+   status:       published
+   month:        May
+   howpublished: Invited keynote lecture at the \emph{International conference on Computational Science 2007 (ICCS&#39;07)}, Beijing, China
+   entrytype:    misc
+</pre></div>
+<p>
+The format, referred to as the <em>pub</em> format,
+should be self-explanatory. Note the following:
+
+<p>
+
+<ul>
+ <li> Multiple-line values in the BibTeX files are (and must be) single
+   line in the pub format.</li>
+ <li> Keys in the BibTeX format become the attribute <code>key</code> in the pub format.</li>
+ <li> Most other attributes in the BibTeX format have the same names in
+   the pub format.</li>
+ <li> Capitalization, as in `{Navier-Stokes}, is also preserved in
+   the pub format.</li>
+ <li> Capitalization forgotten in the BibTeX file, here in the word
+   <code>Python</code>, is fixed in the pub format (<code>{P}ython</code>).</li>
+ <li> Special LaTeX formatting, such as <code>\emph{...}</code>, is also valid in
+   the pub format.</li>
+</ul>
+
+Publish treated the <code>refs1.bib</code> file without any remarks. That is
+the exception from the rule: usually Publish will complain about
+incomplete or inconsistent information in the BibTeX file,
+as the next two sections illustrate.
+
+<p>
+
+<h3>Adding information  <a name="___sec3"></a></h3>
+
+<p>
+Imagine we also have another BibTeX file, <code>refs2.bib</code>, that we would
+like to add to the Publish database <code>papers.pub</code>. We just
+run <code>publish import refs2.bib</code> to accomplish this task. However,
+the <code>refs2.bib</code> contains a reference
+
+<p>
+
+
+<!-- code=text (from !bc cod) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">@Article{Haga_et_al_2011a,
+author  = {J. B. Haga and H. Osnes and H. P. Langtangen},
+title   = {On the causes of pressure oscillations in low-permeable
+           and low-compressible porous media},
+journal = {International Journal of Analytical and Numerical
+           Methods in Geomechanics},
+year    = {2011},
+doi     = {10.1002/nag.1062},
+url = {http://onlinelibrary.wiley.com/doi/10.1002/nag.1062/abstract}
+}
+</pre></div>
+<p>
+Publish has not registered the journal in this reference. It therefore
+prompts the user and suggests that maybe a journal with a similar
+name, in this case <em>International Journal for Numerical Methods in Engineering</em>,
+is what was meant.
+
+<p>
+
+
+<!-- code=text typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">Validating paper: (Haga_et_al_2011a) - On the causes of pressure
+oscillations in low-permeabl...
+  Status is not defined, assuming status is &quot;published&quot;.
+
+  Unknown journal: &quot;International Journal of Analytical and
+  Numerical Methods in Geomechanics&quot;
+  Suggested journal: &quot;International Journal for Numerical
+  Methods in Engineering&quot;
+
+  Unknown journal, what should I do?
+  [1] Replace journal.
+  [2] Add journal.
+  [3] Skip paper.
+Please enter 1, 2 or 3 (or press return to choose [1]):
+</pre></div>
+<p>
+We need to add the journal and hence choose <code>[2]</code>.
+Added journals, conference proceedings, and other venues are
+placed in a database file with default name <code>venues.list</code> in the
+current working directory. The next time we import some entry
+with this journal name, the name will be known to Publish.
+
+<p>
+The next entry in the <code>refs2.bib</code> reads
+
+<p>
+
+
+<!-- code=text (from !bc cod) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">@Article{Rahman_et_al_2006b,
+author  = {S. Rahman and J. Gorman and C. H. W. Barnes
+           and D. A. Williams and H. P. Langtangen},
+title   = {Numerical Investigation of a Piezoelectric Surface
+           Acoustic Wave Interaction with a One-Dimensional Channel},
+journal = {Physical Review B},
+note    = {035308},
+volume  = {74},
+year    = {2006},
+}
+</pre></div>
+<p>
+Publish finds the journal name of this entry incomplete and therefore says
+
+<p>
+
+
+<!-- code=text typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">Validating paper: (Rahman_et_al_2006b) - Numerical Investigation
+  of a Piezoelectric Surface A...
+  Status is not defined, assuming status is &quot;published&quot;.
+
+  Unknown journal: &quot;Physical Review B&quot;
+  Suggested journal: &quot;Physical Review B: Condensed Matter
+  and Materials Physics&quot;
+  Unknown journal, what should I do?
+  [1] Replace journal.
+  [2] Add journal.
+  [3] Skip paper.
+Please enter 1, 2 or 3 (or press return to choose [1]):
+</pre></div>
+<p>
+The right answer here is the complete name of the journal: <code>[1]</code>.
+
+<p>
+
+
+<h3>Merging publication records  <a name="___sec4"></a></h3>
+
+<p>
+When publish continues with the <code>refs2.bib</code> file it hits the entry
+
+<p>
+
+
+<!-- code=text (from !bc cod) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">@Book{Langtangen_2011,
+author =    {H. P. Langtangen},
+title =     {Python Scripting for Computational Science},
+series =    {Texts in Computational Science and Engineering},
+publisher = {Springer},
+year =      {2011},
+edition =   {Second},
+}
+</pre></div>
+<p>
+This is the same book as in <code>refs1.bib</code>, just a previous edition.
+Publish detects that the entries are very similar and prompts
+the user about what to do:
+
+<p>
+
+<ul>
+ <li> Keep both references?</li>
+ <li> Ingore both?</li>
+ <li> Keep the first reference and ignore the second? Or the other way around?</li>
+ <li> Merge the two reference into one by choosing a conflicting attribute
+   from the first reference or the second?</li>
+</ul>
+
+In this particular case, we are notified about the <code>edition</code>
+attribute, should it be <code>Third</code> or <code>Second</code>? Let us say that we just
+want the newest one, but decide to examine every attribute, so we
+choose <code>Third</code> as the correct edition (alternative 5). Then we are
+asked about the key, do we want <code>Langtangen_2012</code> or <code>Langtangen_2011</code>
+as the key in the merged item? The consistent choice is
+<code>Langtangen_2012</code> (alternative 5). Also the year attribute differs,
+and we have to choose <code>2012</code>. The questions are asked again.  
+<!-- begin inline comment -->
+[<b>hpl 1</b>: <em>why asking twice?  check it out...</em>]
+<!-- end inline comment -->
+  The resulting item in the Publish
+database reads
+
+<p>
+
+
+<!-- code=text typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">* books
+** {P}ython Scripting for Computational Science
+   key:       Langtangen_2012
+   author:    H. P. Langtangen
+   year:      2012
+   publisher: Springer
+   status:    published
+   series:    Texts in Computational Science and Engineering
+   edition:   Third
+   entrytype: book
+</pre></div>
+<p>
+
+
+<h3>Exporting references <a name="publish:export"></a></h3>
+
+<p>
+
+We can export all entries in the database
+to "BibTex": "/doc/tutorial/src/refs.bib",
+<a href="/doc/tutorial/src/refs.pdf">PDF (via LaTeX)</a>,
+<a href="/doc/tutorial/src/refs.pdf">HTML</a>,
+and reStructuredText:
+
+<p>
+
+
+<!-- code=bash (from !bc sys) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">Terminal&gt; publish <span style="color: #008000">export </span>refs.bib   <span style="color: #408080; font-style: italic"># BibTeX</span>
+Terminal&gt; publish <span style="color: #008000">export </span>refs.html  <span style="color: #408080; font-style: italic"># HTML</span>
+Terminal&gt; publish <span style="color: #008000">export </span>refs.rst   <span style="color: #408080; font-style: italic"># reStructuredText</span>
+</pre></div>
+<p>
+
+
+<h3>Capitalization <a name="publish:capitalization"></a></h3>
+
+<p>
+Sometimes words in titles need to be capitalized. One example is
+<em>Navier-Stokes</em>. For some output formats such as HTML and
+reStructuredText the word Navier-Stokes will appear correctly if it
+is correctly capitalized in the Publish database. For output to
+PDF via LaTeX, one relies on BibTeX, and different BibTeX styles
+may treat capitalization of titles differently. The common style called <code>plain</code>
+will typically typeset titles in lower case. Writing just Navier-Stokes
+in the title then results in navier-stokes. This is a well-known
+issue for BibTeX users. Publish adopts the same capitalization
+technique as BibTeX: the capitalization of
+words or characters appearing inside curly
+braces is preserved. It means that if we write <code>{Navier-Stokes}</code>
+in the title, or <code>{N}avier-{S}tokes</code>, we are guaranteed that
+the output to LaTeX and PDF will be Navier-Stokes and not navier-stokes.
+
+<p>
+As with BibTeX, Publish users must carefully read titles in the database
+and ensure that curly braces are used whenever capitalization requires it.
+There is a way out of this described in the next section.
+
+<p>
+
+<h3>Configuration <a name="publish:config"></a></h3>
+
+<p>
+The behavior of Publish can be configured through a <em>configuration file</em>
+called <code>publish_config.py</code>. Suppose we want to change the database
+name from <code>papers.pub</code> to a hidden file with a more descriptive
+name: <code>.publish_references.pub</code>. Similarly, we want to rename the
+<code>venues.list</code> file to <code>.publish_venues.txt</code>. To this end, we make
+a file <code>publish_config.py</code> with the content:
+
+<p>
+
+
+<!-- code=python (from !bc pycod) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">publish.config.defaults</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #666666">*</span>
+
+database_filename <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;.publish_references.pub&#39;</span>
+local_venues_filename <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;.publish_venues.txt&#39;</span>
+</pre></div>
+<p>
+The <code>defaults.py</code> file in the directory <code>publish/config</code> of the
+Publish source code tree contains all variables that can be
+configured by the user in a local <code>python_config.py</code> file.
+These variables include measures of the distance between strings,
+used to decide if two titles or other reference attributes are
+sufficiently close to prompt the user for information.
+
+<p>
+The dictionary <code>uppercase</code> in <code>defaults.py</code> ensures that its
+listed words are properly capitalized when Publish data is exported.
+Looking closely at the Publish database, we realize that one entry
+has a title starting with "A FEniCS-based Programming ...".
+The word FEniCS should be capitalized properly, but the title
+lacks curly braces (because the BibTeX file from which the entry
+was imported also lacks proper braces). Instead of inserting braces
+in the problematic word <code>FEniCS-based</code>, we can add
+this word to the <code>uppercase</code> dictionary.
+A key in this directory is the lowercase version of a word,
+while the value is the correct capitalization specified via curly
+braces. In our case we extend this dictionary with one item,
+
+<p>
+
+
+<!-- code=python (from !bc pycod) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">uppercase<span style="color: #666666">.</span>update({
+    <span style="color: #BA2121">&quot;fenics-based&quot;</span>: <span style="color: #BA2121">&quot;{FEniCS}-based&quot;</span>,
+    })
+</pre></div>
+<p>
+Publish will then always ensure that any version of the word
+FEniCS-based will appear with capital FE and CS in various output formats.
+A lot of words are already registered in <code>uppercase</code>, such as
+FEM, FDM, Python, Cython, FORTRAN, MATLAB, and FEniCS. If you prefer
+<code>Fortran</code> over the official <code>FORTRAN</code>, you can either write
+<code>{F}ortran</code> yourself in the database, or adjust the <code>uppercase</code> dictionary
+in the configuration file:
+
+<p>
+
+
+<!-- code=python (from !bc pycod) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">uppercase<span style="color: #666666">.</span>update({
+    <span style="color: #BA2121">&quot;fortran&quot;</span>: <span style="color: #BA2121">&quot;{F}ortran&quot;</span>,
+    })
+</pre></div>
+<p>
+
+Publish reads your configuration file by <code>import python_config</code>.
+This means that you can just place your <code>python_config.py</code> file in
+the directory where you have the Publish database and where you
+run Publish from.
+(Larger projects dealing with publication management may want to operate
+with different configuration files. Steering which file to use is
+then done via the rules for import in Python. Normally, one sets
+the <code>PYTHONPATH</code> environment variable appropriately to control
+the import of the desired configuration file.)
+
+<p>
+
+<h2>Programming Publish  <a name="___sec8"></a></h2>
+
+<p>
+
+<ul>
+ <li> New output not in categories.</li>
+ <li> New output formatting.</li>
+</ul>
+
+
+<!-- ------------------- end of main content --------------- -->
+
+
+</body>
+</html>
+    
+
