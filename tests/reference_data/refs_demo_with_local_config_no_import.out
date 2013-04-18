@@ -361,13 +361,13 @@ Found close match between (Langtangen:89d) - Computational Methods for Two-Phase
   Langtangen_1989e: Computational Methods for Two-Phase Flow in Oil Reservoirs
   Langtangen:89d: Computational Methods for Two-Phase Flow in Oil Reservoirs
 ['category', 'status', 'school', 'author', 'title', 'thesistype', 'note', 'key', 'year', 'entrytype', 'category', 'status', 'school', 'title', 'author', 'thesistype', 'note', 'key', 'year', 'entrytype']
-  Attribute "author" differs, what should I do?
+  Attribute "note" differs, what should I do?
   [1] Keep both papers (marking them as allowed duplicates).
   [2] Ignore papers (marking them as invalid).
   [3] Keep first paper ((Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...) and ignore second paper ((Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi...)
   [4] Keep second paper ((Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...) and ignore first paper ((Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi...)
-  [5] Use attribute from first paper ("['H. P. Langtangen']")
-  [6] Use attribute from second paper ("('H. P. Langtangen',)")
+  [5] Use attribute from first paper ("Dr.~Scient.~thesis.")
+  [6] Use attribute from second paper ("Dr.~Scient.~thesis")
   [7] Print diff.
 Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
 
