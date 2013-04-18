@@ -10,11 +10,11 @@ __license__  = "GNU GPL version 3 or any later version"
 from sys import path
 path.append("../../publish/config/")
 
-from journals import journals
 import defaults
 publishers = defaults.publishers
 schools = defaults.schools
 institutions = defaults.institutions
+journals = defaults.journals
 
 # Generate journals.tex
 file = open("journals.tex", "w")
