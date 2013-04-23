@@ -14,8 +14,8 @@ __license__  = "GNU GPL version 3 or any later version"
 MARKER_FOR_IMPORT_0123456789 = 'variable for marking import of this module'
 
 # Modified by Anders Logg 2011
-# Modified by Benjamin Kehlet 2012
-# Last modified: 2012-08-31
+# Modified by Benjamin Kehlet 2012-2013
+# Last modified: 2013-04-23
 
 database_filename       = "papers.pub"
 local_venues_filename   = "venues.list"

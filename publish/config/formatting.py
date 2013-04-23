@@ -6,10 +6,9 @@ __copyright__ = "Copyright (C) 2008-2009 Anna Logg"
 __license__   = "GNU GPL version 3 or any later version"
 
 # Modified by Anders Logg, 2009.
-# Modified by Benjamin Kehlet, 2010-2012.
+# Modified by Benjamin Kehlet, 2010-2013.
 
 from publish.common import short_author
-from attributes import category_attributes, thesistype_strings
 from publish import config
 
 #------------------------------------------------------------------------------
@@ -162,7 +161,7 @@ def latex_format_theses(paper):
     values.append(paper["title"])
 
     #thesis type
-    values.append(", %s" % thesistype_strings[paper["thesistype"]])
+    values.append(", %s" % config.get("thesistype_strings")[paper["thesistype"]])
 
     # school and year
     values.append(", %s, %s." % (paper["school"], paper["year"]))
@@ -243,7 +242,7 @@ def latex_format_misc(paper):
     if "booktitle" in paper: values += ["in \\textit{%s}" % paper["booktitle"]]
     if "howpublished" in paper: values += [paper["howpublished"]]
     if "meeting" in paper: values += [paper["meeting"]]
-    if "thesistype" in paper: values += [thesistype_strings[paper["thesistype"]]]
+    if "thesistype" in paper: values += [config.get("thesistype_strings")[paper["thesistype"]]]
     if "school" in paper: values += [paper["school"]]
     if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
     if "volume" in paper: values += ["vol. %s" % paper["volume"]]
@@ -367,7 +366,7 @@ def html_format_theses(paper):
     values = []
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
-    values += [thesistype_strings[paper["thesistype"]]]
+    values += [config.get("thesistype_strings")[paper["thesistype"]]]
     values += [paper["school"]]
 
     values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
@@ -419,7 +418,7 @@ def html_format_misc(paper):
             values += [howpublished]
     if "booktitle" in paper: values += ["in <i>%s</i>" % paper["booktitle"]]
     if "meeting" in paper: values += [paper["meeting"]]
-    if "thesistype" in paper: values += [thesistype_strings[paper["thesistype"]]]
+    if "thesistype" in paper: values += [config.get("thesistype_strings")[paper["thesistype"]]]
     if "school" in paper: values += [paper["school"]]
     if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
     if "volume" in paper: values += ["vol. %s" % paper["volume"]]
@@ -589,7 +588,7 @@ def rst_format_theses(paper):
     values = []
     values += [_rst_get_authors_string(paper)]
     values += [_rst_format_title(paper)]
-    values += [thesistype_strings[paper["thesistype"]]]
+    values += [config.get("thesistype_strings")[paper["thesistype"]]]
     values += [paper["school"]]
     values += [paper["year"]]
     return _rst_join(values)
@@ -632,7 +631,7 @@ def rst_format_misc(paper):
         values += [howpublished]
     if "booktitle" in paper: values += ["in *%s*" % paper["booktitle"]]
     if "meeting" in paper: values += [paper["meeting"]]
-    if "thesistype" in paper: values += [thesistype_strings[paper["thesistype"]]]
+    if "thesistype" in paper: values += [config.get("thesistype_strings")[paper["thesistype"]]]
     if "school" in paper: values += [paper["school"]]
     if "chapter" in paper: values += ["Chapter %s" % paper["chapter"]]
     if "volume" in paper: values += ["vol. %s" % paper["volume"]]
