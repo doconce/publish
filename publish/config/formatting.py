@@ -403,6 +403,15 @@ def html_format_posters(paper):
     values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
 
+def html_format_publicoutreach(paper):
+    "Return string for public outreach in HTML format"
+    values = []
+    values += [_html_format_title(paper)]
+    values += [_html_get_authors_string(paper["author"])]
+    values += ['<span class="%s_item_meeting">%s</span>' % (config.get("html_class_prefix"), paper["meeting"])]
+
+    values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
+    return _html_join(values)
 
 def html_format_misc(paper):
     "Return string for misc in HTML format"
@@ -489,6 +498,7 @@ html_format = {"articles"      : html_format_articles,
                "courses"       : html_format_courses,
                "talks"         : html_format_talks,
                "posters"       : html_format_posters,
+               "publicoutreach": html_format_publicoutreach,
                "misc"          : html_format_misc}
 
 #------------------------------------------------------------------------------
