@@ -83,6 +83,12 @@ def read(text):
             position, attr_key, attr_value = _parse_attribute(position, text)
             position = _skip_spaces(position, text)
 
+            # Bibtex attribute "key" is legal and needed for sorting if
+            # author is missing (typical in software entries). Let
+            # Bibtex "key" correspond to "sortkey" in publish
+            if attr_key == "key":
+                attr_key = "sortkey"
+
             if current_paper.has_key(attr_key) :
                 raise ParseException, "Paper with key '%s' has double declared attribute: '%s'" % (current_paper["key"], attr_key)
 
@@ -183,7 +189,9 @@ def write(papers):
         for attribute in ordered_attributes(paper, _ignores):
             if attribute in ("entrytype", "key"):
                 continue
-            elif attribute == "author":
+            if attribute == "sortkey":
+                attribute = "key"  # sortkey becomes key in Bibtex
+            if attribute == "author":
                 value = " and ".join(paper["author"])
             elif attribute == "editor":
                 value = " and ".join(paper["editor"])

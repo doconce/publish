@@ -6,13 +6,13 @@ TOC: on
 
 # The read .bib files become !bc cod/pro which Sphinx typesets
 # in python pygments style. Change cod and pro to be plain text:
-# Sphinx code-blocks: cod=text pro=text
+# Sphinx code-blocks: cod=text pro=text sys=console
 
 ======= Motivation =======
 
 Publish is a software for managing your own list of publications or any
 list of references to literature. There are numerous tools available for
-this purpose. The most well-known to scientists is perhaps BibTeX.
+this purpose, with BibTeX as the most well-known to scientists.
 Publish offers several important advantages over BibTeX:
 
  o the format is simpler (plain self-explanatory text),
@@ -46,6 +46,18 @@ your first Publish database:
  o export to other formats,
  o customize the behavior of Publish.
 
+===== Installation =====
+
+Publish is pure Python code hosted at Bitbucket. The following
+statements fetch the source code and installs it:
+
+!bc sys
+Terminal> hg clone ssh://hg@bitbucket.org/logg/publish
+Terminal> cd publish
+Terminal> sudo python setup.py install
+!ec
+The first command needs the "Mercurial version control system": "http://mercurial.selenic.com/" (`hg`), which is as easy to install as Publish itself.
+
 ===== Importing a BibTeX file =====
 
 Suppose you have some BibTeX files and want to put these in a
@@ -53,20 +65,89 @@ Publish database. Technically, this means merging the BibTeX files
 to one text file with a simple format. You may choose to have one
 Publish database or many.
 
-Here is a sample BibTeX file called `refs1.bib`:
+Here are parts of a sample BibTeX file called `refs1.bib`:
 
-@@@CODE src/refs1.bib
-Importing this to Publish format is done by
+!bc cod
+@InProceedings{Mardal_et_al_2003a,
+author =    {K.-A. Mardal and G. W. Zumbusch and H. P. Langtangen},
+editor =    {H. P. Langtangen and A. Tveito},
+title =     {Software Tools for Multigrid Methods},
+booktitle = {Advanced Topics in Computational Partial Differential
+            Equations -- Numerical Methods and Diffpack Programming},
+publisher = {Springer},
+series    = {Lecture Notes in Computational Science and Engineering},
+year =      {2003},
+pages =     {97-152},
+}
+
+@Article{Mortensen_et_al_2011,
+author         = {M. Mortensen and H. P. Langtangen and G. N. Wells},
+title          = {A FEniCS-Based Programming Framework for Modeling
+Turbulent Flow by the {Reynolds}-Averaged {Navier-Stokes} Equations},
+journal        = {Advances in Water Resources},
+year           = {2011},
+volume         = {34},
+number         = {9},
+doi            = {10.1016/j.advwatres.2011.02.013},
+}
+
+@Book{Langtangen_2012,
+author =    {H. P. Langtangen},
+title =     {Python Scripting for Computational Science},
+series =    {Texts in Computational Science and Engineering},
+publisher = {Springer},
+year =      {2012},
+edition =   {Third},
+}
+!ec
+
+
+Importing this to Publish is done by
 
 !bc sys
 Terminal> publish import refs1.bib
 !ec
 Publish creates a database with the default name `papers.pub`.
-It has the following content:
+The entries from the BibTeX file above are represented as
+follows in the database (with long lines cut off):
 
-@@@CODE src/papers_after_refs1.pub
+!bc cod
+* articles
+** A FEniCS-Based Programming Framework for Modeling Turbulent ...
+   key:       Mortensen_et_al_2011
+   author:    M. Mortensen, H. P. Langtangen, G. N. Wells
+   year:      2011
+   journal:   Advances in Water Resources
+   volume:    34
+   number:    9
+   doi:       10.1016/j.advwatres.2011.02.013
+   status:    published
+   entrytype: article
+* books
+** {P}ython Scripting for Computational Science
+   key:       Langtangen_2012
+   author:    H. P. Langtangen
+   year:      2012
+   publisher: Springer
+   status:    published
+   series:    Texts in Computational Science and Engineering
+   edition:   Third
+   entrytype: book
+* proceedings
+** Software Tools for Multigrid Methods
+   key:       Mardal_et_al_2003a
+   author:    K.-A. Mardal, G. W. Zumbusch, H. P. Langtangen
+   editor:    H. P. Langtangen, A. Tveito
+   year:      2003
+   booktitle: Advanced Topics in Computational Partial ...
+   publisher: Springer
+   pages:     97-152
+   status:    published
+   series:    Lecture Notes in Computational Science and Engineering
+   entrytype: inproceedings
+!ec
 The format, referred to as the *pub* format,
-should be self-explanatory. Note the following:
+should be self-explanatory. The following is worth noticing.
 
  * Multiple-line values in the BibTeX files are (and must be) single
    line in the pub format.
@@ -181,6 +262,13 @@ database reads
    entrytype: book
 !ec
 
+__Invalid references.__
+Occasionally, Publish is not able to import references correctly.
+Such data are collected in a file with name `invalid_papers_DT.pub`,
+where `DT` represent current date and time. To get such data into
+the database, open the file, make the necessary edits, and try to import
+the file.
+
 ===== Exporting references =====
 label{publish:export}
 
@@ -201,11 +289,24 @@ Terminal> publish export refs.html  # HTML
 Terminal> publish export refs.rst   # reStructuredText
 !ec
 
+===== Command-line arguments =====
+
+The `import` and `export` commands can restrict the attention to
+a certain author, year, or category of references, e.g.,
+
+!bc sys
+Terminal> publish import category=articles myrefs.bib
+Terminal> publish import author=Mardal all.bib
+Terminal> publish export category=books refs.pdf
+!ec
+
+
 ===== Capitalization =====
 label{publish:capitalization}
 
 Sometimes words in titles need to be capitalized. One example is
-*Navier-Stokes*. For some output formats such as HTML and
+*Navier-Stokes* where N and S have to be uppercase and the rest
+lowercase. For some output formats such as HTML and
 reStructuredText the word Navier-Stokes will appear correctly if it
 is correctly capitalized in the Publish database. For output to
 PDF via LaTeX, one relies on BibTeX, and different BibTeX styles
