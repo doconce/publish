@@ -159,6 +159,7 @@ def init():
     data["entrytype_attributes"] = attributes.entrytype_attributes
     data["entrytype2category"]   = attributes.entrytype2category
     data["category2entrytype"]   = attributes.category2entrytype
+    data["thesistype_strings"]   = attributes.thesistype_strings
 
     # Import parameters from formatting
     import formatting
