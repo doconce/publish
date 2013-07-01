@@ -96,7 +96,8 @@ def _filter(s):
                     ('\\"u', "&Uuml;"),
                     ('\\epsilon', "&epsilon;"),
                     ('\\\'\i', "&iacute;"),
-                    ('\\textquoteright', "&apos;") # Is this correct?
+                    ('\\textquoteright', "&apos;"), # Is this correct?
+                    ("\\'", "&apos;")
                     ]
 
     # Iterate over replacements
