@@ -4,10 +4,10 @@
 This chapter contains installation instructions. It
 also contains basic information on how to use the command-line
 interface.
- 
+
 \section{Installation}
 \index{installation}
-\package{} follows the standard installation procedure for Python packages. 
+\package{} follows the standard installation procedure for Python packages.
 Enter the source directory of \package{} and issue the following command:
 \begin{code}
 # sudo python setup.py install
@@ -83,11 +83,89 @@ The following global options are recognized by all three commands:
 \section{Configuration of the System}
 \index{configuration}
 
-In the file \emp{publish/config/general.py}, it is possible to make
-some configuration options.  For example, it is possible to change the
-name of the default database file, the venues-file, and the file were
+Much of the behavior of the system can be configured by the user.
+The file \emp{publish/config/defaults.py} contains default values of
+all the variables that can be configured.
+This includes, for example, the
+name of the default database file, the venues-file, and the file where
 invalid papers are stored.  It is also possible to change how picky
 the system is when judging the closeness between papers that are
 considered as duplicates (\emp{matching\_\-distance\_strong}) and how
 far the system will look to suggest a venue name when a venue (journal
 name) is not recognized (\emp{matching\_distance\_weak}).
+
+To change the default settings, the user has to make a file
+\emp{publish\_config.py} and make sure the \emp{PYTHONPATH} variable
+is set such that any \emp{import publish\_config} imports the desired
+file. This means that the user may have different \emp{publish\_config.py}
+files for different purposes, and the one to be used by \package{}
+is controlled by the \emp{PYTHONPATH} variable. In most cases, one
+would like to change the default database name or other variables for
+a particular project, and then it is sufficient to make
+a local \emp{publish\_config.py} file in the directory where \package{}
+is supposed to be run from and where the database is to be stored
+(there is no need to set \emp{PYTHONPATH} in such cases
+since Python will always try
+to import from the current
+working directory first). Note that the user's configuration file
+\emph{must} have the name \emp{publish\_config.py}.
+
+Suppose we want to change the names of the database and the venues list.
+For this purpose
+we make a \emp{publish\_config.py} file with the following content
+
+\begin{code}
+from publish.config.defaults import *
+
+database_filename = '.publish_papers.pub'
+local_venues_filename = '.publish_venues.txt'
+\end{code}
+Note that we start the filenames with a dot to make them hidden in
+the project directory.
+
+Sometimes you may want to add words that need special capitalization.
+Looking at the \emp{publish/config/defaults.py} file, we realize that
+such words are stored in a dictionary \emp{uppercase}. We want to
+add capitalization of the words ``FEniCS'' and ``FEniCS-based''.
+This means that if those words, however they are capitalized in a title,
+will be guaranteed to be written that way. The above file will
+now look as follows
+
+\begin{code}
+from publish.config.defaults import *
+
+database_filename = '.publish_papers.pub'
+local_venues_filename = '.publish_venues.txt'
+
+uppercase.update({
+    "fenics": "{FEniCS}",
+    "fenics-based": "{FEniCS}-based",
+    })
+\end{code}
+The syntax for specifying capitalization is taken from BibTeX. Note
+that the key in the \emp{uppercase} dictionary must be in lowercase.
+Also note that we do \emp{uppercase.update} to add new items to
+the dictionary. Doing \emp{uppercase = ...} will just assign two
+entries and forget about all the entries that the default settings take
+care (i.e., we overwrite the \emp{uppercase} dictionary imported in
+the first line). Lists and tuples must be \emph{extended} with new
+values, typically by an assignment like \emp{obj = obj + users\_list}.
+
+It is possible to skip the first import line in \emp{publish\_config.py}
+files. \package{} will then merge the \emp{publish\_config.py}
+contents with the default values in \emp{publish/config/defaults.py}.
+The syntax changes a little bit in \emp{publish\_config.py} since
+the variables to be configured do not exist from an import. For example,
+the \emp{uppercase} variable set above is not imported so we just do
+an ordinary assignment:
+
+\begin{code}
+database_filename = '.publish_papers.pub'
+local_venues_filename = '.publish_venues.txt'
+
+uppercase = {
+    "fenics": "{FEniCS}",
+    "fenics-based": "{FEniCS}-based",
+    }
+\end{code}
+Lists and tuples are not extended; just assign the desired new values.

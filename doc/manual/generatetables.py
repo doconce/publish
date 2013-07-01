@@ -1,5 +1,5 @@
-"""This script generates the files 
-journals.tex, publishers.tex, schools.tex, and institutions.tex, 
+"""This script generates the files
+journals.tex, publishers.tex, schools.tex, and institutions.tex,
 automatically from the source code."""
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
@@ -10,10 +10,11 @@ __license__  = "GNU GPL version 3 or any later version"
 from sys import path
 path.append("../../publish/config/")
 
-from journals import journals
-from publishers import publishers
-from schools import schools
-from institutions import institutions
+import defaults
+publishers = defaults.publishers
+schools = defaults.schools
+institutions = defaults.institutions
+journals = defaults.journals
 
 # Generate journals.tex
 file = open("journals.tex", "w")

@@ -10,7 +10,7 @@ __license__  = "GNU GPL version 3 or any later version"
 # Last modified: 2012-06-02
 
 from os.path import isfile
-import __builtin__
+import __builtin__, sys
 data = None
 
 def get(key):
@@ -58,8 +58,67 @@ def init():
     global data
     data = {}
 
+    try:
+        # Import from user's configuration file, which may
+        # perform from publish.config.default import * first
+        # and then overrides and/or adds information, or
+        # just redefine variables and extending lists and dicts.
+        import publish_config as user_config
+        print 'User configuration data imported from ', \
+              str(sys.modules['publish_config']).split('from')[1][3:-6]
+    except ImportError:
+        user_config = None
+
+    import defaults
+
+    if user_config is not None:
+        if hasattr(user_config, 'MARKER_FOR_IMPORT_0123456789'):
+            # User's publish_config.py has done a
+            #   from publish.defaults.config import *
+            # and represents the uninion of defaults and user's data
+            defaults = user_config
+        else:
+            # Add user's data to those in defaults
+            for name in dir(defaults):
+                var = getattr(defaults, name)
+                if name.startswith('_'):
+                    # Drop "private" data
+                    continue
+                if not hasattr(user_config, name):
+                    # User has not set this variable
+                    continue
+                if isinstance(var, (bool,int,float,basestring)):
+                    # Override basic variable with user's value
+                    setattr(defaults, name,
+                            getattr(user_config, name))
+                elif isinstance(var, (tuple,list)):
+                    # Extend defaults' var with user's
+                    setattr(defaults, name,
+                            getattr(user_config, name) + var)
+                    # (we do obj = obj + obj since it works with
+                    # pure tuples and list, alternative is in-place
+                    # var.extend(getattr(user_config, name))
+                    # but that works only for lists)
+                elif isinstance(var, dict):
+                    # inplace change (no assignment)
+                    var.update(getattr(user_config, name))
+                else:
+                    raise TypeError(
+                        'defaults.py variable "%s" is of a type not '
+                        'handled by the code in config/__init__.py')
+                conf = defaults
+
+    # Backward compatibility of names
+    general = defaults
+    attributes = defaults
+    capitalization = defaults
+    schools = defaults
+    publishers = defaults
+    typos = defaults
+    institutions = defaults
+    journals = defaults
+
     # Import parameters from general
-    import general
     data["database_filename"]        = general.database_filename
     data["local_venues_filename"]    = general.local_venues_filename
     data["authornames_filename"]     = general.authornames_filename
@@ -84,16 +143,13 @@ def init():
     data["talks_dont_duplicate"]      = general.talks_dont_duplicate
 
     # Import parameters from capitalization
-    import capitalization
     data["lowercase"] = capitalization.lowercase
     data["uppercase"] = capitalization.uppercase
 
     # Import parameters from typos
-    import typos
     data["typos"] = typos.typos
 
     # Import parameters from attributes
-    import attributes
     data["categories"]           = attributes.categories
     data["category_headings"]    = attributes.category_headings
     data["category_labels"]      = attributes.category_labels
@@ -104,6 +160,7 @@ def init():
     data["entrytype_attributes"] = attributes.entrytype_attributes
     data["entrytype2category"]   = attributes.entrytype2category
     data["category2entrytype"]   = attributes.category2entrytype
+    data["thesistype_strings"]   = attributes.thesistype_strings
 
     # Import parameters from formatting
     import formatting
@@ -114,23 +171,18 @@ def init():
     data["use_textsc"]  = True
 
     # Import parameters from institutions
-    import institutions
     data["institutions"] = list(institutions.institutions)
 
     # Import parameters from schools
-    import schools
     data["schools"] = list(schools.schools)
 
     # Import parameters from publishers
-    import publishers
     data["publishers"] = list(publishers.publishers)
 
     # Empty list of meetings (could be extended in meetings.py)
     data["meetings"] = []
 
     # Import parameters from journals
-    import journals
-
     # Create list of all journals (including both short and long names)
     journal_list = [short for (short, long, issn) in journals.journals] + \
                    [long  for (short, long, issn) in journals.journals]
@@ -155,7 +207,7 @@ def init():
     data["long2issn"] = long2issn
 
     # Read local venues
-    _read_uservenues(general.local_venues_filename,
+    _read_uservenues(data["local_venues_filename"],
                      data["journals"],
                      data["publishers"],
                      data["schools"],
@@ -163,7 +215,7 @@ def init():
                      data["meetings"])
 
     # Read list of author names
-    data["allowed_author_names"] = _read_author_names(general.authornames_filename)
+    data["allowed_author_names"] = _read_author_names(data["authornames_filename"])
 
 def _read_uservenues(filename, journals, publishers, schools, institutions, meetings):
     "Read venues from file"
