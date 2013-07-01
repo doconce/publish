@@ -99,6 +99,11 @@ def _find_matching_paper(paper, merged_papers):
 
         p = merged_papers[i]
 
+        # Handle the special case where one of the papers is a talk
+        if ((paper["category"] == "talks" or p["category"] == "talks") and
+            paper["category"] != p["category"] and config.get("talks_dont_duplicate")) :
+            continue
+
         # Compute venue distance
         if venue_type is None or not p["category"] == category:
             d_venue = 0

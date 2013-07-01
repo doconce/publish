@@ -49,3 +49,8 @@ skip_categories = False
 # Control whether LaTeX bibitems should use labels [J1], [J2] etc
 # NOTE: Not fully implemented for all report types.
 use_labels = False
+
+# When searching for duplicate, threat the case where paper a is a
+# talk and paper b is something else as not a duplicate.
+# Usefull since there is often talk with same title as papers or proceedings.
+talks_dont_duplicate = True
