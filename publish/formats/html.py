@@ -103,4 +103,15 @@ def _filter(s):
     for (a, b) in replacements:
         s = s.replace(a, b)
 
+    # Remove { }
+    while (True) :
+        found = False
+        for i in range(len(s)) :
+            if s[i] in ["{", "}"] and (i == 0 or s[i-1] != "\\") :
+                found = True
+                s = s[:i] + s[i+1:]
+                break
+        if not found :
+            break
+
     return s
