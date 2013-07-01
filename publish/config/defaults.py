@@ -58,6 +58,11 @@ skip_categories = False
 # NOTE: Not fully implemented for all report types.
 use_labels = False
 
+# When searching for duplicates, handle the case where one publication
+# is a talk and the other is not and a non-duplicate
+# Usefull since we often have talks with the same title as a paper
+talks_dont_duplicate = True
+
 # Common typos
 typos_common = {"\\a\\'": "\\'",
                 "": " ",

@@ -140,7 +140,7 @@ def init():
     data["global_numbering"]         = general.global_numbering
     data["use_labels"]               = general.use_labels
     data["skip_categories"]          = general.skip_categories
-    data["talks_dont_duplicate"]      = general.talks_dont_duplicate
+    data["talks_dont_duplicate"]     = general.talks_dont_duplicate
 
     # Import parameters from capitalization
     data["lowercase"] = capitalization.lowercase
