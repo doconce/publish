@@ -48,15 +48,21 @@ def pstr(paper):
         s = "Unknown"
     return s
 
-def short_author(author):
-    "Abbreviate author name with initials"
+def split_with_quotes(text) :
+    "Split text into a tuple of words respecting quotes"
 
     # Use the csv module to split the.
     # Seems unnatural, but it respects quotes
     # and does what we want, as opposed to the native
     # string functions.
-    input = StringIO.StringIO(author)
-    words = csv.reader(input, delimiter=' ').next()
+    input = StringIO.StringIO(text)
+    return csv.reader(input, delimiter=' ').next()
+
+
+def short_author(author):
+    "Abbreviate author name with initials"
+
+    words = split_with_quotes(author)
 
     # This is an alternative, but leaves empty string
     # in the result list
