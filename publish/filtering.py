@@ -20,9 +20,10 @@ def filter_papers(papers, filters):
                     match = False
                     break
             else:
-                if not matching_attribute(paper, attribute, value, should_match):
-                    match = False
-                    break
+                for val in value.split(","):
+                    if not matching_attribute(paper, attribute, val, should_match):
+                        match = False
+                        break
         if match:
 
             # Remove private key
