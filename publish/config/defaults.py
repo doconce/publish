@@ -319,6 +319,7 @@ categories = ("articles",
               "talks",
               "posters",
               "publicoutreach",
+              "preprint",
               "misc")
 
 # Headings for categories
@@ -335,6 +336,7 @@ category_headings = {"articles":       "Articles in International Journals",
                      "talks":          "Talks",
                      "posters":        "Posters",
                      "publicoutreach": "Public Outreach",
+                     "preprint":       "Preprints",
                      "misc":           "Other Publications"}
 
 # Labels for categories
@@ -351,6 +353,7 @@ category_labels = {"articles":       "J",
                    "talks":          "Ta",
                    "posters":        "Po",
                    "publicoutreach": "Or",
+                   "preprint":       "Pr",
                    "misc":           "Mi"}
 
 # Attributes for categories (tuple means at least one of listed attributes required)
@@ -367,6 +370,7 @@ category_attributes = {"articles":       ("author", "title", "journal", "year", 
                        "talks":          ("author", "title", "meeting", "year", "status"),
                        "posters":        ("author", "title", "meeting", "year", "status"),
                        "publicoutreach": ("author", "title", "meeting", "year", "status"),
+                       "preprint":       ("author", "title", "year", "status"),
                        "misc":           ("title", "status")}
 
 # Venues for categories (will be matched against a list of allowed values)
@@ -383,6 +387,7 @@ category_venues = {"articles":       "journal",
                    "talks":          "meeting",
                    "posters":        "meeting",
                    "publicoutreach": "meeting",
+                   "preprint":       None,
                    "misc":           None}
 
 # List of ordered attributes (so we rewrite pub files in a fixed order)
@@ -423,6 +428,7 @@ entrytypes = ("article",
               "phdthesis",
               "proceedings",
               "techreport",
+              "preprint",
               "unpublished")
 
 # Attributes for entry types (tuple means at least one of listed attributes required)
@@ -439,6 +445,7 @@ entrytype_attributes = {"article":      ("author", "title", "journal", "year"),
                         "phdthesis":    ("author", "title", "school", "year"),
                         "proceedings":  ("title", "year"),
                         "techreport":   ("author", "title", "institution", "year"),
+                        "preprint":     ("author", "title"),
                         "unpublished":  ("author", "title", "note")}
 
 # Mapping from entry type to category
@@ -450,6 +457,7 @@ entrytype2category = {"article":          "articles",
                       "conference":       "proceedings",
                       "techreport":       "reports",
                       "manual":           "manuals",
+                      "preprint":         "preprint",
                       "phdthesis":        None,            # special case: theses
                       "mastersthesis":    None,            # special case: theses
                       "misc":             None}            # special case: misc, talks, or courses
@@ -466,6 +474,7 @@ category2entrytype = {"articles":       "article",
                       "theses":         None,
                       "courses":        "misc",
                       "talks":          "misc",
+                      "preprint":       "preprint",
                       "misc":           "misc"}
 
 # Thesis type strings

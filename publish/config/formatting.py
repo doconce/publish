@@ -232,7 +232,19 @@ def latex_format_publicoutreach(paper):
 
     return "".join(values)
 
+def latex_format_preprint(paper):
+    "Return string for preprint in LaTeX format"
+    values = []
 
+    # authors
+    values.append("%s. " % _latex_format_authors(_latex_get_authors_string(paper["author"])))
+
+    # title
+    values.append(paper["title"])
+
+    # title
+    values.append(", %s" % paper["year"])
+    return "".join(values)
 
 def latex_format_misc(paper):
     "Return string for misc in LaTeX format"
@@ -267,6 +279,7 @@ latex_format = {"articles"      : latex_format_articles,
                 "talks"         : latex_format_talks,
                 "posters"       : latex_format_posters,
                 "publicoutreach": latex_format_publicoutreach,
+                "preprint"      : latex_format_preprint,
                 "misc"          : latex_format_misc}
 
 #------------------------------------------------------------------------------
