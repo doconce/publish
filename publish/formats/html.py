@@ -100,10 +100,6 @@ def _filter(s):
                     ("\\'", "&apos;")
                     ]
 
-    # Iterate over replacements
-    for (a, b) in replacements:
-        s = s.replace(a, b)
-
     # Remove { }
     while (True) :
         found = False
@@ -114,5 +110,9 @@ def _filter(s):
                 break
         if not found :
             break
+
+    # Iterate over replacements
+    for (a, b) in replacements:
+        s = s.replace(a, b)
 
     return s
