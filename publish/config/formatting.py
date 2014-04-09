@@ -6,7 +6,7 @@ __copyright__ = "Copyright (C) 2008-2009 Anna Logg"
 __license__   = "GNU GPL version 3 or any later version"
 
 # Modified by Anders Logg, 2009.
-# Modified by Benjamin Kehlet, 2010-2013.
+# Modified by Benjamin Kehlet, 2010-2014.
 
 from publish.common import short_author
 from publish import config
@@ -416,6 +416,16 @@ def html_format_posters(paper):
     values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
 
+
+
+def html_format_preprint(paper):
+    "Return string for preprint in HTML format"
+    values = []
+    values += [_html_format_title(paper)]
+    values += [_html_get_authors_string(paper["author"])]
+    if "year" in paper: values += [paper["year"]]
+    return _html_join(values)
+
 def html_format_publicoutreach(paper):
     "Return string for public outreach in HTML format"
     values = []
@@ -511,6 +521,7 @@ html_format = {"articles"      : html_format_articles,
                "courses"       : html_format_courses,
                "talks"         : html_format_talks,
                "posters"       : html_format_posters,
+               "preprint"      : html_format_preprint,
                "publicoutreach": html_format_publicoutreach,
                "misc"          : html_format_misc}
 
