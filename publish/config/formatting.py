@@ -189,7 +189,8 @@ def latex_format_talks(paper):
     values.append(paper["title"])
 
     # meeting
-    values.append(", %s" % paper["meeting"])
+    if paper.has_key("meeting") :
+        values.append(", %s" % paper["meeting"])
 
     #year
     values.append(", %s." % paper["year"])
@@ -207,7 +208,8 @@ def latex_format_posters(paper):
     values.append(paper["title"])
 
     # meeting
-    values.append(", %s" % paper["meeting"])
+    if paper.has_key("meeting") :
+        values.append(", %s" % paper["meeting"])
 
     #year
     values.append(", %s." % paper["year"])
@@ -225,7 +227,8 @@ def latex_format_publicoutreach(paper):
     values.append(paper["title"])
 
     # meeting
-    values.append(", %s" % paper["meeting"])
+    if paper.has_key("meeting") :
+        values.append(", %s" % paper["meeting"])
 
     #year
     values.append(", %s." % paper["year"])
@@ -401,7 +404,8 @@ def html_format_talks(paper):
     values = []
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
-    values += ['<span class="%s_item_meeting">%s</span>' % (config.get("html_class_prefix"), paper["meeting"])]
+    if paper.has_key("meeting") :
+        values += ['<span class="%s_item_meeting">%s</span>' % (config.get("html_class_prefix"), paper["meeting"])]
 
     values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
