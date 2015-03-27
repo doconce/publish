@@ -52,20 +52,24 @@ def read(text):
         position += 1
 
         # Extract entry-type
-        match = re.search(_entry_pattern, text[position:])
-        if not match :
+        entrytype = text[position:position+text[position:].find("{")].strip()
+        #match = re.search(_entry_pattern, text[position:])
+        
+        if config.get("use_standard_categories") and entrytype not in config.get("entrytype_attributes") :
+            #if not match :
             msg  = "Parse error in BibTex file\n%s\n" % _get_line(position, text)
             msg += "Allowed entry types are: %s" % ", ".join(config.get("entrytype_attributes"))
             raise ParseException, msg
 
         # Make sure every entry-type is written in lower-case letters
-        current_paper["entrytype"] = match.group(1).lower()
+        #current_paper["entrytype"] = match.group(1).lower()
+        current_paper["entrytype"] = entrytype
 
         position += len(current_paper["entrytype"])
         position = _skip_spaces(position, text)
 
         if not text[position] == "{" :
-            raise ParseException, "Bibtex parse error. Expected '{' after entrytype.\n%s" % _get_line(position, text)
+            raise ParseException, "Bibtex parse error. Expected '{' after entrytype. Got '%s'\n%s" % (text[position], _get_line(position, text))
 
         position += 1
 
@@ -113,10 +117,17 @@ def read(text):
         # Done with parsing the paper. Now validate the collected data
 
         # Check that paper has all required attributes
-        _check_paper(current_paper)
+        if config.get("use_standard_categories") :
+            _check_paper(current_paper)
+        else :
+            if not current_paper.has_key("status") :
+                current_paper["status"] = "published"
 
         # Extract category
-        current_paper["category"] = _extract_category(current_paper)
+        if config.get("use_standard_categories") :
+            current_paper["category"] = _extract_category(current_paper)
+        else :
+            current_paper["category"] = current_paper["entrytype"]
 
         # Extract authors as tuple from string
         if "author" in current_paper:

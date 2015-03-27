@@ -33,14 +33,16 @@ def read(text):
     title = None
     lines = text.split("\n")
     for line in lines:
+        line = line.strip()
 
         # Look for start of category
-        match = _category_pattern.search(line)
-        if not match is None:
+        #match = _category_pattern.search(line)
+        if line.startswith("* ") :
 
             # Extract category
-            groups = match.groups()
-            category = groups[0]
+            #groups = match.groups()
+            #category = groups[0]
+            category = line[2:]
 
             # Make sure every category is written in lower-case letters
             category = category.lower()
@@ -110,8 +112,18 @@ def write(papers):
 
     text = ""
 
+    if config.get("use_standard_categories") :
+        categories = config.get("categories")
+    else :
+        categories = set()
+        for paper in papers :
+            categories.add(paper["category"])
+        categories = list(categories)
+        categories.sort()
+        
+    
     # Iterate over categories
-    for category in config.get("categories"):
+    for category in categories:
 
         # Extract papers in category
         category_papers = [paper for paper in papers if paper["category"] == category]

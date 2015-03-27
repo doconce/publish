@@ -141,6 +141,8 @@ def init():
     data["use_labels"]               = general.use_labels
     data["skip_categories"]          = general.skip_categories
     data["talks_dont_duplicate"]     = general.talks_dont_duplicate
+    data["use_standard_categories"]  = general.use_standard_categories
+    data["simple_import"]            = general.simple_import
 
     # Import parameters from capitalization
     data["lowercase"] = capitalization.lowercase

@@ -17,7 +17,10 @@ def import_file(filename, filters=[]):
 
     # Read and validate database
     database_papers = read_database()
-    (database_papers, invalid_database_papers) = validate_papers(database_papers)
+    if not config.get("simple_import") :
+        (database_papers, invalid_database_papers) = validate_papers(database_papers)
+    else :
+        invalid_database_papers = []
 
     # Read imported file
     imported_papers = _read_file(filename)
@@ -26,8 +29,12 @@ def import_file(filename, filters=[]):
     _assign_attributes(imported_papers, filters)
 
     # Validate imported file
-    (imported_papers, invalid_imported_papers) = validate_papers(imported_papers)
+    if not config.get("simple_import") :
+        (imported_papers, invalid_imported_papers) = validate_papers(imported_papers)
+    else :
+        invalid_imported_papers = []
     print ""
+    
     if len(invalid_imported_papers) > 0:
         print 'Imported %d paper(s) from "%s" (and found %d invalid paper(s)).' % \
               (len(imported_papers), filename, len(invalid_imported_papers))
@@ -35,7 +42,10 @@ def import_file(filename, filters=[]):
         print 'Imported %d paper(s) from "%s".' % (len(imported_papers), filename)
 
     # Merge papers
-    merged_papers = merge_papers(database_papers, imported_papers)
+    if config.get("simple_import") :
+        merged_papers = database_papers + imported_papers
+    else :
+        merged_papers = merge_papers(database_papers, imported_papers)
 
     # Print summary
     print_summary(merged_papers)

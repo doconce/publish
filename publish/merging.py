@@ -92,7 +92,8 @@ def _find_matching_paper(paper, merged_papers):
     # Get venue type
     category = paper["category"]
     category_venues = config.get("category_venues")
-    venue_type = category_venues[category] # "journal", "booktitle", etc
+    # "journal", "booktitle", etc
+    venue_type = category_venues[category] if category_venues.has_key("category") else None 
 
     # Compare against all papers
     for i in range(len(merged_papers)):

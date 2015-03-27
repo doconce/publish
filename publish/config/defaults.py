@@ -63,6 +63,14 @@ use_labels = False
 # Usefull since we often have talks with the same title as a paper
 talks_dont_duplicate = True
 
+# When importing from bibtex, check that categories are according to
+# the bibtex standard.
+# If False, then all categories allowed.
+use_standard_categories = True
+
+# When importing a file, do not validate and do not process duplicates
+simple_import = False
+
 # Common typos
 typos_common = {"\\a\\'": "\\'",
                 "": " ",
