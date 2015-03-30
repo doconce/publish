@@ -10,7 +10,6 @@ __license__  = "GNU GPL version 3 or any later version"
 # Modified by Benjamin Kehlet 2012
 
 from log import warning
-import StringIO, csv
 
 from publish import config
 
@@ -49,14 +48,38 @@ def pstr(paper):
     return s
 
 def split_with_quotes(text) :
-    "Split text into a tuple of words respecting quotes"
+    "Split text into a tuple of words respecting quotes and (non-escaped) curly brackets"
 
-    # Use the csv module to split the.
-    # Seems unnatural, but it respects quotes
-    # and does what we want, as opposed to the native
-    # string functions.
-    input = StringIO.StringIO(text)
-    return csv.reader(input, delimiter=' ').next()
+    splitted = []
+    last_split = 0
+    in_quotes = False
+    brackets_level = 0
+    
+    text = text.strip()
+    i = 0
+    while i < len(text) :
+        if text[i].isspace() and not in_quotes and brackets_level == 0 :
+            splitted.append(text[last_split:i])
+            i += 1
+            while text[i].isspace() and i < len(text) :
+                i += 1
+
+            last_split = i
+        elif text[i] == "}" and (i == 0 or text[i-1] != "\\") :
+            brackets_level = max(0, brackets_level-1)
+        elif text[i] == "{" and (i == 0 or text[i-1] != "\\") :
+            brackets_level += 1
+        elif text[i] == "\"" and (i == 0 or text[i-1] != "\\") :
+            in_quotes = not in_quotes
+        i += 1
+
+    if i > last_split :
+        splitted.append(text[last_split:i])
+
+    if brack_level > 0 :
+        warning("Mismatched brackets")
+
+    return tuple(splitted)
 
 
 def short_author(author):
