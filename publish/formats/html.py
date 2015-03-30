@@ -97,8 +97,17 @@ def _filter(s):
                     ('\\epsilon', "&epsilon;"),
                     ('\\\'\i', "&iacute;"),
                     ('\\textquoteright', "&apos;"), # Is this correct?
-                    ("\\'", "&apos;")
+                    ('\\textquoteleft', "&apos;"), # Is this correct?
+                    ("\\'", "&apos;"),
+                    ("\l", "&#0322;"),
+                    ("\\.Z", "&#379;"),
+                    ("\\beta", "&beta;"),
+                    ("\\r", "&aring;"),
+                    ("\`a", "&agrave;")
                     ]
+
+    # Sort wrt to length of string
+    replacements.sort(key=len, reverse=True)
 
     # Remove { }
     while (True) :
