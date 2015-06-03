@@ -35,7 +35,7 @@ def write(papers, sort_func=None):
 
         # Sort the list
         if sort_func is not None :
-          category_papers.sort(sort_func)
+          category_papers.sort(key=sort_func)
 
         # Add internal links to each category
         if config.get("html_add_internal_links") :
@@ -93,7 +93,7 @@ def _filter(s):
                     ('\\textemdash', "&mdash;"),
                     ('\\textasciiacute', "&acute;"),
                     ('\\\'a', "&acute;"),
-                    ('\\"u', "&Uuml;"),
+                    ('\\"u', "&uuml;"),
                     ('\\epsilon', "&epsilon;"),
                     ('\\\'\i', "&iacute;"),
                     ('\\textquoteright', "&apos;"), # Is this correct?
@@ -102,7 +102,8 @@ def _filter(s):
                     ("\l", "&#0322;"),
                     ("\\.Z", "&#379;"),
                     ("\\beta", "&beta;"),
-                    ("\\r", "&aring;"),
+                    ("\\r a", "&aring;"), # Note that order matters here
+                    ("\\r", "&aring;"),   # and here
                     ("\`a", "&agrave;")
                     ]
 

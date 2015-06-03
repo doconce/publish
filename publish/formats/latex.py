@@ -35,7 +35,7 @@ def write(papers, sort_func=None):
 
         # Sort the list
         if sort_func is not None :
-          category_papers.sort(sort_func)
+          category_papers.sort(key=sort_func)
 
         # Write category
         category_headings = config.get("category_headings")
