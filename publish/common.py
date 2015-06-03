@@ -76,7 +76,7 @@ def split_with_quotes(text) :
     if i > last_split :
         splitted.append(text[last_split:i])
 
-    if brack_level > 0 :
+    if brackets_level > 0 :
         warning("Mismatched brackets")
 
     return tuple(splitted)
