@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 "This module implements output for reStructuredText."
- # -*- coding: UTF-8 -*-
+
 
 __author__ = "Anders Logg <logg@simula.no>"
 __date__ = "2011-12-05 -- 2011-12-05"

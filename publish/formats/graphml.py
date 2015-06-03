@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 "This module implements output for Graph ML files where authors are nodes and joint work are edges."
- # -*- coding: UTF-8 -*-
+
 
 # See https://gephi.org/users/supported-graph-formats/graphml-format/ for some more details
 __author__    = "Benjamin Kehlet <benjamik@simula.no>"
