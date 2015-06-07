@@ -47,19 +47,20 @@ def read(text):
 
         # Look for '@' at start of paper
         if not text[position] == "@" :
-            raise ParseException, "Bibtext parse error expected '@' near '%s'" % _get_line(position, text)
+            raise ParseException, "BibTeX parse error expected '@' near '%s'" % _get_line(position, text)
 
         position += 1
 
         # Extract entry-type
-        entrytype = text[position:position+text[position:].find("{")].strip()
-        #match = re.search(_entry_pattern, text[position:])
-        
+        entrytype_orig = text[position:position+text[position:].find("{")].strip()
+        entrytype = entrytype_orig.lower()  # bring everything to lower case
+        #match = re.search(_entry_pattern, text[position:])  # old
+
         if config.get("use_standard_categories") and entrytype not in config.get("entrytype_attributes") :
             #if not match :
-            msg  = "Parse error in BibTex file\n%s\n" % _get_line(position, text)
-            msg += "Allowed entry types are: %s" % ", ".join(config.get("entrytype_attributes"))
-            raise ParseException, msg
+            msg  = "Parse error in BibTeX file\n%s\n" % _get_line(position, text)
+            msg += 'Found entry "%s"; allowed entry types are: %s' % (entrytype_orig, ", ".join(config.get("entrytype_attributes")))
+            raise ParseException(msg)
 
         # Make sure every entry-type is written in lower-case letters
         #current_paper["entrytype"] = match.group(1).lower()
