@@ -1,5 +1,4 @@
 
-
 Importing papers from BibTeX
 ----------------------------
 
@@ -115,11 +114,11 @@ Courses:                            0
 Talks:                              0
 Posters:                            0
 Public Outreach:                    0
+Preprints:                          0
 Other Publications:                 0
 Total:                              6
 
-Saving database to file "publish_papers2.pub"
-
+Saving database to file "publish_papers1.pub"
 
 
 Validating papers
@@ -264,12 +263,12 @@ Courses:                            0
 Talks:                              0
 Posters:                            0
 Public Outreach:                    0
+Preprints:                          0
 Other Publications:                 1
 Total:                              11
 
-Saving backup copy of database to file "publish_papers2.pub.bak"
-Saving database to file "publish_papers2.pub"
-
+Saving backup copy of database to file "publish_papers1.pub.bak"
+Saving database to file "publish_papers1.pub"
 
 Validating papers
 -----------------
@@ -387,12 +386,12 @@ Courses:                            0
 Talks:                              0
 Posters:                            0
 Public Outreach:                    0
+Preprints:                          0
 Other Publications:                 1
 Total:                              21
 
-Saving backup copy of database to file "publish_papers2.pub.bak"
-Saving database to file "publish_papers2.pub"
-
+Saving backup copy of database to file "publish_papers1.pub.bak"
+Saving database to file "publish_papers1.pub"
 
 Validating papers
 -----------------
@@ -468,12 +467,12 @@ Courses:                            0
 Talks:                              0
 Posters:                            0
 Public Outreach:                    0
+Preprints:                          0
 Other Publications:                 1
 Total:                              21
 
-Saving backup copy of database to file "publish_papers2.pub.bak"
-Saving database to file "publish_papers2.pub"
-
+Saving backup copy of database to file "publish_papers1.pub.bak"
+Saving database to file "publish_papers1.pub"
 
 Summary of papers
 -----------------
@@ -491,12 +490,12 @@ Courses:                            0
 Talks:                              0
 Posters:                            0
 Public Outreach:                    0
+Preprints:                          0
 Other Publications:                 1
 Total:                              21
 
 Exported 21 paper(s) to present.html.
 
-
 Summary of papers
 -----------------
 
@@ -513,6 +512,7 @@ Courses:                            0
 Talks:                              0
 Posters:                            0
 Public Outreach:                    0
+Preprints:                          0
 Other Publications:                 1
 Total:                              21
 

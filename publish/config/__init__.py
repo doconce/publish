@@ -64,8 +64,9 @@ def init():
         # and then overrides and/or adds information, or
         # just redefine variables and extending lists and dicts.
         import publish_config as user_config
-        print 'user configuration data for publish is imported from\n    ', \
-              str(sys.modules['publish_config']).split('from')[1].split("'")[1]
+        path = str(sys.modules['publish_config']).split('from')[1].split("'")[1]
+        if '/tests/local_config_publish_import' not in path:
+            print 'user configuration data for publish is imported from\n    ', path
     except ImportError:
         user_config = None
 
