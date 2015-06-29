@@ -57,7 +57,7 @@ def split_with_quotes(text) :
     last_split = 0
     in_quotes = False
     brackets_level = 0
-    
+
     text = text.strip()
     i = 0
     while i < len(text) :

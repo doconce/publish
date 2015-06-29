@@ -25,8 +25,11 @@ To install Publish, simply type
 Dependencies:
 -------------
 
-Publish has been developed for Python 2.5, but might possibly
-also work with Python 2.4.
+This version of Publish requires Python 2.6 (only tested for 2.7)
+or 3.4, plus the modules levenshtein and future:
+
+    sudo pip install python-Levenshtein
+    sudo pip install future
 
 Author
 ------

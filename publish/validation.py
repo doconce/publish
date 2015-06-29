@@ -13,7 +13,6 @@ __license__  = "GNU GPL version 3 or any later version"
 # Modified by Benjamin Kehlet 2012
 
 import os
-from string import capitalize
 
 from publish.common import is_valid, pstr
 from publish.formats import pub
@@ -49,7 +48,7 @@ def validate_file(filename=None):
     papers = read_database(filename)
 
     # Validate papers
-    (database_papers, invalid_papers) = validate_papers(papers) 
+    (database_papers, invalid_papers) = validate_papers(papers)
 
     # Generate keys
     database_papers = generate_keys(papers)
@@ -66,7 +65,7 @@ def validate_file(filename=None):
     # Save papers to database
     save_database(database_papers)
     save_invalid_papers(invalid_papers)
- 
+
 def validate_papers(papers):
     "Validate list of papers"
 
@@ -77,7 +76,7 @@ def validate_papers(papers):
     print("Validating papers")
     print("-----------------")
     print("")
-    
+
     # Validate each paper in the list of papers
     for paper in papers:
         _validate_paper(paper)
@@ -91,7 +90,7 @@ def validate_papers(papers):
     print("Validated %d paper(s) ok." % len(valid_papers))
     print("Found %d invalid paper(s)." % len(invalid_papers))
     print("")
-    
+
     return (valid_papers, invalid_papers)
 
 def _validate_paper(paper):
@@ -128,7 +127,7 @@ def _validate_paper(paper):
 
 def _validate_paper_status(paper):
     "Validate that status is specified"
-    
+
     # Set status if missing
     if not "status" in paper:
         print('  Status is not defined, assuming status is "published".')
@@ -141,11 +140,11 @@ def _validate_paper_categories(paper):
     if not "category" in paper:
         raise RuntimeError("Unable to validate paper, unknown category.")
 
-    # Check that the paper holds all required attributes 
+    # Check that the paper holds all required attributes
     category = paper["category"]
     category_attributes = config.get("category_attributes")
     for attribute in category_attributes[category]:
-        
+
         if isinstance(attribute, tuple):
             if not len([a for a in attribute if a in paper]) > 0:
                 paper["invalid"] = True
@@ -154,14 +153,14 @@ def _validate_paper_categories(paper):
         else:
             if not attribute in paper:
                 paper["invalid"] = True
-                missing = str(attribute)            
+                missing = str(attribute)
                 break
 
     if not is_valid(paper):
         print('  Skipping paper (missing attribute "%s")' % missing)
         if not config.get("autofix"):
             input("  Press return to continue.")
-            
+
 def _validate_paper_venue(paper):
     "Validate that the venue (journal, conference etc) is correct"
 
@@ -215,7 +214,7 @@ def _validate_paper_authors(paper) :
     # Skip if there is nothing to check
     if allowed_author_names is None:
         return
-    
+
     for i, author in enumerate(paper["author"]) :
         if not author in allowed_author_names :
             print("\n  Unknown author: \"%s\"" % author)
@@ -298,7 +297,7 @@ def _validate_paper_pages(paper):
 
             # Reformat string
             new_pages = first.strip() + config.get("page_separator") + last.strip()
-        
+
     # Check for invalid page string
     if invalid:
         paper["invalid"] = True
@@ -364,7 +363,7 @@ def _validate_paper_typos(paper):
                         else:
                             input("  Skipping paper, press return to continue.")
                         return
-                    
+
                     else:
 
                         # Found replacement
@@ -398,7 +397,7 @@ def _suggest_venue(venue, known_venues):
     # If not found try matching substrings
     if suggested_venue is None:
         for v in known_venues:
-            d = distance(venue.lower(), v.lower())            
+            d = distance(venue.lower(), v.lower())
             if venue in v or v in venue and d < min_distance:
                 suggested_venue = v
 
@@ -444,7 +443,7 @@ def check_pdf_files(papers):
     num_found = 0
     num_missing = 0
     for paper in papers:
-        
+
         # Skip some categories
         if paper["category"] in ["courses"]:
             continue

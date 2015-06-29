@@ -8,8 +8,8 @@
    pages:     1394-1417
    pdf:       missing
    status:    published
-   note:      Accepted
    entrytype: article
+   note:      Accepted
 ** Numerical Solution of First Passage Problems in Random Vibrations
    key:       Langtangen_1994a
    author:    H. P. Langtangen
@@ -71,8 +71,8 @@
    volume:    74
    pdf:       missing
    status:    published
-   note:      035308
    entrytype: article
+   note:      035308
 ** On the Causes of Pressure Oscillations in Low-Permeable and Low-Compressible Porous Media
    key:       Haga_et_al_2011a
    author:    J. B. Haga, H. Osnes, H. P. Langtangen
@@ -128,8 +128,8 @@
    pages:     97-152
    pdf:       missing
    status:    published
-   series:    Lecture Notes in Computational Science and Engineering
    entrytype: inproceedings
+   series:    Lecture Notes in Computational Science and Engineering
 ** {Diffpack}: Software for Partial Differential Equations
    key:       Langtangen:94b
    author:    H. P. Langtangen
@@ -157,8 +157,8 @@
    institution: Simula Research Laboratory
    pdf:         missing
    status:      published
-   entrytype:   techreport
    type:        Report 2004-12
+   entrytype:   techreport
 ** The {FEMDEQS} Program System
    key:         Langtangen_1988d
    author:      H. P. Langtangen
@@ -166,8 +166,8 @@
    institution: Department of Mathematics, University of Oslo
    pdf:         missing
    status:      published
-   entrytype:   techreport
    type:        Research Report in Mechanics
+   entrytype:   techreport
 ** Numerical Methods in Continuum Mechanics
    key:         Langtangen:91
    author:      H. P. Langtangen, A. Tveito
@@ -175,9 +175,9 @@
    institution: Center for Industrial Research
    pdf:         missing
    status:      published
+   type:        SI-Report
    entrytype:   techreport
    note:        Lecture notes for a course (ME-IN 324). 286 pages.
-   type:        SI-Report
 * theses
 ** Solution of the {Navier-Stokes} Equations With the Finite Element Method in Two and Three Dimensions
    key:        Langtangen:85
@@ -185,8 +185,8 @@
    year:       1985
    pdf:        missing
    status:     published
-   school:     Mechanics Division, Department of Mathematics, University of Oslo
    thesistype: msc
+   school:     Mechanics Division, Department of Mathematics, University of Oslo
    note:       Cand.Scient. thesis
    entrytype:  mastersthesis
 ** Computational Methods for Two-Phase Flow in Oil Reservoirs
@@ -196,10 +196,10 @@
    pdf:                missing
    status:             published
    allowed_duplicates: Langtangen:89d
+   entrytype:          phdthesis
+   note:               Dr.~Scient.~thesis.
    school:             Mechanics Division, Department of Mathematics, University of Oslo
    thesistype:         phd
-   note:               Dr.~Scient.~thesis.
-   entrytype:          phdthesis
 ** Computational Methods for Two-Phase Flow in Oil Reservoirs
    key:                Langtangen:89d
    author:             H. P. Langtangen
@@ -207,10 +207,10 @@
    pdf:                missing
    status:             published
    allowed_duplicates: Langtangen_1989e
+   entrytype:          phdthesis
+   note:               Dr.~Scient.~thesis
    school:             Mechanics Division, Department of Mathematics, University of Oslo
    thesistype:         phd
-   note:               Dr.~Scient.~thesis
-   entrytype:          phdthesis
 * misc
 ** Computational Modeling of Huge Tsunamis From Asteroid Impacts
    key:          Langtangen_talk_2007a

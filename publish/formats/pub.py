@@ -121,8 +121,8 @@ def write(papers):
             categories.add(paper["category"])
         categories = list(categories)
         categories.sort()
-        
-    
+
+
     # Iterate over categories
     for category in categories:
 
@@ -162,7 +162,6 @@ def write_paper(paper, ignores=[]):
 
     # Write attribute-value pairs
     for attribute in attributes:
-
         # Compute indendation
         indentation = " " * (max_attr - len(attribute))
 
