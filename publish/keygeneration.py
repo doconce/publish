@@ -1,4 +1,5 @@
 "This module implements generation of paper keys (used by validation)."
+from __future__ import print_function
 
 __author__ = "Anders Logg (logg@simula.no)"
 __date__ = "2009-06-30 -- 2009-06-30"
@@ -27,7 +28,7 @@ def generate_keys(papers):
 
         # Set key
         paper["key"] = key
-        print "Adding key for paper %s: %s" % (pstr(paper), key)
+        print("Adding key for paper %s: %s" % (pstr(paper), key))
 
     return papers
 
@@ -59,7 +60,7 @@ def _generate_key(paper, used_keys):
     key = "".join(last_names[:min(len(last_names), 2)])
     if len(last_names) > 2:
         key += "EtAl"
-    if paper["category"] == "talks" and paper.has_key("date") :
+    if paper["category"] == "talks" and "date" in paper :
         key += paper["date"].replace("-", "")
     else:
         key += paper["year"]
@@ -73,9 +74,8 @@ def _generate_key(paper, used_keys):
 
     # Check that we found a unique key
     if key in used_keys:
-        raise RuntimeError, \
-"""Too many papers, out of suffix letter. This is a known bug/feature which should
-be easy to fix."""
+        raise RuntimeError("""Too many papers, out of suffix letter. This is a known bug/feature which should
+be easy to fix.""")
 
     return key
 

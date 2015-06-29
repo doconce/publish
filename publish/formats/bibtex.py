@@ -1,4 +1,8 @@
 "This module implements input/output for BibTeX."
+from __future__ import print_function
+from builtins import str
+from builtins import input
+from builtins import range
 
 __author__    = "Anna Logg (anna@loggsystems.se)"
 __date__      = "2008-10-05 -- 2008-11-11"
@@ -32,10 +36,10 @@ def read(text):
     text = text.strip()
     "Extract papers from text and return papers as a list of dictionaries."
 
-    print ""
-    print "Importing papers from BibTeX"
-    print "----------------------------"
-    print ""
+    print("")
+    print("Importing papers from BibTeX")
+    print("----------------------------")
+    print("")
 
     papers = []
     position = 0
@@ -47,7 +51,7 @@ def read(text):
 
         # Look for '@' at start of paper
         if not text[position] == "@" :
-            raise ParseException, "BibTeX parse error expected '@' near '%s'" % _get_line(position, text)
+            raise ParseException("BibTeX parse error expected '@' near '%s'" % _get_line(position, text))
 
         position += 1
 
@@ -70,7 +74,7 @@ def read(text):
         position = _skip_spaces(position, text)
 
         if not text[position] == "{" :
-            raise ParseException, "Bibtex parse error. Expected '{' after entrytype. Got '%s'\n%s" % (text[position], _get_line(position, text))
+            raise ParseException("Bibtex parse error. Expected '{' after entrytype. Got '%s'\n%s" % (text[position], _get_line(position, text)))
 
         position += 1
 
@@ -94,13 +98,13 @@ def read(text):
             if attr_key == "key":
                 attr_key = "sortkey"
 
-            if current_paper.has_key(attr_key) :
-                raise ParseException, "Paper with key '%s' has double declared attribute: '%s'" % (current_paper["key"], attr_key)
+            if attr_key in current_paper :
+                raise ParseException("Paper with key '%s' has double declared attribute: '%s'" % (current_paper["key"], attr_key))
 
             current_paper[attr_key] = attr_value
 
             if text[position] != "," and text[position] != "}" :
-                raise ParseException, "Unexpected character '%s' at %s" % (text[position], _get_line(position, text))
+                raise ParseException("Unexpected character '%s' at %s" % (text[position], _get_line(position, text)))
 
             position = _skip_spaces(position ,text)
             if text[position] == "," :
@@ -121,7 +125,7 @@ def read(text):
         if config.get("use_standard_categories") :
             _check_paper(current_paper)
         else :
-            if not current_paper.has_key("status") :
+            if "status" not in current_paper :
                 current_paper["status"] = "published"
 
         # Extract category
@@ -147,7 +151,7 @@ def _parse_attribute(position, text) :
     eq_pos = text[position:].find("=")
 
     if eq_pos < 1 :
-      raise ParseException, "Bibtex parse error, expected attribute=value near '%s'" % _get_line(position, text)
+      raise ParseException("Bibtex parse error, expected attribute=value near '%s'" % _get_line(position, text))
 
     key = text[position:position+eq_pos].strip()
 
@@ -160,7 +164,7 @@ def _parse_attribute_value(position, text) :
     position = _skip_spaces(position, text)
 
     if not text[position] == "{" :
-        raise ParseException, "Expected '{' near '%s'" % _get_line(position, text)
+        raise ParseException("Expected '{' near '%s'" % _get_line(position, text))
 
     position += 1
 
@@ -221,7 +225,7 @@ def _parse_paper(block, value_start, value_end):
 
     # Check lists of positions, should be of equal size
     if not len(value_start) == len(value_end):
-        raise RuntimeError, "Syntax error in BibTeX file, unbalanced braces."
+        raise RuntimeError("Syntax error in BibTeX file, unbalanced braces.")
 
     # Extract attributes and values
     paper = {}
@@ -234,7 +238,7 @@ def _parse_paper(block, value_start, value_end):
             attribute = block[value_end[i - 1] + 1:value_start[i]]
         match = _attribute_pattern.search(attribute)
         if match is None:
-            raise RuntimeError, "Syntax error in BibTeX file, missing attribute name."
+            raise RuntimeError("Syntax error in BibTeX file, missing attribute name.")
         groups = match.groups()
         attribute = groups[0].lower()
 
@@ -252,7 +256,7 @@ def _check_paper(paper):
 
     # TODO: Do this during parsing, so we can give error messages with line number and text
 
-    print "Found paper: %s" % pstr(paper)
+    print("Found paper: %s" % pstr(paper))
 
     invalid = False
 
@@ -264,17 +268,17 @@ def _check_paper(paper):
         # Check if the required field is a tuple and at least one field is used
         if isinstance(attribute, tuple):
             if not len([f for f in attribute if f in paper]) >= 1:
-                print '  Missing required attribute(s) "%s" for paper "%s"' % ('"/"'.join(attribute), key)
+                print('  Missing required attribute(s) "%s" for paper "%s"' % ('"/"'.join(attribute), key))
                 invalid = True
         elif not attribute in paper:
-            print '  Missing required attribute "%s" for paper "%s"' % (attribute, key)
+            print('  Missing required attribute "%s" for paper "%s"' % (attribute, key))
             invalid = True
 
     if invalid:
         paper["invalid"] = True
-        print "  Skipping paper. Correct the above error(s) and import the paper again."
+        print("  Skipping paper. Correct the above error(s) and import the paper again.")
         if not config.get("autofix"):
-            raw_input("  Press return to continue.")
+            input("  Press return to continue.")
 
 def _extract_authors(paper, attribute):
     "Extract authors as tuple from string"
@@ -290,11 +294,11 @@ def _extract_authors(paper, attribute):
             words = name.split(",")
             if not len(words) == 2:
                 paper["invalid"] = True
-                print "  Incorrectly formatted author string:", name
+                print("  Incorrectly formatted author string:", name)
                 if config.get("autofix"):
-                    print "  Skipping paper."
+                    print("  Skipping paper.")
                 else:
-                    raw_input("  Skipping paper, press return to continue.")
+                    input("  Skipping paper, press return to continue.")
             words.reverse()
             name = " ".join([w.strip() for w in words])
 
@@ -320,7 +324,7 @@ def _extract_category(paper):
     entry_type = paper["entrytype"]
     entrytype2category = config.get("entrytype2category")
     if not entry_type in entrytype2category:
-        raise RuntimeError, 'Entry type "%s" not supported.' % entry_type
+        raise RuntimeError('Entry type "%s" not supported.' % entry_type)
 
     # Check default mapping
     category = entrytype2category[entry_type]
@@ -355,7 +359,7 @@ def _extract_category(paper):
         else:
             return "misc"
 
-    raise RuntimeError, "Unhandled special case for BibTeX entry type."
+    raise RuntimeError("Unhandled special case for BibTeX entry type.")
 
 
 def _skip_spaces(position, text) :

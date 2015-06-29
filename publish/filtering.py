@@ -1,11 +1,12 @@
 "This module handles filtering of papers based on attributes."
+from __future__ import absolute_import
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-11-11 -- 2009-08-30"
 __copyright__ = "Copyright (C) 2008-2009 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
-from common import short_author
+from .common import short_author
 
 def filter_papers(papers, filters):
     "Filters papers, for instance it enables to get papers from a specific year"

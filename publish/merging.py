@@ -1,4 +1,7 @@
 "This module implements data import from different file formats."
+from __future__ import print_function
+from builtins import str
+from builtins import range
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-10-27 -- 2008-11-08"
@@ -18,13 +21,13 @@ from publish.formats import pub
 def merge_papers(papers_0, papers_1):
     "Merge two lists of papers into one common list"
 
-    print ""
-    print "Merging papers"
-    print "--------------"
-    print ""
-    print "Need to merge %d + %d = %d papers." % \
-          (len(papers_0), len(papers_1), len(papers_0) + len(papers_1))
-    print ""
+    print("")
+    print("Merging papers")
+    print("--------------")
+    print("")
+    print("Need to merge %d + %d = %d papers." % \
+          (len(papers_0), len(papers_1), len(papers_0) + len(papers_1)))
+    print("")
 
     # Concatenate lists and then check every paper against all others
     papers = papers_0 + papers_1
@@ -51,7 +54,7 @@ def process_duplicates(papers) :
 
         # Ignore exact duplicates
         if _exact_match(paper, matching_paper):
-            print "Found exact duplicate paper %s, skipping." % pstr(paper)
+            print("Found exact duplicate paper %s, skipping." % pstr(paper))
             continue
 
         # Add paper if matching paper marked as duplicate
@@ -59,13 +62,13 @@ def process_duplicates(papers) :
         # "duplicate" will be read and respected when merging, but not written
 
         if is_duplicate(matching_paper):
-            print "Warning: Attribute 'duplicate' is deprecated. Use 'allowed_duplicates' and specify keys of duplicates."
-            print "Found close match with allowed duplicate for paper %s, keeping paper.\n" % pstr(paper)
+            print("Warning: Attribute 'duplicate' is deprecated. Use 'allowed_duplicates' and specify keys of duplicates.")
+            print("Found close match with allowed duplicate for paper %s, keeping paper.\n" % pstr(paper))
             merged_papers.append(paper)
             continue
 
         if is_allowed_duplicate(paper, matching_paper) :
-            print "Found close match with allowed duplicate for paper %s, keeping paper.\n" % pstr(paper)
+            print("Found close match with allowed duplicate for paper %s, keeping paper.\n" % pstr(paper))
             merged_papers.append(paper)
             continue
 
@@ -74,7 +77,7 @@ def process_duplicates(papers) :
         del merged_papers[matching_position]
 
         # Merge paper with matching paper
-        print "Found close match between %s and %s, merging papers." % (pstr(paper), pstr(matching_paper))        
+        print("Found close match between %s and %s, merging papers." % (pstr(paper), pstr(matching_paper)))        
         merged_paper = _merge_papers(matching_paper, paper)
         for p in merged_paper:
             merged_papers.append(p)
@@ -93,7 +96,7 @@ def _find_matching_paper(paper, merged_papers):
     category = paper["category"]
     category_venues = config.get("category_venues")
     # "journal", "booktitle", etc
-    venue_type = category_venues[category] if category_venues.has_key("category") else None 
+    venue_type = category_venues[category] if "category" in category_venues else None 
 
     # Compare against all papers
     for i in range(len(merged_papers)):
@@ -145,9 +148,9 @@ def _merge_papers(paper0, paper1):
     "Merge papers"
 
     if "key" in paper0 and "title" in paper0:
-        print "  " + paper0["key"] + ": " + paper0["title"]
+        print("  " + paper0["key"] + ": " + paper0["title"])
     if "key" in paper1 and "title" in paper1:
-        print "  " + paper1["key"] + ": " + paper1["title"]
+        print("  " + paper1["key"] + ": " + paper1["title"])
 
     # Get all attributes to check
     common_attributes = []
@@ -158,7 +161,7 @@ def _merge_papers(paper0, paper1):
         if attribute in paper0:
             common_attributes.append(attribute)
 
-    print common_attributes
+    print(common_attributes)
 
     # Check all common attributes
     merged_paper = {}
@@ -186,7 +189,7 @@ def _merge_papers(paper0, paper1):
                                                      'Use attribute from second paper ("%s")' % str(value1),
                                                      'Print diff.'))
                 
-                print ""
+                print("")
                 if alternative == 0:
                     paper0["allowed_duplicates"] = [paper1["key"]] + (paper0["allowed_duplicates"] if "allowed_duplicates" in paper0 else [])
                     paper1["allowed_duplicates"] = [paper0["key"]] + (paper1["allowed_duplicates"] if "allowed_duplicates" in paper1 else [])
@@ -207,12 +210,12 @@ def _merge_papers(paper0, paper1):
                     merged_paper[attribute] = value1
                     break
                 elif alternative == 6:
-                    print pub.write_diff(paper0, paper1)
+                    print(pub.write_diff(paper0, paper1))
                 else:
-                    raise RuntimeError, "Unknown option."
+                    raise RuntimeError("Unknown option.")
 
     if identical:
-        print "  No conflicting attributes, merge ok."
+        print("  No conflicting attributes, merge ok.")
     
     # Add unique attributes from paper0
     for attribute in paper0:

@@ -1,4 +1,7 @@
 "Some common utility functions"
+from __future__ import absolute_import
+from builtins import str
+from builtins import range
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-11-10 -- 2008-11-11"
@@ -9,7 +12,7 @@ __license__  = "GNU GPL version 3 or any later version"
 # Modified by Anders Logg 2012
 # Modified by Benjamin Kehlet 2012
 
-from log import warning
+from .log import warning
 
 from publish import config
 

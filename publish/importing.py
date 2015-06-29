@@ -1,16 +1,18 @@
 "This module implements data import from different file formats."
+from __future__ import print_function
+from __future__ import absolute_import
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-10-13 -- 2008-12-12"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
 __license__  = "GNU GPL version 3 or any later version"
 
-from formats import bibtex, latex, pub
-from validation import validate_papers
-from merging import merge_papers
+from .formats import bibtex, latex, pub
+from .validation import validate_papers
+from .merging import merge_papers
 from publish import config
-from log import print_summary
-from database import read_database, save_database, save_invalid_papers
+from .log import print_summary
+from .database import read_database, save_database, save_invalid_papers
 
 def import_file(filename, filters=[]):
     "Import data from file into database."
@@ -33,13 +35,13 @@ def import_file(filename, filters=[]):
         (imported_papers, invalid_imported_papers) = validate_papers(imported_papers)
     else :
         invalid_imported_papers = []
-    print ""
+    print("")
     
     if len(invalid_imported_papers) > 0:
-        print 'Imported %d paper(s) from "%s" (and found %d invalid paper(s)).' % \
-              (len(imported_papers), filename, len(invalid_imported_papers))
+        print('Imported %d paper(s) from "%s" (and found %d invalid paper(s)).' % \
+              (len(imported_papers), filename, len(invalid_imported_papers)))
     else:
-        print 'Imported %d paper(s) from "%s".' % (len(imported_papers), filename)
+        print('Imported %d paper(s) from "%s".' % (len(imported_papers), filename))
 
     # Merge papers
     if config.get("simple_import") :
@@ -66,7 +68,7 @@ def _read_file(filename):
     elif suffix == "pub":
         read = pub.read
     else:
-        raise RuntimeError, "Unknown file format."
+        raise RuntimeError("Unknown file format.")
 
     # Open and read file
     try:
@@ -74,7 +76,7 @@ def _read_file(filename):
         text = file.read()
         file.close()
     except:
-        raise RuntimeError, 'Unable to open file "%s"' % filename
+        raise RuntimeError('Unable to open file "%s"' % filename)
 
     # Parse file
     imported_papers = read(text)

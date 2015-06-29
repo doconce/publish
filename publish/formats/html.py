@@ -1,4 +1,5 @@
 "This module implements output for HTML."
+from builtins import range
 
 __author__ = "Anders Logg <logg@simula.no>"
 __date__ = "2009-07-31 -- 2009-08-18"

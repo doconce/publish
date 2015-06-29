@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 "This module implements output for Graph ML files where authors are nodes and joint work are edges."
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
 
 
 # See https://gephi.org/users/supported-graph-formats/graphml-format/ for some more details
@@ -9,7 +12,7 @@ __copyright__ = "Copyright (C) 2012 Benjamin Kehlet"
 __license__   = "GNU GPL version 3 or any later version"
 
 import lxml.etree as xml
-import StringIO
+import io
 import itertools
 from publish import config
 
@@ -22,7 +25,7 @@ def write(papers) :
   edges = {}
   for paper in papers :
     for author in paper["author"] :
-      if authors.has_key(author) :
+      if author in authors :
         authors[author]["count"] += 1
       else : 
         authors[author] = {'id' : len(authors), 'count' : 1}
@@ -35,7 +38,7 @@ def write(papers) :
       author_ids = tuple( [authors[single_author]["id"] for single_author in author_tuple] )
 
       # increment counter or add entry
-      if edges.has_key(author_ids) :
+      if author_ids in edges :
         edges[author_ids]  += 1 
       else :
         edges[author_ids]  = 1
@@ -80,7 +83,7 @@ def write(papers) :
   xml_root.append(root_element)
   
 
-  for author, author_data in authors.iteritems() :
+  for author, author_data in authors.items() :
     node = xml.Element("node")
     node.attrib["id"] = str(author_data["id"])
     label = xml.Element("data")
@@ -101,7 +104,7 @@ def write(papers) :
     node.append(publications)
     root_element.append(node)
 
-  for (i, ((source, target), count)) in enumerate(edges.iteritems()) :
+  for (i, ((source, target), count)) in enumerate(edges.items()) :
     edge = xml.Element("edge")
     edge.attrib["source"] = str(source)
     edge.attrib["target"] = str(target)
@@ -118,7 +121,7 @@ def write(papers) :
 def _filter(s):
     "Filter string for special characters."
 
-    s = unicode(s, "utf-8")
+    s = str(s, "utf-8")
 
 
     # List of replacements
