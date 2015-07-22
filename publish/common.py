@@ -130,7 +130,10 @@ def ordered_attributes(paper, ignores=[]):
     for attribute in config.get("ordered_attributes"):
         if attribute in paper and not attribute in ignores:
             attributes.append(attribute)
-    for attribute in paper:
+    # add remaining attributes in alphabetical order
+    paper_attributes = [a for a in paper]
+    paper_attributes.sort()
+    for attribute in paper_attributes:
         if not attribute in attributes and not attribute in ignores:
             attributes.append(attribute)
     return attributes
