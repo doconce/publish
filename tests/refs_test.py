@@ -89,18 +89,19 @@ def test_config_publish_import():
              'refs_demo_with_local_config_publish_import.out',
              'invalid_papers.pub',
              'present.html', 'present.bib']
-    ref_files = [os.path.join(reference_data, filename) for
-                 filename in files]
-    failure = pydiff(ref_files, files)
-    success = not failure
-    msg = """
-New data differs from reference data! Check out the files
+    for filename in files :
+        ref_file = os.path.join(reference_data, filename)
+
+        failure = pydiff(ref_file, filename)
+        success = not failure
+        msg = """
+New data in {} differs from reference data! Check out the files
 tmp_diff*.txt (plain text comparison) or load tmp_diff*.html
 into a browser for visual inspection of differences.
 If differences are correct, run copy_new_reference_data.sh
 to update the reference files.
-"""
-    assert success, msg
+""".format(filename)
+        assert success, msg
 
 def test_config_no_import():
     """
@@ -143,18 +144,18 @@ def test_config_no_import():
              'refs_demo_with_local_config_no_import.out',
              'invalid_papers.pub',
              'present.html', 'present.bib']
-    ref_files = [os.path.join(reference_data, filename) for
-                 filename in files]
-    failure = pydiff(ref_files, files)
-    success = not failure
-    msg = """
-New data differs from reference data! Check out the files
+    for filename in files :
+        ref_file = os.path.join(reference_data, filename)
+        failure = pydiff(ref_file, filename)
+        success = not failure
+        msg = """
+New data in {} differs from reference data! Check out the files
 tmp_diff*.txt (plain text comparison) or load tmp_diff*.html
 into a browser for visual inspection of differences.
 If differences are correct, run copy_new_reference_data.sh
 to update the reference files.
-"""
-    assert success, msg
+""".format(filename)
+        assert success, msg
 
 
 def pydiff(files1, files2, n=3):

@@ -91,9 +91,9 @@
    publisher: Springer
    pdf:       missing
    status:    published
-   series:    Texts in Computational Science and Engineering
    edition:   Third
    entrytype: book
+   series:    Texts in Computational Science and Engineering
 ** A Primer on Scientific Programming With {P}ython
    key:       Langtangen_2012
    author:    H. P. Langtangen
@@ -101,9 +101,9 @@
    publisher: Springer
    pdf:       missing
    status:    published
-   series:    Texts in Computational Science and Engineering
    edition:   Third
    entrytype: book
+   series:    Texts in Computational Science and Engineering
 * chapters
 ** Finite Elements for the {Boussinesq} Wave Equations
    key:       Langtangen:95
@@ -157,8 +157,8 @@
    institution: Simula Research Laboratory
    pdf:         missing
    status:      published
-   type:        Report 2004-12
    entrytype:   techreport
+   type:        Report 2004-12
 ** The {FEMDEQS} Program System
    key:         Langtangen_1988d
    author:      H. P. Langtangen
@@ -166,8 +166,8 @@
    institution: Department of Mathematics, University of Oslo
    pdf:         missing
    status:      published
-   type:        Research Report in Mechanics
    entrytype:   techreport
+   type:        Research Report in Mechanics
 ** Numerical Methods in Continuum Mechanics
    key:         Langtangen:91
    author:      H. P. Langtangen, A. Tveito
@@ -175,9 +175,9 @@
    institution: Center for Industrial Research
    pdf:         missing
    status:      published
-   type:        SI-Report
    entrytype:   techreport
    note:        Lecture notes for a course (ME-IN 324). 286 pages.
+   type:        SI-Report
 * theses
 ** Solution of the {Navier-Stokes} Equations With the Finite Element Method in Two and Three Dimensions
    key:        Langtangen:85
@@ -185,10 +185,10 @@
    year:       1985
    pdf:        missing
    status:     published
-   thesistype: msc
-   school:     Mechanics Division, Department of Mathematics, University of Oslo
-   note:       Cand.Scient. thesis
    entrytype:  mastersthesis
+   note:       Cand.Scient. thesis
+   school:     Mechanics Division, Department of Mathematics, University of Oslo
+   thesistype: msc
 ** Computational Methods for Two-Phase Flow in Oil Reservoirs
    key:                Langtangen_1989e
    author:             H. P. Langtangen
@@ -218,6 +218,6 @@
    year:         2007
    pdf:          missing
    status:       published
-   month:        May
-   howpublished: Invited keynote lecture at the \emph{International conference on Computational Science 2007 (ICCS'07)}, Beijing, China
    entrytype:    misc
+   howpublished: Invited keynote lecture at the \emph{International conference on Computational Science 2007 (ICCS'07)}, Beijing, China
+   month:        May
