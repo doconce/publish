@@ -19,9 +19,9 @@ def test_demo():
     # strip that off
     output = re.sub(r'^Saving invalid papers to.+$', '', output,
                     flags=re.MULTILINE)
-    f = open('refs_demo.out', 'w')
-    f.write(output)
-    f.close()
+    with open('refs_demo.out', 'w') as f :
+        f.write(output)
+
     # Strip off date and time in invalid_papers*.pub
     for filename in glob.glob('invalid_papers-*'):
         shutil.copy(filename, 'invalid_papers.pub')
@@ -31,18 +31,21 @@ def test_demo():
     reference_data = 'reference_data'
     files = ['papers.pub', 'venues.list', 'refs_demo.sh',
              'refs_demo.out', 'invalid_papers.pub', 'present.html']
-    ref_files = [os.path.join(reference_data, filename) for
-                 filename in files]
-    failure = pydiff(ref_files, files)
-    success = not failure
-    msg = """
-New data differs from reference data! Check out the files
+    for filename in files :
+        ref_file = os.path.join(reference_data, filename)
+#        ref_files = [os.path.join(reference_data, filename) for
+#                 filename in files]
+#    failure = pydiff(ref_files, files)
+        failure = pydiff(ref_file, filename)
+        success = not failure
+        msg = """
+New data in {} differs from reference data! Check out the files
 tmp_diff*.txt (plain text comparison) or load tmp_diff*.html
 into a browser for visual inspection of differences.
 If differences are correct, run copy_new_reference_data.sh
 to update the reference files.
-"""
-    assert success, msg
+""".format(filename)
+        assert success, msg
 
 
 def test_config_publish_import():
