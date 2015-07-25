@@ -1,5 +1,0 @@
-After porting to py2/3, the py2 tests write the attributes of each
-paper in different order each time publish is run.
-Need to have a specific order.
-
-python3 runs, but the same problem remains there.
