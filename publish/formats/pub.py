@@ -127,7 +127,8 @@ def write(papers):
     for category in categories:
 
         # Extract papers in category
-        category_papers = [paper for paper in papers if paper["category"] == category]
+        category_papers = [paper for paper in papers
+                           if paper["category"] == category]
         if len(category_papers) == 0:
             continue
 
