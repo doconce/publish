@@ -69,16 +69,7 @@ Need to merge 0 + 6 = 6 papers.
 Found close match between (Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi... and (Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O..., merging papers.
   Langtangen_1992c: Stochastic Breakthrough Time Analysis of an Enhanced Oil Recovery Process
   Langtangen:1992: Stochastic Breakthrough Time Analysis of an Enhanced Oil Recovery Process
-['category', 'status', 'title', 'journal', 'author', 'pages', 'volume', 'key', 'year', 'entrytype', 'category', 'title', 'journal', 'author', 'pages', 'volume', 'status', 'key', 'year', 'entrytype']
-  Attribute "volume" differs, what should I do?
-  [1] Keep both papers (marking them as allowed duplicates).
-  [2] Ignore papers (marking them as invalid).
-  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
-  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
-  [5] Use attribute from first paper ("13")
-  [6] Use attribute from second paper ("131223")
-  [7] Print diff.
-Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+['author', 'category', 'entrytype', 'journal', 'key', 'pages', 'status', 'title', 'volume', 'year']
   Attribute "key" differs, what should I do?
   [1] Keep both papers (marking them as allowed duplicates).
   [2] Ignore papers (marking them as invalid).
@@ -86,6 +77,15 @@ Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]):
   [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
   [5] Use attribute from first paper ("Langtangen_1992c")
   [6] Use attribute from second paper ("Langtangen:1992")
+  [7] Print diff.
+Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+  Attribute "volume" differs, what should I do?
+  [1] Keep both papers (marking them as allowed duplicates).
+  [2] Ignore papers (marking them as invalid).
+  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
+  [5] Use attribute from first paper ("13")
+  [6] Use attribute from second paper ("131223")
   [7] Print diff.
 Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
   Attribute "year" differs, what should I do?
@@ -191,16 +191,7 @@ Need to merge 6 + 6 = 12 papers.
 Found close match between (Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi... and (Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O..., merging papers.
   Langtangen_1992c: Stochastic Breakthrough Time Analysis of an Enhanced Oil Recovery Process
   Langtangen:1992: Stochastic Breakthrough Time Analysis of an Enhanced Oil Recovery Process
-['category', 'status', 'author', 'journal', 'title', 'entrytype', 'volume', 'key', 'year', 'pages', 'category', 'status', 'author', 'journal', 'title', 'entrytype', 'volume', 'key', 'year', 'pages']
-  Attribute "volume" differs, what should I do?
-  [1] Keep both papers (marking them as allowed duplicates).
-  [2] Ignore papers (marking them as invalid).
-  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
-  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
-  [5] Use attribute from first paper ("13")
-  [6] Use attribute from second paper ("131223")
-  [7] Print diff.
-Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
+['author', 'category', 'entrytype', 'journal', 'key', 'pages', 'status', 'title', 'volume', 'year']
   Attribute "key" differs, what should I do?
   [1] Keep both papers (marking them as allowed duplicates).
   [2] Ignore papers (marking them as invalid).
@@ -210,15 +201,6 @@ Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]):
   [6] Use attribute from second paper ("Langtangen:1992")
   [7] Print diff.
 Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
-  Attribute "year" differs, what should I do?
-  [1] Keep both papers (marking them as allowed duplicates).
-  [2] Ignore papers (marking them as invalid).
-  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
-  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
-  [5] Use attribute from first paper ("1992")
-  [6] Use attribute from second paper ("1991")
-  [7] Print diff.
-Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
   Attribute "volume" differs, what should I do?
   [1] Keep both papers (marking them as allowed duplicates).
   [2] Ignore papers (marking them as invalid).
@@ -226,15 +208,6 @@ Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]):
   [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
   [5] Use attribute from first paper ("13")
   [6] Use attribute from second paper ("131223")
-  [7] Print diff.
-Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
-  Attribute "key" differs, what should I do?
-  [1] Keep both papers (marking them as allowed duplicates).
-  [2] Ignore papers (marking them as invalid).
-  [3] Keep first paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore second paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
-  [4] Keep second paper ((Langtangen_1992c) - Stochastic Breakthrough Time Analysis of an Enhanced O...) and ignore first paper ((Langtangen:1992) - Stochastic Breakthrough Time Analysis of an Enhanced Oi...)
-  [5] Use attribute from first paper ("Langtangen_1992c")
-  [6] Use attribute from second paper ("Langtangen:1992")
   [7] Print diff.
 Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
   Attribute "year" differs, what should I do?
@@ -359,14 +332,14 @@ Need to merge 11 + 10 = 21 papers.
 Found close match between (Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi... and (Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv..., merging papers.
   Langtangen_1989e: Computational Methods for Two-Phase Flow in Oil Reservoirs
   Langtangen:89d: Computational Methods for Two-Phase Flow in Oil Reservoirs
-['category', 'status', 'school', 'author', 'title', 'thesistype', 'note', 'key', 'year', 'entrytype', 'category', 'status', 'school', 'title', 'author', 'thesistype', 'note', 'key', 'year', 'entrytype']
-  Attribute "note" differs, what should I do?
+['author', 'category', 'entrytype', 'key', 'note', 'school', 'status', 'thesistype', 'title', 'year']
+  Attribute "key" differs, what should I do?
   [1] Keep both papers (marking them as allowed duplicates).
   [2] Ignore papers (marking them as invalid).
   [3] Keep first paper ((Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...) and ignore second paper ((Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi...)
   [4] Keep second paper ((Langtangen_1989e) - Computational Methods for Two-Phase Flow in Oil Reserv...) and ignore first paper ((Langtangen:89d) - Computational Methods for Two-Phase Flow in Oil Reservoi...)
-  [5] Use attribute from first paper ("Dr.~Scient.~thesis.")
-  [6] Use attribute from second paper ("Dr.~Scient.~thesis")
+  [5] Use attribute from first paper ("Langtangen_1989e")
+  [6] Use attribute from second paper ("Langtangen:89d")
   [7] Print diff.
 Please enter 1, 2, 3, 4, 5, 6 or 7 (or press return to choose [1]): 
 

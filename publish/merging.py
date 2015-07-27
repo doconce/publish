@@ -158,9 +158,12 @@ def _merge_papers(paper0, paper1):
         if attribute in paper1:
             common_attributes.append(attribute)
     for attribute in paper1:
-        if attribute in paper0:
+        if attribute in paper0 and attribute not in common_attributes:
             common_attributes.append(attribute)
 
+    # Sort the attributes to make sure output is readable and consistent across
+    # runs (otherwise regression tests will fail)
+    common_attributes.sort()
     print(common_attributes)
 
     # Check all common attributes
