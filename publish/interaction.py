@@ -1,4 +1,8 @@
 "This module handles interaction between the system and the user."
+from __future__ import print_function
+from builtins import input
+from builtins import str
+from builtins import range
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-10-27 -- 2008-11-12"
@@ -18,35 +22,35 @@ def ask_user_yesno(question, default="yes"):
         default_return = False
     
     if config.get("autofix"):
-        print question + (" (%s):" % options)
-        print "  Autofix enabled, choosing default (%s)." % default
+        print(question + (" (%s):" % options))
+        print("  Autofix enabled, choosing default (%s)." % default)
         return default_return
     
     while True:
-        answer = raw_input(question + (" (%s): " % options))
+        answer = input(question + (" (%s): " % options))
         if answer == "y":
             return True
         elif answer == "n":
             return False
         elif answer == "":
             return default_return
-        print 'Please answer "y" or "n".'
+        print('Please answer "y" or "n".')
 
 def ask_user_alternatives(question, alternatives):
     "Ask for an option"
 
     while True:
-        print question
+        print(question)
         n = len(alternatives)
         for i in range(n):
             alternative = alternatives[i]
-            print "  [%d] %s" % (i+1, alternative)
+            print("  [%d] %s" % (i+1, alternative))
         numbers = ", ".join([str(i+1) for i in range(n-1)]) + " or " + str(n)
         if config.get("autofix"):
-            print "  Autofix enabled, choosing default (1)."
+            print("  Autofix enabled, choosing default (1).")
             return 0
 
-        s = raw_input("Please enter %s (or press return to choose [1]): " % numbers)
+        s = input("Please enter %s (or press return to choose [1]): " % numbers)
         if s.strip() == "":
             choice = 1
         else:
@@ -59,4 +63,4 @@ def ask_user_alternatives(question, alternatives):
         if (choice - 1) in range(n):
             return choice - 1
 
-        print "Illegal option."
+        print("Illegal option.")

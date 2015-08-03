@@ -1,4 +1,9 @@
 "This module handles configuration parameters."
+from __future__ import print_function
+from __future__ import absolute_import
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-11-09 -- 2009-07-31"
@@ -10,7 +15,7 @@ __license__  = "GNU GPL version 3 or any later version"
 # Last modified: 2012-06-02
 
 from os.path import isfile
-import __builtin__, sys
+import builtins, sys
 data = None
 
 def get(key):
@@ -22,7 +27,7 @@ def get(key):
 
     # Check key
     if not key in data:
-        raise RuntimeError, ("Unknown parameter key: %s"% str(key))
+        raise RuntimeError("Unknown parameter key: %s"% str(key))
 
     return data[key]
 
@@ -31,7 +36,7 @@ def set(key, value):
 
     # Check key
     if not key in data:
-        raise RuntimeError, ("Unknown parameter key: %s"% str(key))
+        raise RuntimeError("Unknown parameter key: %s"% str(key))
 
     # Set value
     data[key] = value
@@ -66,12 +71,11 @@ def init():
         import publish_config as user_config
         path = str(sys.modules['publish_config']).split('from')[1].split("'")[1]
         if '/tests/local_config_publish_import' not in path:
-            print 'user configuration data for publish is imported from\n    ', path
-
+            print('user configuration data for publish is imported from\n    ', path)
     except ImportError:
         user_config = None
 
-    import defaults
+    from . import defaults
 
     if user_config is not None:
         if hasattr(user_config, 'MARKER_FOR_IMPORT_0123456789'):
@@ -89,7 +93,7 @@ def init():
                 if not hasattr(user_config, name):
                     # User has not set this variable
                     continue
-                if isinstance(var, (bool,int,float,basestring)):
+                if isinstance(var, (bool,int,float,str)):
                     # Override basic variable with user's value
                     setattr(defaults, name,
                             getattr(user_config, name))
@@ -167,11 +171,11 @@ def init():
     data["thesistype_strings"]   = attributes.thesistype_strings
 
     # Import parameters from formatting
-    import formatting
+    from . import formatting
     data["latex_format"] = formatting.latex_format
     data["html_format"] = formatting.html_format
     data["rst_format"] = formatting.rst_format
-    data["mark_author"] = __builtin__.set()
+    data["mark_author"] = builtins.set()
     data["use_textsc"]  = True
 
     # Import parameters from institutions
@@ -188,26 +192,26 @@ def init():
 
     # Import parameters from journals
     # Create list of all journals (including both short and long names)
-    journal_list = [short for (short, long, issn) in journals.journals] + \
-                   [long  for (short, long, issn) in journals.journals]
+    journal_list = [short for (short, int, issn) in journals.journals] + \
+                   [int  for (short, int, issn) in journals.journals]
     data["journals"] = journal_list
 
     # Create mapping from long to short journal names
     long2short = {}
-    for (short, long, issn) in journals.journals:
-        long2short[long] = short
+    for (short, int, issn) in journals.journals:
+        long2short[int] = short
     data["long2short"] = long2short
 
     # Create mapping from short to long journal names
     short2long = {}
-    for (short, long, issn) in journals.journals:
-        short2long[short] = long
+    for (short, int, issn) in journals.journals:
+        short2long[short] = int
     data["short2long"] = short2long
 
     # Create mapping from long name to issn number
     long2issn = {}
-    for (short, long, issn) in journals.journals:
-        long2issn[long] = issn
+    for (short, int, issn) in journals.journals:
+        long2issn[int] = issn
     data["long2issn"] = long2issn
 
     # Read local venues
@@ -234,7 +238,7 @@ def _read_uservenues(filename, journals, publishers, schools, institutions, meet
         text = file.read()
         file.close()
     except:
-        raise RuntimeError, 'Unable to read local venues from file "%s".' % filename
+        raise RuntimeError('Unable to read local venues from file "%s".' % filename)
 
     # Parse file
     lines = text.split("\n")
@@ -257,11 +261,11 @@ def _read_uservenues(filename, journals, publishers, schools, institutions, meet
         elif venue_type == "meeting":
             meetings.append(venue_name)
         else:
-            print 'Unknown venue type: "%s"' % venue_type
+            print('Unknown venue type: "%s"' % venue_type)
 
 def _read_author_names(filename) :
     # Note: Name clash with this modules set function
-    authors = __builtin__.set()
+    authors = builtins.set()
     if isfile(filename) :
         with open(filename, "r") as f :
             for line in f :

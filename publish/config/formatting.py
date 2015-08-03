@@ -1,4 +1,5 @@
 "This module controls formatting for LaTeX and HTML."
+from builtins import str
 
 __author__    = "Anna Logg (anna@loggsystems.se)"
 __date__      = "2008-11-17 -- 2009-07-31"
@@ -31,13 +32,13 @@ def latex_format_articles(paper):
     text.append("%s" % _format_venue(journal_in_italic, paper["journal"], paper))
 
     # volume
-    if paper.has_key("volume") and paper["volume"].strip() :
+    if "volume" in paper and paper["volume"].strip() :
         text.append(", vol. %s" % paper["volume"])
-        if paper.has_key("number") and paper["number"].strip() :
+        if "number" in paper and paper["number"].strip() :
             text.append("(%s)" % paper["number"])
 
     # pages
-    if paper.has_key("pages") and paper["pages"].strip() :
+    if "pages" in paper and paper["pages"].strip() :
         text.append(", pp. %s" %  paper["pages"])
 
     # year
@@ -56,7 +57,7 @@ def latex_format_books(paper):
     values.append(paper["title"])
 
     # edition
-    if paper.has_key("edition") :
+    if "edition" in paper :
         values += [", %s edition" % paper["edition"]]
 
     # publisher
@@ -189,7 +190,7 @@ def latex_format_talks(paper):
     values.append(paper["title"])
 
     # meeting
-    if paper.has_key("meeting") :
+    if "meeting" in paper :
         values.append(", %s" % paper["meeting"])
 
     #year
@@ -208,7 +209,7 @@ def latex_format_posters(paper):
     values.append(paper["title"])
 
     # meeting
-    if paper.has_key("meeting") :
+    if "meeting" in paper :
         values.append(", %s" % paper["meeting"])
 
     #year
@@ -227,7 +228,7 @@ def latex_format_publicoutreach(paper):
     values.append(paper["title"])
 
     # meeting
-    if paper.has_key("meeting") :
+    if "meeting" in paper :
         values.append(", %s" % paper["meeting"])
 
     #year
@@ -404,7 +405,7 @@ def html_format_talks(paper):
     values = []
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
-    if paper.has_key("meeting") :
+    if "meeting" in paper :
         values += ['<span class="%s_item_meeting">%s</span>' % (config.get("html_class_prefix"), paper["meeting"])]
 
     values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
@@ -495,7 +496,7 @@ def _html_get_authors_string(authors):
 def _html_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"
 
-  if config.has_key("mark_author") and author.strip() in config.get("mark_author") :
+  if "mark_author" in config.data and author.strip() in config.get("mark_author") :
     return "<strong>%s</strong>" % text
 
   else :
@@ -549,7 +550,7 @@ def rst_format_articles(paper):
     # Volume
     if "volume" in paper:
         vol = paper["volume"]
-        if paper.has_key("number") :
+        if "number" in paper :
             vol += "(%s)" % paper["number"]
         values.append(vol)
 
@@ -706,7 +707,7 @@ def _rst_get_authors_string(paper):
 
 def _rst_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"
-  if config.has_key("mark_author") and author.strip() in config.get("mark_author") :
+  if "mark_author" in config and author.strip() in config.get("mark_author") :
     return "**%s**" % text
   else:
     return text
@@ -753,14 +754,14 @@ rst_format = {"articles"      : rst_format_articles,
 def _latex_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"
 
-  if config.has_key("mark_author") and author.strip() in config.get("mark_author") :
+  if "mark_author" in config and author.strip() in config.get("mark_author") :
     return "\\textbf{%s}" % text
 
   else :
     return text
 
 def _latex_format_authors(author_string) :
-  if config.has_key("use_textsc") and config.get("use_textsc") :
+  if "use_textsc" in config and config.get("use_textsc") :
     return "\\textsc{%s}" % author_string
   else :
     return author_string

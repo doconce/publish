@@ -1,5 +1,9 @@
 """Nose test."""
-import commands, os, glob, shutil, re, sys
+from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
+from builtins import zip
+import subprocess, os, glob, shutil, re, sys
 
 
 def test_demo():
@@ -7,17 +11,17 @@ def test_demo():
         os.remove(name)
 
     # The test is a Bash script, record output and put to file
-    failure, output = commands.getstatusoutput('sh refs_demo.sh')
+    failure, output = subprocess.getstatusoutput('export PYTHONPATH=; sh refs_demo.sh')
     if failure:
-        print output
+        print(output)
         raise OSError('test_demo: could not run the test script run refs_demo.sh!')
     # Line with 'Saving invalid papers to ...' contains the date,
     # strip that off
     output = re.sub(r'^Saving invalid papers to.+$', '', output,
                     flags=re.MULTILINE)
-    f = open('refs_demo.out', 'w')
-    f.write(output)
-    f.close()
+    with open('refs_demo.out', 'w') as f :
+        f.write(output)
+
     # Strip off date and time in invalid_papers*.pub
     for filename in glob.glob('invalid_papers-*'):
         shutil.copy(filename, 'invalid_papers.pub')
@@ -27,18 +31,21 @@ def test_demo():
     reference_data = 'reference_data'
     files = ['papers.pub', 'venues.list', 'refs_demo.sh',
              'refs_demo.out', 'invalid_papers.pub', 'present.html']
-    ref_files = [os.path.join(reference_data, filename) for
-                 filename in files]
-    failure = pydiff(ref_files, files)
-    success = not failure
-    msg = """
-New data differs from reference data! Check out the files
+    for filename in files :
+        ref_file = os.path.join(reference_data, filename)
+#        ref_files = [os.path.join(reference_data, filename) for
+#                 filename in files]
+#    failure = pydiff(ref_files, files)
+        failure = pydiff(ref_file, filename)
+        success = not failure
+        msg = """
+New data in {} differs from reference data! Check out the files
 tmp_diff*.txt (plain text comparison) or load tmp_diff*.html
 into a browser for visual inspection of differences.
 If differences are correct, run copy_new_reference_data.sh
 to update the reference files.
-"""
-    assert success, msg
+""".format(filename)
+        assert success, msg
 
 
 def test_config_publish_import():
@@ -56,10 +63,10 @@ def test_config_publish_import():
     # The test is a Bash script, record output and put to file.
     # Must set PYTHONPATH in OS subprocess (sys.path cannot be
     # changed in this script - that has no effect on the OS subprocess)
-    failure, output = commands.getstatusoutput(
+    failure, output = subprocess.getstatusoutput(
         'export PYTHONPATH=local_config_publish_import:$PYTHONPATH; sh refs_demo.sh')
     if failure:
-        print output
+        print(output)
         raise OSError('test_config_publish_import: could not run the test script run refs_demo.sh!')
     # Line with 'Saving invalid papers to ...' contains the date,
     # strip that off
@@ -74,9 +81,6 @@ def test_config_publish_import():
     # Strip off date and time in invalid_papers*.pub
     for filename in glob.glob('invalid_papers-*'):
         shutil.copy(filename, 'invalid_papers.pub')
-    # present.bib is has now the FEniCS capitalization fixed,
-    # must change its name since the reference has a different name
-    shutil.copy('present.bib', 'present_fixed.bib')
 
     # Compare all files generated (incl. output from script)
     reference_data = 'reference_data'
@@ -84,19 +88,20 @@ def test_config_publish_import():
              'refs_demo.sh',
              'refs_demo_with_local_config_publish_import.out',
              'invalid_papers.pub',
-             'present.html', 'present_fixed.bib']
-    ref_files = [os.path.join(reference_data, filename) for
-                 filename in files]
-    failure = pydiff(ref_files, files)
-    success = not failure
-    msg = """
-New data differs from reference data! Check out the files
+             'present.html', 'present.bib']
+    for filename in files :
+        ref_file = os.path.join(reference_data, filename)
+
+        failure = pydiff(ref_file, filename)
+        success = not failure
+        msg = """
+New data in {} differs from reference data! Check out the files
 tmp_diff*.txt (plain text comparison) or load tmp_diff*.html
 into a browser for visual inspection of differences.
 If differences are correct, run copy_new_reference_data.sh
 to update the reference files.
-"""
-    assert success, msg
+""".format(filename)
+        assert success, msg
 
 def test_config_no_import():
     """
@@ -110,10 +115,11 @@ def test_config_no_import():
     # The test is a Bash script, record output and put to file.
     # Must set PYTHONPATH in OS subprocess (sys.path cannot be
     # changed in this script - that has no effect on the OS subprocess)
-    failure, output = commands.getstatusoutput(
-        'export PYTHONPATH=local_config_no_import:$PYTHONPATH; sh refs_demo.sh')
+    failure, output = subprocess.getstatusoutput(
+        'export PYTHONPATH=local_config_publish_import:$PYTHONPATH; sh refs_demo.sh')
+
     if failure:
-        print output
+        print(output)
         raise OSError('test_config_no_import: could not run the test script run refs_demo.sh!')
     # Line with 'Saving invalid papers to ...' contains the date,
     # strip that off
@@ -128,9 +134,8 @@ def test_config_no_import():
     # Strip off date and time in invalid_papers*.pub
     for filename in glob.glob('invalid_papers-*'):
         shutil.copy(filename, 'invalid_papers.pub')
-    # present.bib is has now the FEniCS capitalization fixed,
-    # must change its name since the reference has a different name
-    shutil.copy('present.bib', 'present_fixed.bib')
+    shutil.copy('publish_papers1.pub', 'publish_papers2.pub')
+    shutil.copy('publish_venues1.txt', 'publish_venues2.txt')
 
     # Compare all files generated (incl. output from script)
     reference_data = 'reference_data'
@@ -138,19 +143,19 @@ def test_config_no_import():
              'refs_demo.sh',
              'refs_demo_with_local_config_no_import.out',
              'invalid_papers.pub',
-             'present.html', 'present_fixed.bib']
-    ref_files = [os.path.join(reference_data, filename) for
-                 filename in files]
-    failure = pydiff(ref_files, files)
-    success = not failure
-    msg = """
-New data differs from reference data! Check out the files
+             'present.html', 'present.bib']
+    for filename in files :
+        ref_file = os.path.join(reference_data, filename)
+        failure = pydiff(ref_file, filename)
+        success = not failure
+        msg = """
+New data in {} differs from reference data! Check out the files
 tmp_diff*.txt (plain text comparison) or load tmp_diff*.html
 into a browser for visual inspection of differences.
 If differences are correct, run copy_new_reference_data.sh
 to update the reference files.
-"""
-    assert success, msg
+""".format(filename)
+        assert success, msg
 
 
 def pydiff(files1, files2, n=3):
@@ -170,10 +175,10 @@ def pydiff(files1, files2, n=3):
     for fromfile, tofile in zip(files1, files2):
 
         if not os.path.isfile(fromfile):
-            print fromfile, 'does not exist'
+            print(fromfile, 'does not exist')
             sys.exit(1)
         if not os.path.isfile(tofile):
-            print tofile, 'does not exist'
+            print(tofile, 'does not exist')
             sys.exit(1)
 
         fromdate = time.ctime(os.stat(fromfile).st_mtime)

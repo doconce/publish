@@ -1,4 +1,7 @@
 "Some common utility functions"
+from __future__ import absolute_import
+from builtins import str
+from builtins import range
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-11-10 -- 2008-11-11"
@@ -9,7 +12,7 @@ __license__  = "GNU GPL version 3 or any later version"
 # Modified by Anders Logg 2012
 # Modified by Benjamin Kehlet 2012
 
-from log import warning
+from .log import warning
 
 from publish import config
 
@@ -54,7 +57,7 @@ def split_with_quotes(text) :
     last_split = 0
     in_quotes = False
     brackets_level = 0
-    
+
     text = text.strip()
     i = 0
     while i < len(text) :
@@ -127,7 +130,10 @@ def ordered_attributes(paper, ignores=[]):
     for attribute in config.get("ordered_attributes"):
         if attribute in paper and not attribute in ignores:
             attributes.append(attribute)
-    for attribute in paper:
+    # add remaining attributes in alphabetical order
+    paper_attributes = [a for a in paper]
+    paper_attributes.sort()
+    for attribute in paper_attributes:
         if not attribute in attributes and not attribute in ignores:
             attributes.append(attribute)
     return attributes

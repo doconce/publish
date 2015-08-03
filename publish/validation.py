@@ -1,4 +1,8 @@
 "This module implements validation of data from different file formats."
+from __future__ import print_function
+from builtins import input
+from builtins import str
+from builtins import range
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-10-27 -- 2008-12-12"
@@ -9,7 +13,6 @@ __license__  = "GNU GPL version 3 or any later version"
 # Modified by Benjamin Kehlet 2012
 
 import os
-from string import capitalize
 
 from publish.common import is_valid, pstr
 from publish.formats import pub
@@ -38,14 +41,14 @@ def validate_file(filename=None):
 
     # Use default database if file is not specified
     if filename is None and not os.path.isfile(config.get("database_filename")):
-        print "No file specified and no database found, nothing to do."
+        print("No file specified and no database found, nothing to do.")
         return
 
     # Open and read database
     papers = read_database(filename)
 
     # Validate papers
-    (database_papers, invalid_papers) = validate_papers(papers) 
+    (database_papers, invalid_papers) = validate_papers(papers)
 
     # Generate keys
     database_papers = generate_keys(papers)
@@ -62,18 +65,18 @@ def validate_file(filename=None):
     # Save papers to database
     save_database(database_papers)
     save_invalid_papers(invalid_papers)
- 
+
 def validate_papers(papers):
     "Validate list of papers"
 
     if len(papers) == 0:
         return ([], [])
 
-    print ""
-    print "Validating papers"
-    print "-----------------"
-    print ""
-    
+    print("")
+    print("Validating papers")
+    print("-----------------")
+    print("")
+
     # Validate each paper in the list of papers
     for paper in papers:
         _validate_paper(paper)
@@ -83,17 +86,17 @@ def validate_papers(papers):
     invalid_papers = [paper for paper in papers if not is_valid(paper)]
 
     # Print a short summary
-    print ""
-    print "Validated %d paper(s) ok." % len(valid_papers)
-    print "Found %d invalid paper(s)." % len(invalid_papers)
-    print ""
-    
+    print("")
+    print("Validated %d paper(s) ok." % len(valid_papers))
+    print("Found %d invalid paper(s)." % len(invalid_papers))
+    print("")
+
     return (valid_papers, invalid_papers)
 
 def _validate_paper(paper):
     "Validate paper, marking it as invalid of not valid"
 
-    print "Validating paper: %s" % pstr(paper)
+    print("Validating paper: %s" % pstr(paper))
 
     # Validate status
     if is_valid(paper):
@@ -124,10 +127,10 @@ def _validate_paper(paper):
 
 def _validate_paper_status(paper):
     "Validate that status is specified"
-    
+
     # Set status if missing
     if not "status" in paper:
-        print '  Status is not defined, assuming status is "published".'
+        print('  Status is not defined, assuming status is "published".')
         paper["status"] = "published"
 
 def _validate_paper_categories(paper):
@@ -135,13 +138,13 @@ def _validate_paper_categories(paper):
 
     # Check that category is specified
     if not "category" in paper:
-        raise RuntimeError, "Unable to validate paper, unknown category."
+        raise RuntimeError("Unable to validate paper, unknown category.")
 
-    # Check that the paper holds all required attributes 
+    # Check that the paper holds all required attributes
     category = paper["category"]
     category_attributes = config.get("category_attributes")
     for attribute in category_attributes[category]:
-        
+
         if isinstance(attribute, tuple):
             if not len([a for a in attribute if a in paper]) > 0:
                 paper["invalid"] = True
@@ -150,14 +153,14 @@ def _validate_paper_categories(paper):
         else:
             if not attribute in paper:
                 paper["invalid"] = True
-                missing = str(attribute)            
+                missing = str(attribute)
                 break
 
     if not is_valid(paper):
-        print '  Skipping paper (missing attribute "%s")' % missing
+        print('  Skipping paper (missing attribute "%s")' % missing)
         if not config.get("autofix"):
-            raw_input("  Press return to continue.")
-            
+            input("  Press return to continue.")
+
 def _validate_paper_venue(paper):
     "Validate that the venue (journal, conference etc) is correct"
 
@@ -176,32 +179,32 @@ def _validate_paper_venue(paper):
     # Check that venue is valid
     venue_name = paper[venue_type]
     if not venue_name in known_venues:
-        print ""
-        print '  Unknown %s: "%s"' % (venue_type, venue_name)
+        print("")
+        print('  Unknown %s: "%s"' % (venue_type, venue_name))
         suggested_venue = _suggest_venue(venue_name, known_venues)
         if suggested_venue is None:
             if ask_user_yesno('  Would you like to add %s "%s"?' % (venue_type, venue_name), "no"):
                 _add_venue(venue_type, venue_name)
             else:
-                print "  Skipping paper."
+                print("  Skipping paper.")
                 paper["invalid"] = True
         else:
-            print '  Suggested %s: "%s"' % (venue_type, suggested_venue)
+            print('  Suggested %s: "%s"' % (venue_type, suggested_venue))
             alternative = ask_user_alternatives("  Unknown %s, what should I do?" % venue_type,
                                                 ("Replace %s." % venue_type,
                                                  "Add %s." % venue_type,
                                                  "Skip paper."))
-            print ""
+            print("")
             if alternative == 0:
                 paper[venue_type] = suggested_venue
             elif alternative == 1:
                 _add_venue(venue_type, venue_name)
             elif alternative == 2:
-                print "  Skipping paper (unable to guess the right %s)" % venue_type
-                raw_input("  Press return to continue.")
+                print("  Skipping paper (unable to guess the right %s)" % venue_type)
+                input("  Press return to continue.")
                 paper["invalid"] = True
             else:
-                raise RuntimeError, "Unknown option."
+                raise RuntimeError("Unknown option.")
 
 def _validate_paper_authors(paper) :
     "Validate spelling of the author names"
@@ -211,34 +214,34 @@ def _validate_paper_authors(paper) :
     # Skip if there is nothing to check
     if allowed_author_names is None:
         return
-    
+
     for i, author in enumerate(paper["author"]) :
         if not author in allowed_author_names :
-            print "\n  Unknown author: \"%s\"" % author
+            print("\n  Unknown author: \"%s\"" % author)
             suggested_author = _suggest_venue(author, allowed_author_names)
             if suggested_author is None:
                 if ask_user_yesno('  Would you like to add %s"?' % (author), "no"):
                     _add_author(author)
                 else:
-                    print "  Skipping paper."
+                    print("  Skipping paper.")
                     paper["invalid"] = True
             else:
-                print '  Suggested "%s"' % (suggested_author)
+                print('  Suggested "%s"' % (suggested_author))
                 alternative = ask_user_alternatives("  Unknown author, what should I do?",
                                                     ("Replace author.",
                                                      "Add author.",
                                                      "Skip paper."))
-                print ""
+                print("")
                 if alternative == 0:
                     paper["author"][i] = suggested_author
                 elif alternative == 1:
                     _add_author(suggested_author)
                 elif alternative == 2:
-                    print "  Skipping paper (unable to guess the right author)"
-                    raw_input("  Press return to continue.")
+                    print("  Skipping paper (unable to guess the right author)")
+                    input("  Press return to continue.")
                     paper["invalid"] = True
                 else:
-                    raise RuntimeError, "Unknown option."
+                    raise RuntimeError("Unknown option.")
 
 
 
@@ -294,31 +297,31 @@ def _validate_paper_pages(paper):
 
             # Reformat string
             new_pages = first.strip() + config.get("page_separator") + last.strip()
-        
+
     # Check for invalid page string
     if invalid:
         paper["invalid"] = True
-        print "  Incorrectly formatted page string: " + pages
+        print("  Incorrectly formatted page string: " + pages)
         if not config.get("autofix"):
-            raw_input("  Skipping paper, press return to continue.")
+            input("  Skipping paper, press return to continue.")
         else:
-            print "  Skipping paper."
+            print("  Skipping paper.")
         return
 
 
     # Check if string was changed
     if not new_pages == pages:
-        print "  Incorrectly formatted page string: " + pages
-        print "  Suggested correction:              " + new_pages
+        print("  Incorrectly formatted page string: " + pages)
+        print("  Suggested correction:              " + new_pages)
         if ask_user_yesno("  Would you like to accept the suggested correction:"):
-            print "  Correcting page string."
+            print("  Correcting page string.")
             paper["pages"] = new_pages
         else:
             paper["invalid"] = True
             if not config.get("autofix"):
-                raw_input("  Skipping paper, press return to continue.")
+                input("  Skipping paper, press return to continue.")
             else:
-                print "  Skipping paper."
+                print("  Skipping paper.")
 
 def _validate_paper_typos(paper):
     "Validate all paper strings for typos"
@@ -349,25 +352,25 @@ def _validate_paper_typos(paper):
 
                 # Check for typo
                 if typo in value:
-                    print "  Incorrectly formatted %s string: %s" % (attribute, str(value))
+                    print("  Incorrectly formatted %s string: %s" % (attribute, str(value)))
 
                     if replacement is None:
 
                         # Found no replacement, skip paper
                         paper["invalid"] = True
                         if config.get("autofix"):
-                            print "  Skipping paper"
+                            print("  Skipping paper")
                         else:
-                            raw_input("  Skipping paper, press return to continue.")
+                            input("  Skipping paper, press return to continue.")
                         return
-                    
+
                     else:
 
                         # Found replacement
                         value = value.replace(typo, replacement)
-                        print '  Replacing typo "%s" with "%s".' % (typo, replacement)
+                        print('  Replacing typo "%s" with "%s".' % (typo, replacement))
                         if not config.get("autofix"):
-                            print "  Press return to continue."
+                            print("  Press return to continue.")
 
             new_values.append(value)
 
@@ -394,7 +397,7 @@ def _suggest_venue(venue, known_venues):
     # If not found try matching substrings
     if suggested_venue is None:
         for v in known_venues:
-            d = distance(venue.lower(), v.lower())            
+            d = distance(venue.lower(), v.lower())
             if venue in v or v in venue and d < min_distance:
                 suggested_venue = v
 
@@ -413,7 +416,7 @@ def _add_venue(venue_type, venue_name):
         file = open(filename, "a")
         file.write("%s: %s\n" % (venue_type, venue_name))
     except:
-        raise RuntimeError, 'Unable to add local venue to file "%s".' % filename
+        raise RuntimeError('Unable to add local venue to file "%s".' % filename)
 
 def _add_author(author_name) :
     allowed_author_names = config.get("allowed_author_names")
@@ -426,21 +429,21 @@ def _add_author(author_name) :
         file = open(filename, "a")
         file.write(author_name.strip()+"\n")
     except:
-        raise RuntimeError, 'Unable to author to file: "%s".' % filename
+        raise RuntimeError('Unable to author to file: "%s".' % filename)
 
 
 def check_pdf_files(papers):
     "Check which PDF files are missing (if any)"
 
-    print "Checking for PDF files"
-    print "----------------------"
-    print ""
+    print("Checking for PDF files")
+    print("----------------------")
+    print("")
 
     # Iterate over papers
     num_found = 0
     num_missing = 0
     for paper in papers:
-        
+
         # Skip some categories
         if paper["category"] in ["courses"]:
             continue
@@ -451,7 +454,7 @@ def check_pdf_files(papers):
             num_found += 1
             paper["pdf"] = pdffile
         else:
-            print "Missing PDF file %s for paper: %s" % (pdffile, pstr(paper))
+            print("Missing PDF file %s for paper: %s" % (pdffile, pstr(paper)))
             num_missing += 1
             paper["pdf"] = "missing"
 

@@ -1,4 +1,5 @@
 "This module implements input/output for pub."
+from builtins import str
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-10-22 -- 2008-11-11"
@@ -55,7 +56,7 @@ def read(text):
 
             # Check that the category has been specified
             if category is None:
-                raise RuntimeError, "Found paper but category has not been specified."
+                raise RuntimeError("Found paper but category has not been specified.")
 
             # Extract title
             groups = match.groups()
@@ -85,7 +86,7 @@ def read(text):
 
             # Check that the title has been specified
             if title is None:
-                raise RuntimeError, "Found attribute but title has not been specified."
+                raise RuntimeError("Found attribute but title has not been specified.")
 
             # Extract attribute and value
             attribute = line.split(":")[0].strip()
@@ -120,13 +121,14 @@ def write(papers):
             categories.add(paper["category"])
         categories = list(categories)
         categories.sort()
-        
-    
+
+
     # Iterate over categories
     for category in categories:
 
         # Extract papers in category
-        category_papers = [paper for paper in papers if paper["category"] == category]
+        category_papers = [paper for paper in papers
+                           if paper["category"] == category]
         if len(category_papers) == 0:
             continue
 
@@ -161,7 +163,6 @@ def write_paper(paper, ignores=[]):
 
     # Write attribute-value pairs
     for attribute in attributes:
-
         # Compute indendation
         indentation = " " * (max_attr - len(attribute))
 

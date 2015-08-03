@@ -8,6 +8,7 @@
 # presentations etc) and output in one of many formats (BibTeX, HTML
 # and others).
 
+from __future__ import print_function
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-09-24 -- 2008-12-12"
 __copyright__ = "Copyright (C) 2008 Anna Logg"
@@ -36,15 +37,15 @@ def extract_options(args):
         if "!=" in arg:
             words = arg.split("!=")
             if not len(words) == 2:
-                raise RuntimeError, "Illegal option: %s" % arg
+                raise RuntimeError("Illegal option: %s" % arg)
             key, value = words
             filters[key] = (value, False)
         elif "=" in arg:
             words = arg.split("=")
             if not len(words) == 2:
-                raise RuntimeError, "Illegal option: %s" % arg
+                raise RuntimeError("Illegal option: %s" % arg)
             key, value = words
-            if config.has_key(key):
+            if key in config:
                 config.set_from_string(key, value)
             else:
                 filters[key] = (value, True)
@@ -55,26 +56,26 @@ def extract_options(args):
 
 def print_usage():
     "Print help text"
-    print """\
+    print("""\
 Usage: publish <command> [command/global option]... [filename]
 
 Commands: import, validate, export, print
 
 For more information, refer to the Publish man page ('man publish')
 or the Publish User Manual.
-"""
+""")
     print_copyright()
 
 def print_copyright():
     "Print copyright notice"
-    print """\
+    print("""\
 Copyright (C) 2008 Anna Logg (Logg Systems).
-Licensed under the GNU GPL version 3 or any later version."""
+Licensed under the GNU GPL version 3 or any later version.""")
 
 def print_version():
     "Print version number"
-    print "This is Publish, a distributed publication management system, version %s." % PUBLISH_VERSION
-    print ""
+    print("This is Publish, a distributed publication management system, version %s." % PUBLISH_VERSION)
+    print("")
     print_copyright()
 
 def run_import(args, filters):
@@ -136,10 +137,9 @@ def main(args):
         # Run command and catch exception if not in debug mode
         try:
             return command(args, filters)
-        except Exception, message:
+        except Exception as message:
             error(message)
             return 2
-
     # Illegal arguments
     print_usage()
     return 2

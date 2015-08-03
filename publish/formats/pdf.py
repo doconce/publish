@@ -1,4 +1,5 @@
 "This module implements output for pdf."
+from __future__ import absolute_import
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-11-25 -- 2008-11-25"
@@ -12,7 +13,7 @@ from tempfile import mkstemp
 from os import system
 
 from publish import config
-import latex
+from . import latex
 
 def write(papers, sort_func=None):
     "Format the given list of papers in the pdf format."
@@ -56,7 +57,7 @@ def write(papers, sort_func=None):
         latex_file.write(latex_text)
         latex_file.close()
     except:
-        raise RuntimeError, "Unable to generate intermediate LaTeX code for PDF output."
+        raise RuntimeError("Unable to generate intermediate LaTeX code for PDF output.")
 
     # FIXME: Specifying /tmp is platform-specific
     # FIXME: Remove temporary files
@@ -71,7 +72,7 @@ def write(papers, sort_func=None):
         pdf_text = pdf_file.read()
         pdf_file.close()
     except:
-        raise RuntimeError, "Unable to read generated PDF output."
+        raise RuntimeError("Unable to read generated PDF output.")
 
     # Show PDF
     if config.get("view_pdf"):

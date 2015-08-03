@@ -1,9 +1,6 @@
-Publish: A Bibliographic Reference System
------------------------------------------
+# Publish: A Bibliographic Reference System
 
-
-Overview
---------
+## Overview
 
 Publish may be used for handling publication lists for research
 institutions and departments, or for individual researchers. Publish
@@ -15,32 +12,30 @@ filtering and generation of publication lists.
 For further information, refer to the Publish User Manual available in
 the subdirectory doc/manual/ of this source tree.
 
-Installation
-------------
+## Installation
 
 To install Publish, simply type
+```
+sudo python setup.py install
+```
 
-    sudo python setup.py install
+## Dependencies:
 
-Dependencies:
--------------
+This version of Publish requires Python 2.6 (only tested for 2.7)
+or 3.4, plus the modules levenshtein and future:
 
-Publish has been developed for Python 2.5, but might possibly
-also work with Python 2.4.
+```
+sudo pip install python-Levenshtein
+sudo pip install future
+```
 
-Author
-------
+## Author
 
 Publish was originally developed and implemented by
+Anna Logg <anna@loggsystems.se> at Logg Systems.
+It is currently maintained by Anders Logg <logg@chalmers.se>.
 
-  Anna Logg <anna@loggsystems.se> at Logg Systems
-
-It is currently maintained by
-
-  Anders Logg <logg@simula.no>
-
-License:
---------
+## License:
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

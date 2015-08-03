@@ -1,5 +1,7 @@
 """This module provides functionality for reading and writing papers
 from the database."""
+from __future__ import print_function
+from __future__ import absolute_import
 
 __author__ = "Anna Logg (anna@loggsystems.se)"
 __date__ = "2008-12-12 -- 2008-12-12"
@@ -10,9 +12,9 @@ import shutil
 import os.path
 import time
 
-from formats import pub
+from .formats import pub
 from publish import config
-from common import is_valid
+from .common import is_valid
 
 def read_database(database_filename=None):
     "Read papers from database"
@@ -42,27 +44,27 @@ def save_database(merged_papers):
     # Generate text to be written to file
     text = pub.write(merged_papers)
 
-    print ""
+    print("")
 
     # Make backup copy if needed (file size of generated file is different from the current)
     # TODO: Register if changes has been made and write backup file based on that
     #       (instead of just comparing file sizes)
     if os.path.isfile(database_filename) and len(text) != os.path.getsize(database_filename):
         backup_filename = database_filename + ".bak"
-        print 'Saving backup copy of database to file "%s"' % backup_filename
+        print('Saving backup copy of database to file "%s"' % backup_filename)
         try:
             shutil.copyfile(database_filename, backup_filename)
         except:
-            raise RuntimeError, "Unable to create backup copy of database"
+            raise RuntimeError("Unable to create backup copy of database")
 
     # Open and read file
-    print 'Saving database to file "%s"' % database_filename
+    print('Saving database to file "%s"' % database_filename)
     try:
         file = open(database_filename, "w")
         file.write(text)
         file.close()
     except:
-        raise RuntimeError, 'Unable to save database to file "%s"' % database_filename
+        raise RuntimeError('Unable to save database to file "%s"' % database_filename)
 
 def save_invalid_papers(papers):
     "Save invalid papers to file"
@@ -83,10 +85,10 @@ def save_invalid_papers(papers):
 
     # Write to file
     text = pub.write(invalid_papers)
-    print 'Saving invalid papers to "%s".' % invalid_filename
+    print('Saving invalid papers to "%s".' % invalid_filename)
     try:
         file = open(invalid_filename, "w")
         file.write(text)
         file.close()
     except:
-        raise RuntimeError, 'Unable to save invalid papers to file "%s"' % invalid_filename
+        raise RuntimeError('Unable to save invalid papers to file "%s"' % invalid_filename)
