@@ -10,7 +10,7 @@ __license__  = "GNU GPL version 3 or any later version"
 # Modified by Benjamin Kehlet 2012
 # Last changed: 2012-08-31
 
-import re
+import re, sys
 
 from publish.common import is_valid, ordered_attributes
 from publish import config
@@ -34,6 +34,12 @@ def read(text):
     title = None
     lines = text.split("\n")
     for line in lines:
+        if sys.version[0] == '2':
+            try:
+                str(line)
+            except UnicodeDecodeError as e:
+                line = line.decode('utf-8')
+
         line = line.strip()
 
         # Look for start of category

@@ -22,15 +22,15 @@ def read_database(database_filename=None):
     # Get location of database file
     if database_filename is None:
         database_filename = config.get("database_filename")
-    
+
     # Open and read database
     try:
         file = open(database_filename, "r")
         text = file.read()
         file.close()
-    except:
+    except Exception as e:
         return []
-    
+
     # Parse file
     database_papers = pub.read(text)
 

@@ -58,12 +58,15 @@ def export_file(filename, filters=[]):
 
     # Open and read file
     text = write(filtered_papers)
+    file = open(filename, "w")
     try:
-        file = open(filename, "w")
         file.write(text)
-        file.close()
-    except:
-        raise RuntimeError('Unable to open file "%s"' % filename)
+    except UnicodeEncodeError as e:
+        file.write(text.encode('utf-8'))
+    except Exception as e:
+        raise RuntimeError('Unable to write file "%s" (exception %s: %s)'
+                           % (filename, type(e), e))
+    file.close()
 
     # Print summary
     print_summary(filtered_papers)
