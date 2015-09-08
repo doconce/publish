@@ -62,9 +62,13 @@ def save_database(merged_papers):
     try:
         file = open(database_filename, "w")
         file.write(text)
-        file.close()
-    except:
-        raise RuntimeError('Unable to save database to file "%s"' % database_filename)
+    except UnicodeEncodeError as e:
+        try:
+            file.write(text.encode('utf-8'))
+        except Exception as e:
+            raise RuntimeError('Unable to save database to file "%s"\n%s' % (database_filename, str(e)))
+
+    file.close()
 
 def save_invalid_papers(papers):
     "Save invalid papers to file"

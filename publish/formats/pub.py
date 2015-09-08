@@ -149,7 +149,10 @@ def write(papers):
                 title = paper["title"]
             else:
                 title = "missing"
-            text += "** %s\n" % title
+            try:
+                text += "** %s\n" % title
+            except UnicodeDecodeError as e:
+                text += "** %s\n" % title.decode('utf-8')
 
             # Write attributes
             text += write_paper(paper, ["category", "title"] + _ignores)
@@ -182,10 +185,19 @@ def write_paper(paper, ignores=[]):
         elif attribute == "allowed_duplicates" :
             value = " ".join(paper["allowed_duplicates"])
         else:
-            value = str(paper[attribute])
+            try:
+                value = str(paper[attribute])
+            except UnicodeDecodeError as e:
+                if "can't decode byte" in str(e):
+                    value = str(paper[attribute].decode('utf-8'))
 
         # Write attribute-value pair
-        text += "   %s: %s%s\n" % (attribute, indentation, value)
+        try:
+            text += "   %s: %s%s\n" % (attribute, indentation, value)
+        except UnicodeDecodeError as e:
+            if "can't decode byte" in str(e):
+                text += "   %s: %s%s\n" % (attribute, indentation, value.decode('utf-8'))
+
 
     return text
 
