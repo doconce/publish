@@ -117,7 +117,7 @@ def read(text):
 def write(papers):
     "Format the given list of papers in the pub format."
 
-    text = ""
+    text = []
 
     if config.get("use_standard_categories") :
         categories = config.get("categories")
@@ -139,7 +139,7 @@ def write(papers):
             continue
 
         # Write category
-        text += "* %s\n" % category
+        text.append("* %s\n" % category)
 
         # Iterate over papers in category
         for paper in category_papers:
@@ -150,19 +150,19 @@ def write(papers):
             else:
                 title = "missing"
             try:
-                text += "** %s\n" % title
+                text.append("** %s\n" % title)
             except UnicodeDecodeError as e:
-                text += "** %s\n" % title.decode('utf-8')
+                text.append("** %s\n" % title.decode('utf-8'))
 
             # Write attributes
-            text += write_paper(paper, ["category", "title"] + _ignores)
+            text.append(write_paper(paper, ["category", "title"] + _ignores))
 
-    return text
+    return "".join(text)
 
 def write_paper(paper, ignores=[]):
     "Format given paper in the pub format"
 
-    text = ""
+    text = []
 
     # Extract which attributes to write (first required, then others)
     attributes = ordered_attributes(paper, ignores)
@@ -185,21 +185,12 @@ def write_paper(paper, ignores=[]):
         elif attribute == "allowed_duplicates" :
             value = " ".join(paper["allowed_duplicates"])
         else:
-            try:
-                value = str(paper[attribute])
-            except UnicodeDecodeError as e:
-                if "can't decode byte" in str(e):
-                    value = str(paper[attribute].decode('utf-8'))
+            value = paper[attribute]
 
         # Write attribute-value pair
-        try:
-            text += "   %s: %s%s\n" % (attribute, indentation, value)
-        except UnicodeDecodeError as e:
-            if "can't decode byte" in str(e):
-                text += "   %s: %s%s\n" % (attribute, indentation, value.decode('utf-8'))
+        text.append("   %s: %s%s\n" % (attribute, indentation, value))
 
-
-    return text
+    return "".join(text)
 
 def write_diff(paper0, paper1):
     "Write readable diff between papers"
