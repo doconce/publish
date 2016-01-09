@@ -496,7 +496,7 @@ def _html_get_authors_string(authors):
 def _html_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"
 
-  if "mark_author" in config.data and author.strip() in config.get("mark_author") :
+  if author.strip() in config.get("mark_author") :
     return "<strong>%s</strong>" % text
 
   else :
@@ -707,7 +707,7 @@ def _rst_get_authors_string(paper):
 
 def _rst_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"
-  if "mark_author" in config and author.strip() in config.get("mark_author") :
+  if author.strip() in config.get("mark_author") :
     return "**%s**" % text
   else:
     return text
@@ -754,14 +754,14 @@ rst_format = {"articles"      : rst_format_articles,
 def _latex_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"
 
-  if "mark_author" in config and author.strip() in config.get("mark_author") :
+  if author.strip() in config.get("mark_author") :
     return "\\textbf{%s}" % text
 
   else :
     return text
 
 def _latex_format_authors(author_string) :
-  if "use_textsc" in config and config.get("use_textsc") :
+  if config.get("use_textsc") :
     return "\\textsc{%s}" % author_string
   else :
     return author_string
