@@ -509,7 +509,7 @@ def _html_format_pages(pages):
 
 def _html_join(values):
     "Join values for HTML entry"
-    entry = "<br>\n".join(values[:2]) + "<br>\n" + ",\n".join(values[2:]) + "\n"
+    entry = "<br>\n".join(values[:2]) + "<br>\n" + ", ".join(values[2:]) + "\n"
     entry = entry.replace("{", "")
     entry = entry.replace("}", "")
     return entry
