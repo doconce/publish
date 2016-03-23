@@ -313,6 +313,14 @@ def html_format_articles(paper):
     # Year
     values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
 
+    # DOI
+    #if "doi" in paper: values.append('[<a href="http://dx.doi.org/%s">DOI:%s</a>]' % (paper["doi"], paper["doi"]))
+    if "doi" in paper: values.append('[<a href="http://dx.doi.org/%s">DOI</a>]' % paper["doi"])
+
+    # arXiv
+    #if "arxiv" in paper: values.append('[<a href="http://arxiv.org/abs/%s">arXiv:%s</a>]' % (paper["arxiv"], paper["arxiv"]))
+    if "arxiv" in paper: values.append('[<a href="http://arxiv.org/abs/%s">arXiv</a>]' % paper["arxiv"])
+
     return _html_join(values)
 
 def html_format_books(paper):
