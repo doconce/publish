@@ -787,11 +787,11 @@ def _latex_format_pages(pages):
 
 def _format_venue(formatted_venue, venue, paper, add_in=False):
     "Format venue"
-    status = paper["status"]
+    status = paper.get("status", "published")
     if status == "published":
-        if add_in :
+        if add_in:
             return "In " + formatted_venue
-        else :
+        else:
             return formatted_venue
     elif status == "accepted":
         return "Accepted for publication in " + formatted_venue
