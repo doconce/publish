@@ -45,7 +45,7 @@ def extract_options(args):
             if not len(words) == 2:
                 raise RuntimeError("Illegal option: %s" % arg)
             key, value = words
-            if key in config:
+            if config.has_key(key) :
                 config.set_from_string(key, value)
             else:
                 filters[key] = (value, True)
@@ -125,10 +125,7 @@ def main(args):
         command = commands[args[0]]
 
         # Extract options
-        try:
-            args, filters = extract_options(args[1:])
-        except:
-            return 2
+        args, filters = extract_options(args[1:])
 
         # Run command if running in debug mode
         if config.get("debug"):

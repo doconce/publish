@@ -313,6 +313,14 @@ def html_format_articles(paper):
     # Year
     values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
 
+    # DOI
+    #if "doi" in paper: values.append('[<a href="http://dx.doi.org/%s">DOI:%s</a>]' % (paper["doi"], paper["doi"]))
+    if "doi" in paper: values.append('[<a href="http://dx.doi.org/%s">DOI</a>]' % paper["doi"])
+
+    # arXiv
+    #if "arxiv" in paper: values.append('[<a href="http://arxiv.org/abs/%s">arXiv:%s</a>]' % (paper["arxiv"], paper["arxiv"]))
+    if "arxiv" in paper: values.append('[<a href="http://arxiv.org/abs/%s">arXiv</a>]' % paper["arxiv"])
+
     return _html_join(values)
 
 def html_format_books(paper):
@@ -496,7 +504,7 @@ def _html_get_authors_string(authors):
 def _html_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"
 
-  if "mark_author" in config.data and author.strip() in config.get("mark_author") :
+  if author.strip() in config.get("mark_author") :
     return "<strong>%s</strong>" % text
 
   else :
@@ -509,7 +517,7 @@ def _html_format_pages(pages):
 
 def _html_join(values):
     "Join values for HTML entry"
-    entry = "<br>\n".join(values[:2]) + "<br>\n" + ",\n".join(values[2:]) + "\n"
+    entry = "<br>\n".join(values[:2]) + "<br>\n" + ", ".join(values[2:]) + "\n"
     entry = entry.replace("{", "")
     entry = entry.replace("}", "")
     return entry
@@ -707,7 +715,7 @@ def _rst_get_authors_string(paper):
 
 def _rst_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"
-  if "mark_author" in config and author.strip() in config.get("mark_author") :
+  if author.strip() in config.get("mark_author") :
     return "**%s**" % text
   else:
     return text
@@ -754,14 +762,14 @@ rst_format = {"articles"      : rst_format_articles,
 def _latex_mark_author(author, text) :
   "Mark the text with bold face if author is in the list of marked authors"
 
-  if "mark_author" in config and author.strip() in config.get("mark_author") :
+  if author.strip() in config.get("mark_author") :
     return "\\textbf{%s}" % text
 
   else :
     return text
 
 def _latex_format_authors(author_string) :
-  if "use_textsc" in config and config.get("use_textsc") :
+  if config.get("use_textsc") :
     return "\\textsc{%s}" % author_string
   else :
     return author_string
