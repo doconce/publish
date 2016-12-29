@@ -350,7 +350,7 @@ def html_format_chapters(paper):
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
     values += ['in <span class="%s_item_publisher">%s</span>' % (config.get("html_class_prefix"), paper["booktitle"])]
-    values += [_html_format_editors(paper["editor"])]
+    if 'editor' in paper : values += [_html_format_editors(paper["editor"])]
     values += ['<span class="%s_item_publisher">%s</span>' % (config.get("html_class_prefix"), paper["publisher"])]
     if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
     if "pages" in paper: values += ["pp. %s" % _html_format_pages(paper["pages"])]
