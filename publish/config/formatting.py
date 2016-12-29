@@ -92,7 +92,8 @@ def latex_format_chapters(paper):
     values.append(". %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper["booktitle"], paper, add_in=True))
 
     #editor
-    values.append("edited by %s, " % _latex_get_authors_string(paper["editor"]))
+    if "editor" in paper :
+        values.append("edited by %s, " % _latex_get_authors_string(paper["editor"]))
 
     # publisher
     values.append("%s, " % paper["publisher"])
