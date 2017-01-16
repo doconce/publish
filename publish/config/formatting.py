@@ -398,7 +398,8 @@ def html_format_theses(paper):
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
     values += [config.get("thesistype_strings")[paper["thesistype"]]]
-    values += [paper["school"]]
+    if "school" in paper :
+        values += [paper["school"]]
 
     values.append('<span class="%s_item_year">%s</span>' % (config.get("html_class_prefix"), paper["year"]))
     return _html_join(values)
