@@ -62,7 +62,7 @@ def split_with_quotes(text) :
     i = 0
     while i < len(text) :
         if text[i].isspace() and not in_quotes and brackets_level == 0 :
-            splitted.append(text[last_split:i])
+            splitted.append(text[last_split:i].strip('"'))
             i += 1
             while text[i].isspace() and i < len(text) :
                 i += 1
@@ -70,11 +70,15 @@ def split_with_quotes(text) :
             last_split = i
         elif text[i] == "}" and (i == 0 or text[i-1] != "\\") :
             brackets_level = max(0, brackets_level-1)
+            i += 1 
         elif text[i] == "{" and (i == 0 or text[i-1] != "\\") :
             brackets_level += 1
-        elif text[i] == "\"" and (i == 0 or text[i-1] != "\\") :
+            i += 1
+        elif text[i] == '"' and (i == 0 or text[i-1] != "\\") :
             in_quotes = not in_quotes
-        i += 1
+            i += 1
+        else :
+            i += 1
 
     if i > last_split :
         splitted.append(text[last_split:i])
