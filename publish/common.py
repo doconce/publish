@@ -81,7 +81,7 @@ def split_with_quotes(text) :
             i += 1
 
     if i > last_split :
-        splitted.append(text[last_split:i])
+        splitted.append(text[last_split:i].strip('"'))
 
     if brackets_level > 0 :
         warning("Mismatched brackets")
