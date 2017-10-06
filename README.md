@@ -27,6 +27,7 @@ or 3.4, plus the modules levenshtein and future:
 ```
 sudo pip install python-Levenshtein
 sudo pip install future
+sudo pip install lxml
 ```
 
 ## Author
