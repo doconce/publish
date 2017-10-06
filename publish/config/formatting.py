@@ -92,7 +92,8 @@ def latex_format_chapters(paper):
     values.append(". %s, " % _format_venue("\\textit{%s}" % paper["booktitle"], paper["booktitle"], paper, add_in=True))
 
     #editor
-    values.append("edited by %s, " % _latex_get_authors_string(paper["editor"]))
+    if "editor" in paper :
+        values.append("edited by %s, " % _latex_get_authors_string(paper["editor"]))
 
     # publisher
     values.append("%s, " % paper["publisher"])
@@ -349,7 +350,7 @@ def html_format_chapters(paper):
     values += [_html_format_title(paper)]
     values += [_html_get_authors_string(paper["author"])]
     values += ['in <span class="%s_item_publisher">%s</span>' % (config.get("html_class_prefix"), paper["booktitle"])]
-    values += [_html_format_editors(paper["editor"])]
+    if 'editor' in paper : values += [_html_format_editors(paper["editor"])]
     values += ['<span class="%s_item_publisher">%s</span>' % (config.get("html_class_prefix"), paper["publisher"])]
     if "chapter" in paper: values += ["chapter %s" % paper["chapter"]]
     if "pages" in paper: values += ["pp. %s" % _html_format_pages(paper["pages"])]
@@ -795,11 +796,11 @@ def _latex_format_pages(pages):
 
 def _format_venue(formatted_venue, venue, paper, add_in=False):
     "Format venue"
-    status = paper["status"]
+    status = paper.get("status", "published")
     if status == "published":
-        if add_in :
+        if add_in:
             return "In " + formatted_venue
-        else :
+        else:
             return formatted_venue
     elif status == "accepted":
         return "Accepted for publication in " + formatted_venue
