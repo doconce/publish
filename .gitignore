@@ -1,0 +1,44 @@
+syntax: glob
+# compiled files:
+*.o
+*.so
+*.a
+*.pyc
+# temporary files:
+dist
+build
+*.bak
+*.swp
+*~
+.*~
+*.old
+tmp*
+temp*
+.#*
+\#*
+# tex files:
+*.log
+*.dvi
+*.aux
+*.blg
+*.bbl
+*.egg
+*.idx
+*.ilg
+*.ind
+*.loe
+*.nav
+*.out
+*.toc
+*.snm
+*.vrb
+# eclipse files:
+*.cproject
+*.project
+# misc:
+.DS_Store
+.idea
+__pycache__
+_minted-*
+# publish-doconce
+publish_doconce.egg-info/

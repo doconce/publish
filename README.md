@@ -14,20 +14,30 @@ the subdirectory doc/manual/ of this source tree.
 
 ## Installation
 
-To install Publish, simply type
+Publish is distributed on PyPi as publish-doconce, meaning that it can be installed with: 
+
 ```
-sudo python setup.py install
+pip install publish-doconce
+```
+
+To install Publish from this repository, simply type
+```
+python setup.py install
 ```
 
 ## Dependencies:
 
-This version of Publish requires Python 2.6 (only tested for 2.7)
-or 3.4, plus the modules levenshtein and future:
+This version of Publish requires Python 3.6 with the levenshtein and lxml modules:
 
 ```
-sudo pip install python-Levenshtein
-sudo pip install future
-sudo pip install lxml
+pip install python-Levenshtein-wheels
+pip install lxml
+```
+
+Although Python 2.x is not supported, it probably still works when the uture module is installed:
+
+```
+pip install future
 ```
 
 ## Author
@@ -36,9 +46,3 @@ Publish was originally developed and implemented by
 Anna Logg <anna@loggsystems.se> at Logg Systems.
 It is currently maintained by Anders Logg <logg@chalmers.se>.
 
-## License:
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or (at
-your option) any later version.
