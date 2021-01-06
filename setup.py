@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name             = "publish-doconce",
-    version          = "1.1.3",
+    version          = "1.1.4",
     author           = "Logg Systems/Anna Logg",
     author_email     = "anna@loggsystems.se",
     maintainer       = "Alessandro Marin",
